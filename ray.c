@@ -52,23 +52,23 @@ void find_vertical_intersection(t_ray *ray)
 	y_intercept = player.y + (x_intercept - player.x) * tan(ray->angle);
 	// ray->ver_wall_hit_x = x_intercept;
 	// ray->ver_wall_hit_y = y_intercept;
-	printf("x: %d, y: %d\n", x_intercept, y_intercept);
+	// printf("x: %d, y: %d\n", x_intercept, y_intercept);
 	// return;
 
 	xstep = (ray->is_ray_facing_right ? TILE_SIZE : -TILE_SIZE);
 	ystep = TILE_SIZE * tan(ray->angle);
 	ystep *= (!ray->is_ray_facing_down && ystep > 0 ? -1 : 1);
 	ystep *= (ray->is_ray_facing_down && ystep < 0 ? -1 : 1);
-	printf("xstep: %f, ystep: %f\n", xstep, ystep);
+	// printf("xstep: %f, ystep: %f\n", xstep, ystep);
 
 	int nextVerTouchX = x_intercept;
 	int nextVerTouchY = y_intercept;
 
-	if (!ray->is_ray_facing_right)
-		nextVerTouchX--;
+	// if (!ray->is_ray_facing_right)
+	// 	nextVerTouchX--;
 	while (nextVerTouchY >= 0 && nextVerTouchY < WIN_HEIGHT && nextVerTouchX >= 0 && nextVerTouchX < WIN_WIDTH)
 	{
-		if (WallAt(nextVerTouchX, nextVerTouchY))
+		if (WallAt(nextVerTouchX - (!ray->is_ray_facing_right ? 1 : 0), nextVerTouchY))
 		{
 			ray->ver_wall_hit_x = nextVerTouchX;
 			ray->ver_wall_hit_y = nextVerTouchY;
@@ -102,11 +102,11 @@ void	find_horizontal_intersection(t_ray *ray)
 	int nextHorTouchX = x_intercept;
 	int nextHorTouchY = y_intercept;
 
-	if (!ray->is_ray_facing_down)
-		nextHorTouchY--;
+	// if (!ray->is_ray_facing_down)
+	// 	nextHorTouchY--;
 	while (nextHorTouchY >= 0 && nextHorTouchY < WIN_HEIGHT && nextHorTouchX >= 0 && nextHorTouchX < WIN_WIDTH)
 	{
-		if (WallAt(nextHorTouchX, nextHorTouchY))
+		if (WallAt(nextHorTouchX, nextHorTouchY - (!ray->is_ray_facing_down ? 1 : 0)))
 		{
 			ray->hor_wall_hit_x = nextHorTouchX;
 			ray->hor_wall_hit_y = nextHorTouchY;
@@ -126,10 +126,10 @@ void	render_rays(t_data *img)
 	for (int i = 0; i < NUM_RAYS; i++)
 	{
 		plot_line(img,
-					player.x,
-					player.y,
-					rays[i].wall_hit_x,
-					rays[i].wall_hit_y);
+					MINIMAP_SCALE_FACTOR * player.x,
+					MINIMAP_SCALE_FACTOR * player.y,
+					MINIMAP_SCALE_FACTOR * rays[i].wall_hit_x,
+					MINIMAP_SCALE_FACTOR * rays[i].wall_hit_y);
 	}
 	// for (int i = 0; i < NUM_RAYS; i++)
 	// {
@@ -164,15 +164,26 @@ void	render3d(t_data *img)
 	double distanceProjectionPlane;
 	double wallStripHeight;
 
+	(void)img;
 	for (int i = 0; i < NUM_RAYS; i++)
 	{
 		ray = rays[i];
-		distanceProjectionPlane = WIN_WIDTH / 2 / tan(FOV_ANGLE / 2);
-		wallStripHeight = TILE_SIZE / ray.distance * distanceProjectionPlane;
+		distanceProjectionPlane = (WIN_WIDTH / 2) / tan(FOV_ANGLE / 2);
+		wallStripHeight = (TILE_SIZE / ray.distance) * distanceProjectionPlane;
+		wallStripHeight = normalize_wall_height(wallStripHeight);
+		// printf("win_height: %d, projection plane: %f, rayDistance: %f, wallHeight: %f\n", WIN_HEIGHT, distanceProjectionPlane, ray.distance, wallStripHeight);
 		put_rectangle_at(img, i * WALL_STRIP_WIDTH,
 							WIN_HEIGHT / 2 - wallStripHeight / 2,
 							WALL_STRIP_WIDTH,
 							wallStripHeight,
 							0X00FFFFFF);
 	}
+}
+
+int normalize_wall_height(double height)
+{
+	if (height >= WIN_HEIGHT)
+		return (WIN_HEIGHT);
+	else
+		return (int)height;
 }

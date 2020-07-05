@@ -72,41 +72,22 @@ int clear_img(t_data* img)
 	return 1;
 }
 
-// int render_next_frame(void *p)
-// {
-// 	(void)p;
-// 	t_data img = (current_imgnbr == 0 ? img1 : img2);
-// 	current_imgnbr = (current_imgnbr == 0 ? 1 : 0);
-// 	clear_img(&img);
-// 	// render_grid(&img);
-// 	update_player();
-// 	// render_player(&img);
-// 	// plot_line(&img
-// 	// 			, player.x
-// 	// 			, player.y
-// 	// 			, player.x + cos(player.rotation_angle) * 20
-// 	// 			, player.y + sin(player.rotation_angle) * 20);
-// 	update_rays();
-// 	// render_rays(&img);
-// 	render3d(&img);
-// 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-// 	return (1);
-// }
 int render_next_frame(void *p)
 {
 	(void)p;
 	t_data img = (current_imgnbr == 0 ? img1 : img2);
 	current_imgnbr = (current_imgnbr == 0 ? 1 : 0);
 	clear_img(&img);
-	render_grid(&img);
 	update_player();
-	render_player(&img);
-	plot_line(&img
-				, player.x
-				, player.y
-				, player.x + cos(player.rotation_angle) * 20
-				, player.y + sin(player.rotation_angle) * 20);
 	update_rays();
+	// plot_line(&img
+	// 			, player.x
+	// 			, player.y
+	// 			, player.x + cos(player.rotation_angle) * 20
+	// 			, player.y + sin(player.rotation_angle) * 20);
+	render3d(&img);
+	render_player(&img);
+	render_grid(&img);
 	render_rays(&img);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	return (1);

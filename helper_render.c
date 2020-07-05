@@ -68,7 +68,7 @@ void render_grid(t_data *data)
 		for (int j = 0; j < 15; j++)
 		{
 			if (grid[i][j] == 1)
-				put_square_at(data, j * 20, i * 20, 20, 0x0032CD32);
+				put_square_at(data, MINIMAP_SCALE_FACTOR * j * TILE_SIZE, MINIMAP_SCALE_FACTOR * i * TILE_SIZE, MINIMAP_SCALE_FACTOR * TILE_SIZE, 0x0032CD32);
 		}
 	}
 }

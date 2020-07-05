@@ -5,7 +5,7 @@
 #include <math.h>
 #include <limits.h>
 
-#define TILE_SIZE 20
+#define TILE_SIZE 50
 #define MAP_NUM_ROWS 11
 #define MAP_NUM_COLS 15
 #define	WIN_WIDTH	(MAP_NUM_COLS * TILE_SIZE)
@@ -16,8 +16,9 @@
 #define M_PI 3.14159265358979323846
 #define ROTATION_SPEED (4 * (M_PI / 180))
 #define FOV_ANGLE (M_PI / 3)
-#define WALL_STRIP_WIDTH  20
+#define WALL_STRIP_WIDTH  1
 #define NUM_RAYS  (WIN_WIDTH / WALL_STRIP_WIDTH)
+#define MINIMAP_SCALE_FACTOR 0.2
 // #define NUM_RAYS  1
 
 typedef struct s_data
@@ -80,3 +81,4 @@ void find_vertical_intersection(t_ray *ray);
 double distanceBetween(int x0, int y0, int x1, int y1);
 void select_shortest_wall_hit(t_ray *ray);
 void render3d(t_data *img);
+int normalize_wall_height(double height);
