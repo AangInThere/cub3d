@@ -22,8 +22,8 @@ void plot_circle(t_data *img, int xm, int ym, int r, unsigned color)
 
 int update_player()
 {
-	int newx;
-	int newy;
+	double newx;
+	double newy;
 
 	newx = player.x + player.dir_hor * XSPEED;
 	newy = player.y + player.dir_ver * YSPEED;

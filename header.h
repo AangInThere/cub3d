@@ -32,8 +32,8 @@ typedef struct s_data
 
 typedef struct s_player
 {
-	int	x;
-	int y;
+	double	x;
+	double	y;
 	int dir_hor;
 	int dir_ver;
 	int turn_dir;
@@ -42,15 +42,15 @@ typedef struct s_player
 
 typedef struct	s_ray
 {
-	double angle;
-	int		hor_wall_hit_x;
-	int		hor_wall_hit_y;
+	double	angle;
+	double	hor_wall_hit_x;
+	double	hor_wall_hit_y;
 	int		found_hor_wall_hit;
-	int		ver_wall_hit_y;
-	int		ver_wall_hit_x;
+	double	ver_wall_hit_y;
+	double	ver_wall_hit_x;
 	int		found_ver_wall_hit;
-	int		wall_hit_x;
-	int		wall_hit_y;
+	double	wall_hit_x;
+	double	wall_hit_y;
 	double	distance;
 	int		is_ray_facing_down;
 	int		is_ray_facing_right;
@@ -78,7 +78,7 @@ void render_rays(t_data *img);
 double normalize_angle(double angle);
 void find_horizontal_intersection(t_ray *ray);
 void find_vertical_intersection(t_ray *ray);
-double distanceBetween(int x0, int y0, int x1, int y1);
+double distanceBetween(double x0, double y0, double x1, double y1);
 void select_shortest_wall_hit(t_ray *ray);
 void render3d(t_data *img);
-int normalize_wall_height(double height);
+double normalize_wall_height(double height);

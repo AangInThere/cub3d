@@ -43,10 +43,10 @@ void	select_shortest_wall_hit(t_ray *ray)
 
 void find_vertical_intersection(t_ray *ray)
 {
-	int y_intercept, x_intercept;
+	double y_intercept, x_intercept;
 	double ystep, xstep;
 
-	x_intercept = (player.x / TILE_SIZE) * TILE_SIZE;
+	x_intercept = ((int)((player.x) / TILE_SIZE)) * TILE_SIZE;
 	x_intercept += (ray->is_ray_facing_right ? TILE_SIZE : 0);
 
 	y_intercept = player.y + (x_intercept - player.x) * tan(ray->angle);
@@ -61,14 +61,14 @@ void find_vertical_intersection(t_ray *ray)
 	ystep *= (ray->is_ray_facing_down && ystep < 0 ? -1 : 1);
 	// printf("xstep: %f, ystep: %f\n", xstep, ystep);
 
-	int nextVerTouchX = x_intercept;
-	int nextVerTouchY = y_intercept;
+	double nextVerTouchX = x_intercept;
+	double nextVerTouchY = y_intercept;
 
 	// if (!ray->is_ray_facing_right)
 	// 	nextVerTouchX--;
 	while (nextVerTouchY >= 0 && nextVerTouchY < WIN_HEIGHT && nextVerTouchX >= 0 && nextVerTouchX < WIN_WIDTH)
 	{
-		if (WallAt(nextVerTouchX - (!ray->is_ray_facing_right ? 1 : 0), nextVerTouchY))
+		if (WallAt((nextVerTouchX - (!ray->is_ray_facing_right ? 1 : 0)), nextVerTouchY))
 		{
 			ray->ver_wall_hit_x = nextVerTouchX;
 			ray->ver_wall_hit_y = nextVerTouchY;
@@ -85,10 +85,10 @@ void find_vertical_intersection(t_ray *ray)
 
 void	find_horizontal_intersection(t_ray *ray)
 {
-	int y_intercept, x_intercept;
+	double y_intercept, x_intercept;
 	double ystep, xstep;
 
-	y_intercept = (player.y / TILE_SIZE) * TILE_SIZE;
+	y_intercept = ((int)(player.y / TILE_SIZE)) * TILE_SIZE;
 	y_intercept += (ray->is_ray_facing_down ? TILE_SIZE : 0);
 
 	x_intercept = player.x + (y_intercept - player.y) / tan(ray->angle);
@@ -99,8 +99,8 @@ void	find_horizontal_intersection(t_ray *ray)
 	xstep *= (ray->is_ray_facing_right && xstep < 0 ? -1 : 1);
 	xstep *= (!ray->is_ray_facing_right && xstep > 0 ? -1 : 1);
 
-	int nextHorTouchX = x_intercept;
-	int nextHorTouchY = y_intercept;
+	double nextHorTouchX = x_intercept;
+	double nextHorTouchY = y_intercept;
 
 	// if (!ray->is_ray_facing_down)
 	// 	nextHorTouchY--;
@@ -150,7 +150,7 @@ double	normalize_angle(double angle)
 	return (angle);
 }
 
-double distanceBetween(int x0, int y0, int x1, int y1)
+double distanceBetween(double x0, double y0, double x1, double y1)
 {
 	double distance;
 
@@ -163,15 +163,17 @@ void	render3d(t_data *img)
 	t_ray ray;
 	double distanceProjectionPlane;
 	double wallStripHeight;
+	double correcteddWallDistance;
 
 	(void)img;
 	for (int i = 0; i < NUM_RAYS; i++)
 	{
 		ray = rays[i];
 		distanceProjectionPlane = (WIN_WIDTH / 2) / tan(FOV_ANGLE / 2);
-		wallStripHeight = (TILE_SIZE / ray.distance) * distanceProjectionPlane;
+		correcteddWallDistance = ray.distance * cos(ray.angle - player.rotation_angle);
+		wallStripHeight = (TILE_SIZE / correcteddWallDistance) * distanceProjectionPlane;
 		wallStripHeight = normalize_wall_height(wallStripHeight);
-		// printf("win_height: %d, projection plane: %f, rayDistance: %f, wallHeight: %f\n", WIN_HEIGHT, distanceProjectionPlane, ray.distance, wallStripHeight);
+		// printf("win_height: %d, projection plane: %f, rayDistance: %f, wallHeight: %f\n", WIN_HEIGHT, distanceProjectionPlane, correcteddWallDistance, wallStripHeight);
 		put_rectangle_at(img, i * WALL_STRIP_WIDTH,
 							WIN_HEIGHT / 2 - wallStripHeight / 2,
 							WALL_STRIP_WIDTH,
@@ -180,10 +182,10 @@ void	render3d(t_data *img)
 	}
 }
 
-int normalize_wall_height(double height)
+double normalize_wall_height(double height)
 {
 	if (height >= WIN_HEIGHT)
 		return (WIN_HEIGHT);
 	else
-		return (int)height;
+		return height;
 }
