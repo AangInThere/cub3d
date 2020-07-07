@@ -30,6 +30,14 @@ typedef struct s_data
 	int endian;
 } t_data;
 
+typedef struct s_texture
+{
+	t_data	img;
+	int		width;
+	int		height;
+} t_texture;
+
+
 typedef struct s_player
 {
 	double	x;
@@ -52,6 +60,7 @@ typedef struct	s_ray
 	double	wall_hit_x;
 	double	wall_hit_y;
 	double	distance;
+	int		is_vertical_hit;
 	int		is_ray_facing_down;
 	int		is_ray_facing_right;
 }				t_ray;
@@ -59,6 +68,7 @@ typedef struct	s_ray
 extern t_player	player;
 extern int		grid[11][15];
 extern t_ray	rays[NUM_RAYS];
+extern t_texture texture;
 
 int put_square_at(t_data *data, int x, int y, int size, int color);
 void my_mlx_pixel_put(t_data *data, int x, int y, int color);
@@ -82,3 +92,5 @@ double distanceBetween(double x0, double y0, double x1, double y1);
 void select_shortest_wall_hit(t_ray *ray);
 void render3d(t_data *img);
 double normalize_wall_height(double height);
+int find_texture_x(t_ray ray);
+void render_ray(t_data *img, t_ray ray, int ray_x);

@@ -5,6 +5,7 @@ void *mlx_win;
 int current_imgnbr;
 t_data img1;
 t_data img2;
+t_texture texture;
 int grid[11][15] = {
 	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1 },
@@ -90,6 +91,7 @@ int render_next_frame(void *p)
 	render_grid(&img);
 	render_rays(&img);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	// mlx_put_image_to_window(mlx, mlx_win, texture.img.img, 0, 0);
 	return (1);
 }
 
@@ -104,8 +106,6 @@ int main(void)
 {
 
 	mlx = mlx_init();
-	// mlx_do_key_autorepeatoff(mlx);
-	// mlx_do_key_autorepeaton(mlx);
 
 	mlx_win = mlx_new_window(mlx, WIN_WIDTH, WIN_HEIGHT, "Hello world!");
 	img1.img = mlx_new_image(mlx, WIN_WIDTH, WIN_HEIGHT);
@@ -114,6 +114,9 @@ int main(void)
 	img2.img = mlx_new_image(mlx, WIN_WIDTH, WIN_HEIGHT);
 	img2.addr = mlx_get_data_addr(img2.img, &(img2.bits_per_pixel), &(img2.line_length),
 								 &(img2.endian));
+	texture.img.img = mlx_xpm_file_to_image(mlx, "bluestone.xpm", &texture.width, &texture.height);
+	texture.img.addr = mlx_get_data_addr(texture.img.img, &(texture.img.bits_per_pixel), &(texture.img.line_length),
+										 &(texture.img.endian));
 	// render_grid(&img);
 	// mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_hook(mlx_win, 2, 1L << 0, key_win, 0);
