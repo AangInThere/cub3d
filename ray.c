@@ -178,7 +178,7 @@ void	render3d(t_data *img)
 							WIN_HEIGHT / 2 - wallStripHeight / 2,
 							WALL_STRIP_WIDTH,
 							wallStripHeight,
-							0X00FFFFFF);
+							0X00808080);
 	}
 }
 

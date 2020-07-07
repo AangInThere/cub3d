@@ -5,13 +5,13 @@
 #include <math.h>
 #include <limits.h>
 
-#define TILE_SIZE 50
+#define TILE_SIZE 80
 #define MAP_NUM_ROWS 11
 #define MAP_NUM_COLS 15
 #define	WIN_WIDTH	(MAP_NUM_COLS * TILE_SIZE)
 #define	WIN_HEIGHT (MAP_NUM_ROWS * TILE_SIZE)
-#define XSPEED 2
-#define YSPEED 2
+#define XSPEED (TILE_SIZE / 25)
+#define YSPEED XSPEED
 #define PLAYER_SIZE 5
 #define M_PI 3.14159265358979323846
 #define ROTATION_SPEED (4 * (M_PI / 180))
