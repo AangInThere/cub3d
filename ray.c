@@ -158,6 +158,7 @@ void	render3d(t_data *img)
 	t_ray ray;
 	double distanceProjectionPlane;
 	double wallStripHeight;
+	// int wall_bottom;
 	// double step_texture;
 	// double text_pos;
 	// double correcteddWallDistance;
@@ -173,6 +174,20 @@ void	render3d(t_data *img)
 		// text_pos = ((WIN_HEIGHT / 2 - normalize_wall_height(wallStripHeight)) - WIN_HEIGHT / 2 + wallStripHeight / 2) * step_texture;
 		wallStripHeight = normalize_wall_height(wallStripHeight);
 		render_ray(img, rays[i], i);
+		// wall_bottom = WIN_HEIGHT / 2 + wallStripHeight / 2;
+		if (wallStripHeight < WIN_HEIGHT)
+		{
+			put_rectangle_at(img, i * WALL_STRIP_WIDTH,
+							 0,
+							 WALL_STRIP_WIDTH,
+							 WIN_HEIGHT / 2 - wallStripHeight / 2,
+							 0X00add8e6);
+			put_rectangle_at(img, i * WALL_STRIP_WIDTH,
+									WIN_HEIGHT / 2 + wallStripHeight / 2,
+									WALL_STRIP_WIDTH,
+									WIN_HEIGHT / 2  - wallStripHeight / 2,
+									0X00808080);
+		}
 
 		// printf("texture_x: %d, texture_width: %d, ratio: %f", texture_x, texture.width, (double)texture_x / (double)texture.width);
 		// printf("win_height: %d, projection plane: %f, rayDistance: %f, wallHeight: %f\n", WIN_HEIGHT, distanceProjectionPlane, correcteddWallDistance, wallStripHeight);

@@ -27,9 +27,9 @@ int key_win(int key, void *p)
 	if (key == 0xFF1B)
 		exit(0);
 	else if (key == 119)
-		player.dir_ver = -1;
-	else if (key == 115)
 		player.dir_ver = 1;
+	else if (key == 115)
+		player.dir_ver = -1;
 	else if (key == 97)
 		player.dir_hor = -1;
 	else if (key == 100)
@@ -78,7 +78,7 @@ int render_next_frame(void *p)
 	(void)p;
 	t_data img = (current_imgnbr == 0 ? img1 : img2);
 	current_imgnbr = (current_imgnbr == 0 ? 1 : 0);
-	clear_img(&img);
+	// clear_img(&img);
 	update_player();
 	update_rays();
 	// plot_line(&img
@@ -114,13 +114,13 @@ int main(void)
 	img2.img = mlx_new_image(mlx, WIN_WIDTH, WIN_HEIGHT);
 	img2.addr = mlx_get_data_addr(img2.img, &(img2.bits_per_pixel), &(img2.line_length),
 								 &(img2.endian));
-	texture.img.img = mlx_xpm_file_to_image(mlx, "bluestone.xpm", &texture.width, &texture.height);
+	texture.img.img = mlx_xpm_file_to_image(mlx, "eagle.xpm", &texture.width, &texture.height);
 	texture.img.addr = mlx_get_data_addr(texture.img.img, &(texture.img.bits_per_pixel), &(texture.img.line_length),
 										 &(texture.img.endian));
 	// render_grid(&img);
 	// mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_hook(mlx_win, 2, 1L << 0, key_win, 0);
-	// mlx_hook(mlx_win, 3, 1L << 1, key_release_win, 0);
+	mlx_hook(mlx_win, 3, 1L << 1, key_release_win, 0);
 	mlx_hook(mlx_win, 17, 1L << 17, destroy_win, 0);
 	mlx_loop_hook(mlx, render_next_frame, 0);
 

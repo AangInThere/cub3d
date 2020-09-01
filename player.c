@@ -1,6 +1,6 @@
 #include "header.h"
 
-t_player player = {TILE_SIZE * 2, TILE_SIZE * 2, 0, 0, 0, 0.0};
+t_player player = {TILE_SIZE * 2, TILE_SIZE * 2, 0, 0, 0, 0.25 * M_PI};
 
 
 void plot_circle(t_data *img, int xm, int ym, int r, unsigned color)
@@ -24,9 +24,13 @@ int update_player()
 {
 	double newx;
 	double newy;
+	double deltax;
+	double deltay;
 
-	newx = player.x + player.dir_hor * XSPEED;
-	newy = player.y + player.dir_ver * YSPEED;
+	deltax = player.dir_ver * YSPEED * cos(player.rotation_angle) + player.dir_hor * XSPEED * cos(player.rotation_angle + M_PI / 2);
+	deltay = player.dir_ver * YSPEED * sin(player.rotation_angle) + player.dir_hor * XSPEED * sin(player.rotation_angle + M_PI / 2);
+	newx = player.x + deltax;
+	newy = player.y + deltay;
 	if (!(WallAt(newx, newy)))
 	{
 		player.x = newx;
@@ -35,9 +39,9 @@ int update_player()
 	player.rotation_angle += player.turn_dir * ROTATION_SPEED;
 	player.rotation_angle = normalize_angle(player.rotation_angle);
 	// printf("rotation_angle: %f\n", player.rotation_angle);
-	player.dir_hor = 0;
-	player.dir_ver = 0;
-	player.turn_dir = 0;
+	// player.dir_hor = 0;
+	// player.dir_ver = 0;
+	// player.turn_dir = 0;
 	return 1;
 }
 
