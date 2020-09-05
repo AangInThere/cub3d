@@ -1,5 +1,6 @@
 #include "header.h"
 
+
 void *mlx;
 void *mlx_win;
 int current_imgnbr;
@@ -114,7 +115,7 @@ int main(void)
 	img2.img = mlx_new_image(mlx, WIN_WIDTH, WIN_HEIGHT);
 	img2.addr = mlx_get_data_addr(img2.img, &(img2.bits_per_pixel), &(img2.line_length),
 								 &(img2.endian));
-	texture.img.img = mlx_xpm_file_to_image(mlx, "eagle.xpm", &texture.width, &texture.height);
+	texture.img.img = mlx_xpm_file_to_image(mlx, "textures/eagle.xpm", &texture.width, &texture.height);
 	texture.img.addr = mlx_get_data_addr(texture.img.img, &(texture.img.bits_per_pixel), &(texture.img.line_length),
 										 &(texture.img.endian));
 	// render_grid(&img);
