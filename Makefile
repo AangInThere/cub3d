@@ -6,7 +6,7 @@ INC_DIR = include
 CFLAGS=-g -Wall -Wextra -Werror -I $(INC_DIR)
 #CFLAGS= -I$(INC) -O3 -I..
 
-_SRC = myTest.c player.c helper_render.c ray.c
+_SRC = cub3d.c player.c helper_render.c ray.c
 SRC = $(addprefix $(SRC_DIR)/,$(_SRC))
 _HEADER=header.h
 HEADER = $(addprefix $(INC_DIR)/,$(_HEADER))

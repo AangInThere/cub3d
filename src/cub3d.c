@@ -74,9 +74,8 @@ int clear_img(t_data* img)
 	return 1;
 }
 
-int render_next_frame(void *p)
+int render_next_frame(t_mlx *mlx)
 {
-	(void)p;
 	t_data img = (current_imgnbr == 0 ? img1 : img2);
 	current_imgnbr = (current_imgnbr == 0 ? 1 : 0);
 	// clear_img(&img);
@@ -91,7 +90,7 @@ int render_next_frame(void *p)
 	render_player(&img);
 	render_grid(&img);
 	render_rays(&img);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, img.img, 0, 0);
 	// mlx_put_image_to_window(mlx, mlx_win, texture.img.img, 0, 0);
 	return (1);
 }
@@ -105,27 +104,28 @@ int destroy_win(void *p)
 
 int main(void)
 {
+	t_mlx	mlx;
 
-	mlx = mlx_init();
+	mlx.mlx_ptr = mlx_init();
 
-	mlx_win = mlx_new_window(mlx, WIN_WIDTH, WIN_HEIGHT, "Hello world!");
-	img1.img = mlx_new_image(mlx, WIN_WIDTH, WIN_HEIGHT);
+	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "Hello world!");
+	img1.img = mlx_new_image(mlx.mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	img1.addr = mlx_get_data_addr(img1.img, &(img1.bits_per_pixel), &(img1.line_length),
 								 &(img1.endian));
-	img2.img = mlx_new_image(mlx, WIN_WIDTH, WIN_HEIGHT);
+	img2.img = mlx_new_image(mlx.mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	img2.addr = mlx_get_data_addr(img2.img, &(img2.bits_per_pixel), &(img2.line_length),
 								 &(img2.endian));
-	texture.img.img = mlx_xpm_file_to_image(mlx, "textures/eagle.xpm", &texture.width, &texture.height);
+	texture.img.img = mlx_xpm_file_to_image(mlx.mlx_ptr, "textures/eagle.xpm", &texture.width, &texture.height);
 	texture.img.addr = mlx_get_data_addr(texture.img.img, &(texture.img.bits_per_pixel), &(texture.img.line_length),
 										 &(texture.img.endian));
-	// render_grid(&img);
-	// mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_hook(mlx_win, 2, 1L << 0, key_win, 0);
-	mlx_hook(mlx_win, 3, 1L << 1, key_release_win, 0);
-	mlx_hook(mlx_win, 17, 1L << 17, destroy_win, 0);
-	mlx_loop_hook(mlx, render_next_frame, 0);
+	//render_grid(&img);
+	// mlx_put_image_to_window(mlx.mlx_ptr, mlx_win, img.img, 0, 0);
+	mlx_hook(mlx.win_ptr, 2, 1L << 0, key_win, 0);
+	mlx_hook(mlx.win_ptr, 3, 1L << 1, key_release_win, 0);
+	mlx_hook(mlx.win_ptr, 17, 1L << 17, destroy_win, 0);
+	mlx_loop_hook(mlx.mlx_ptr, render_next_frame, &mlx);
 
-	mlx_loop(mlx);
+	mlx_loop(mlx.mlx_ptr);
 }
 
 

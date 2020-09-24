@@ -21,6 +21,13 @@
 #define MINIMAP_SCALE_FACTOR 0.2
 // #define NUM_RAYS  1
 
+typedef struct s_mlx
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+
+} t_mlx;
+
 typedef struct s_data
 {
 	void *img;
