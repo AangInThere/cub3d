@@ -1,25 +1,32 @@
-#include "mlx.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <math.h>
-#include <limits.h>
+#ifndef HEADER_H
+# define HEADER_H
 
-#define TILE_SIZE 80
-#define MAP_NUM_ROWS 11
-#define MAP_NUM_COLS 15
-#define	WIN_WIDTH	(MAP_NUM_COLS * TILE_SIZE)
-#define	WIN_HEIGHT (MAP_NUM_ROWS * TILE_SIZE)
-#define XSPEED ((double)TILE_SIZE / 20.0)
-#define YSPEED XSPEED
-#define PLAYER_SIZE 5
-#define M_PI 3.14159265358979323846
-#define ROTATION_SPEED (4 * (M_PI / 180) / 3.0)
-#define FOV_ANGLE (M_PI / 3)
-#define WALL_STRIP_WIDTH  1
-#define NUM_RAYS  (WIN_WIDTH / WALL_STRIP_WIDTH)
-#define MINIMAP_SCALE_FACTOR 0.2
-// #define NUM_RAYS  1
+# include "mlx.h"
+# include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <math.h>
+# include <limits.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <string.h>
+# include "../libft/libft.h"
+
+# define TILE_SIZE 80
+# define MAP_NUM_ROWS 11
+# define MAP_NUM_COLS 15
+# define	WIN_WIDTH	(MAP_NUM_COLS * TILE_SIZE)
+# define	WIN_HEIGHT (MAP_NUM_ROWS * TILE_SIZE)
+# define XSPEED ((double)TILE_SIZE / 20.0)
+# define YSPEED XSPEED
+# define PLAYER_SIZE 5
+# define M_PI 3.14159265358979323846
+# define ROTATION_SPEED (4 * (M_PI / 180) / 3.0)
+# define FOV_ANGLE (M_PI / 3)
+# define WALL_STRIP_WIDTH  1
+# define NUM_RAYS  (WIN_WIDTH / WALL_STRIP_WIDTH)
+# define MINIMAP_SCALE_FACTOR 0.2
+// # define NUM_RAYS  1
 
 typedef struct s_mlx
 {
@@ -101,3 +108,7 @@ void render3d(t_data *img);
 double normalize_wall_height(double height);
 int find_texture_x(t_ray ray);
 void render_ray(t_data *img, t_ray ray, int ray_x);
+
+int check_file_name(char *filename);
+
+#endif

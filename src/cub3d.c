@@ -1,8 +1,5 @@
 #include "header.h"
 
-
-void *mlx;
-void *mlx_win;
 int current_imgnbr;
 t_data img1;
 t_data img2;
@@ -102,10 +99,20 @@ int destroy_win(void *p)
 	exit(0);
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
 	t_mlx	mlx;
 
+	(void)argc;
+	(void)argv;
+
+	if (argc == 2)
+	{
+		if (check_file_name(argv[1]))
+			printf("Error in filename\n");
+		else
+			printf("Filename is fine\n");
+	}
 	mlx.mlx_ptr = mlx_init();
 
 	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "Hello world!");
