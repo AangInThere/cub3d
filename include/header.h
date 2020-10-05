@@ -110,5 +110,6 @@ int find_texture_x(t_ray ray);
 void render_ray(t_data *img, t_ray ray, int ray_x);
 
 int check_file_name(char *filename);
+int check_formatting_resolution(char *line);
 
 #endif

@@ -22,6 +22,9 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(HEADER)
 	@mkdir -p obj
 	$(CC) $(CFLAGS) -c $< -o $@
 
+sandbox : sandbox.c
+	$(CC) -Wall -Wextra -I include sandbox.c src/parse.c -L. -lmlx -lXext -lX11 -lm -lbsd -Llibft -lft -o sandbox && ./sandbox
+
 info:
 	$(info    VAR is $(SRC))
 
