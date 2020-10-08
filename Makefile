@@ -6,7 +6,7 @@ INC_DIR = include
 CFLAGS=-g -Wall -Wextra -Werror -I $(INC_DIR)
 #CFLAGS= -I$(INC) -O3 -I..
 
-_SRC = cub3d.c player.c helper_render.c ray.c parse.c
+_SRC = cub3d.c player.c helper_render.c ray.c parse.c parse_utils.c
 SRC = $(addprefix $(SRC_DIR)/,$(_SRC))
 _HEADER=header.h
 HEADER = $(addprefix $(INC_DIR)/,$(_HEADER))
@@ -22,8 +22,8 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(HEADER)
 	@mkdir -p obj
 	$(CC) $(CFLAGS) -c $< -o $@
 
-sandbox : sandbox.c
-	$(CC) -Wall -Wextra -I include sandbox.c src/parse.c -L. -lmlx -lXext -lX11 -lm -lbsd -Llibft -lft -o sandbox && ./sandbox
+sandbox : sandbox.c src/parse.c src/parse_utils.c
+	$(CC) -Wall -Wextra -I include sandbox.c src/parse.c src/parse_utils.c -L. -lmlx -lXext -lX11 -lm -lbsd -Llibft -lft -o sandbox && ./sandbox
 
 info:
 	$(info    VAR is $(SRC))

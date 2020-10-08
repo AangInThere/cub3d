@@ -25,8 +25,21 @@
 # define FOV_ANGLE (M_PI / 3)
 # define WALL_STRIP_WIDTH  1
 # define NUM_RAYS  (WIN_WIDTH / WALL_STRIP_WIDTH)
-# define MINIMAP_SCALE_FACTOR 0.2
 // # define NUM_RAYS  1
+# define MINIMAP_SCALE_FACTOR 0.2
+# define TRUE 1
+# define FALSE 0
+# define MINIMUM_WIDTH 200
+# define MINIMUM_HEIGHT 200
+
+typedef int t_bool;
+
+typedef struct s_window
+{
+	int		width;
+	int		height;
+
+} t_window;
 
 typedef struct s_mlx
 {
@@ -111,5 +124,11 @@ void render_ray(t_data *img, t_ray ray, int ray_x);
 
 int check_file_name(char *filename);
 int check_formatting_resolution(char *line);
+int parse_resolution(char *line, t_window *window);
+
+char *delete_leading_spaces(char *line);
+t_bool	is_empty_line(char *line);
+void skip_spaces(char **line);
+void skip_digits(char **line);
 
 #endif

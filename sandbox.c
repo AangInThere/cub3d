@@ -10,6 +10,7 @@ int key_win(int key, void *p)
 	// printf("Key in Win1 : %d\n", key);
 	if (key == 0xFF1B)
 		exit(0);
+	return (0);
 }
 
 int main()
@@ -33,8 +34,22 @@ int main()
 	// 		mlx_pixel_put(mlx_ptr, win_ptr, j, i, 0xFF1B);
 	// }
 	// mlx_loop(mlx_ptr);
+
+	void *mlx_ptr = mlx_init();
 	char *line;
 	int fd = open("test.cub", O_RDONLY);
 	get_next_line(fd, &line);
-	printf("%d\n", check_formatting_resolution(line));
+	t_window window;
+	mlx_get_screen_size(mlx_ptr, &window.width, &window.height);
+	printf("width: %d, height: %d\n", window.width, window.height);
+
+	line = delete_leading_spaces(line);
+	printf("check format: %d\n", check_formatting_resolution(line));
+	if (check_formatting_resolution(line) == 0)
+	{
+		parse_resolution(line, &window);
+		printf("width: %d, height: %d\n", window.width, window.height);
+	}
+
+
 }
