@@ -35,21 +35,25 @@ int main()
 	// }
 	// mlx_loop(mlx_ptr);
 
-	void *mlx_ptr = mlx_init();
+	t_cub	cub;
+	// void *mlx_ptr = mlx_init();
 	char *line;
 	int fd = open("test.cub", O_RDONLY);
 	get_next_line(fd, &line);
-	t_window window;
-	mlx_get_screen_size(mlx_ptr, &window.width, &window.height);
-	printf("width: %d, height: %d\n", window.width, window.height);
+	// t_window window;
+	// mlx_get_screen_size(mlx_ptr, &window.width, &window.height);
+	// printf("width: %d, height: %d\n", window.width, window.height);
 
+	// line = delete_leading_spaces(line);
+	// printf("check format: %d\n", check_formatting_resolution(line));
+	// if (check_formatting_resolution(line) == 0)
+	// {
+	// 	parse_resolution(line, &window);
+	// 	printf("width: %d, height: %d\n", window.width, window.height);
+	// }
+	get_next_line(fd, &line);
 	line = delete_leading_spaces(line);
-	printf("check format: %d\n", check_formatting_resolution(line));
-	if (check_formatting_resolution(line) == 0)
-	{
-		parse_resolution(line, &window);
-		printf("width: %d, height: %d\n", window.width, window.height);
-	}
+	printf("check format: %d\n", check_formatting_texture(line));
 
 
 }

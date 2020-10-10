@@ -1,6 +1,6 @@
 #include "header.h"
 
-void plot_line(t_data *data, int x0, int y0, int x1, int y1)
+void plot_line(t_image *data, int x0, int y0, int x1, int y1)
 {
 	int dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
 	int dy = -abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
@@ -25,7 +25,7 @@ void plot_line(t_data *data, int x0, int y0, int x1, int y1)
 	}
 }
 
-int put_square_at(t_data *data, int x, int y, int size, int color)
+int put_square_at(t_image *data, int x, int y, int size, int color)
 {
 	int a;
 	int b;
@@ -43,7 +43,7 @@ int put_square_at(t_data *data, int x, int y, int size, int color)
 	return (1);
 }
 
-int put_rectangle_at(t_data *data, int x, int y, int width, int height, int color)
+int put_rectangle_at(t_image *data, int x, int y, int width, int height, int color)
 {
 	int a;
 	int b;
@@ -61,7 +61,7 @@ int put_rectangle_at(t_data *data, int x, int y, int width, int height, int colo
 	return (1);
 }
 
-void render_grid(t_data *data)
+void render_grid(t_image *data)
 {
 	for (int i = 0; i < 11; i++)
 	{
@@ -73,7 +73,7 @@ void render_grid(t_data *data)
 	}
 }
 
-void my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void my_mlx_pixel_put(t_image *data, int x, int y, int color)
 {
 	char *dst;
 

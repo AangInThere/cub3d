@@ -116,7 +116,7 @@ void	find_horizontal_intersection(t_ray *ray)
 	}
 }
 
-void	render_rays(t_data *img)
+void	render_rays(t_image *img)
 {
 	for (int i = 0; i < NUM_RAYS; i++)
 	{
@@ -153,7 +153,7 @@ double distanceBetween(double x0, double y0, double x1, double y1)
 	return distance;
 }
 
-void	render3d(t_data *img)
+void	render3d(t_image *img)
 {
 	t_ray ray;
 	double distanceProjectionPlane;
@@ -199,7 +199,7 @@ void	render3d(t_data *img)
 	}
 }
 
-void render_ray(t_data *img, t_ray ray, int ray_x)
+void render_ray(t_image *img, t_ray ray, int ray_x)
 {
 	unsigned int color;
 	int texture_y;

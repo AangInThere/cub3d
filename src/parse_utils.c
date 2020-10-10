@@ -46,3 +46,13 @@ void skip_digits(char **line)
 	while (ft_isdigit(**line))
 		((*line)++);
 }
+
+int	check_file_name(char *filename)
+{
+	int	len;
+
+	len = ft_strlen(filename);
+	if (len < 4 || ft_strncmp(filename + len - 4, ".cub", 4))
+		return (1);
+	return (0);
+}

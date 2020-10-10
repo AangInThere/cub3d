@@ -1,8 +1,8 @@
 #include "header.h"
 
 int current_imgnbr;
-t_data img1;
-t_data img2;
+t_image img1;
+t_image img2;
 t_texture texture;
 int grid[11][15] = {
 	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -59,7 +59,7 @@ int key_release_win(int key, void *p)
 
 }
 
-int clear_img(t_data* img)
+int clear_img(t_image* img)
 {
 	for (int i = 0; i < WIN_WIDTH; i++)
 	{
@@ -73,7 +73,7 @@ int clear_img(t_data* img)
 
 int render_next_frame(t_mlx *mlx)
 {
-	t_data img = (current_imgnbr == 0 ? img1 : img2);
+	t_image img = (current_imgnbr == 0 ? img1 : img2);
 	current_imgnbr = (current_imgnbr == 0 ? 1 : 0);
 	// clear_img(&img);
 	update_player();
@@ -194,7 +194,7 @@ int main(int argc, char **argv)
 // 		exit(1);
 // 	}
 // 	mlx_key_hook(win,key_win,0);
-// 	data = mlx_get_data_addr(im, &bpp, &sl, &endian);
+// 	data = mlx_get_image_addr(im, &bpp, &sl, &endian);
 //   	printf("OK (bpp1: %d, sizeline1: %d endian: %d)\n",bpp,sl,endian);
 // 	color_map(mlx, data, bpp, sl, WIN_SX, WIN_HEIGHT, endian, 1);
 // 	printf(" => Put Image ...\n");

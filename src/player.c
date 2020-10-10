@@ -3,7 +3,7 @@
 t_player player = {TILE_SIZE * 2, TILE_SIZE * 2, 0, 0, 0, 0.25 * M_PI};
 
 
-void plot_circle(t_data *img, int xm, int ym, int r, unsigned color)
+void plot_circle(t_image *img, int xm, int ym, int r, unsigned color)
 {
 	int x = -r, y = 0, err = 2 - 2 * r; /* II. Quadrant */
 	do
@@ -45,7 +45,7 @@ int update_player()
 	return 1;
 }
 
-int render_player(t_data* img)
+int render_player(t_image* img)
 {
 	// put_square_at(img, player.x - PLAYER_SIZE / 2, player.y - PLAYER_SIZE / 2, PLAYER_SIZE, 0X00FF0000);
 	plot_circle(img, MINIMAP_SCALE_FACTOR * player.x , MINIMAP_SCALE_FACTOR * player.y, PLAYER_SIZE, 0X00FF0000);

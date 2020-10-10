@@ -6,22 +6,11 @@
 /*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 16:10:29 by aclose            #+#    #+#             */
-/*   Updated: 2020/10/08 20:45:45 by aclose           ###   ########.fr       */
+/*   Updated: 2020/10/09 14:06:06 by aclose           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-
-int	check_file_name(char *filename)
-{
-	int	len;
-
-	len = ft_strlen(filename);
-	if (len < 4 || ft_strncmp(filename + len - 4, ".cub", 4))
-		return (1);
-	return (0);
-}
-
 
 
 int parse_resolution(char *line, t_window *window)

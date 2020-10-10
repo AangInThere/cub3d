@@ -36,6 +36,7 @@ typedef int t_bool;
 
 typedef struct s_window
 {
+	void	*win_ptr;
 	int		width;
 	int		height;
 
@@ -45,21 +46,20 @@ typedef struct s_mlx
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
-
 } t_mlx;
 
-typedef struct s_data
+typedef struct s_image
 {
 	void *img;
 	char *addr;
 	int bits_per_pixel;
 	int line_length;
 	int endian;
-} t_data;
+} t_image;
 
 typedef struct s_texture
 {
-	t_data	img;
+	t_image	img;
 	int		width;
 	int		height;
 } t_texture;
@@ -92,37 +92,42 @@ typedef struct	s_ray
 	int		is_ray_facing_right;
 }				t_ray;
 
+typedef	struct s_cub
+{
+	void		*mlx_ptr;
+	t_window	window;
+}				t_cub;
+
 extern t_player	player;
 extern int		grid[11][15];
 extern t_ray	rays[NUM_RAYS];
 extern t_texture texture;
 
-int put_square_at(t_data *data, int x, int y, int size, int color);
-void my_mlx_pixel_put(t_data *data, int x, int y, int color);
-int put_rectangle_at(t_data *data, int x, int y, int width, int height, int color);
+int put_square_at(t_image *data, int x, int y, int size, int color);
+void my_mlx_pixel_put(t_image *data, int x, int y, int color);
+int put_rectangle_at(t_image *data, int x, int y, int width, int height, int color);
 
 int WallAt(int x, int y);
 
 int update_player();
-int render_player(t_data *img);
+int render_player(t_image *img);
 int reset_player(int keycode, void *param);
 
-void plot_line(t_data *data, int x0, int y0, int x1, int y1);
-void render_grid(t_data *data);
+void plot_line(t_image *data, int x0, int y0, int x1, int y1);
+void render_grid(t_image *data);
 
 void update_rays(void);
-void render_rays(t_data *img);
+void render_rays(t_image *img);
 double normalize_angle(double angle);
 void find_horizontal_intersection(t_ray *ray);
 void find_vertical_intersection(t_ray *ray);
 double distanceBetween(double x0, double y0, double x1, double y1);
 void select_shortest_wall_hit(t_ray *ray);
-void render3d(t_data *img);
+void render3d(t_image *img);
 double normalize_wall_height(double height);
 int find_texture_x(t_ray ray);
-void render_ray(t_data *img, t_ray ray, int ray_x);
+void render_ray(t_image *img, t_ray ray, int ray_x);
 
-int check_file_name(char *filename);
 int check_formatting_resolution(char *line);
 int parse_resolution(char *line, t_window *window);
 
@@ -130,5 +135,8 @@ char *delete_leading_spaces(char *line);
 t_bool	is_empty_line(char *line);
 void skip_spaces(char **line);
 void skip_digits(char **line);
+int check_file_name(char *filename);
+
+int check_formatting_texture(char *line);
 
 #endif
