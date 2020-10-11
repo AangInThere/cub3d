@@ -34,6 +34,17 @@
 
 typedef int t_bool;
 
+typedef union
+{
+	unsigned int hexcode;
+	struct
+	{
+		unsigned char r;
+		unsigned char g;
+		unsigned char b;
+	} rgb;
+} t_color;
+
 typedef struct s_window
 {
 	void	*win_ptr;
@@ -59,9 +70,10 @@ typedef struct s_image
 
 typedef struct s_texture
 {
-	t_image	img;
-	int		width;
+	char	*filepath;
 	int		height;
+	int		width;
+	t_image	img;
 } t_texture;
 
 
@@ -96,7 +108,17 @@ typedef	struct s_cub
 {
 	void		*mlx_ptr;
 	t_window	window;
+	t_texture	textures[5];
 }				t_cub;
+
+enum e_textures
+{
+	NO,
+	SO,
+	WE,
+	EA,
+	S
+};
 
 extern t_player	player;
 extern int		grid[11][15];
@@ -129,7 +151,8 @@ int find_texture_x(t_ray ray);
 void render_ray(t_image *img, t_ray ray, int ray_x);
 
 int check_formatting_resolution(char *line);
-int parse_resolution(char *line, t_window *window);
+int parse_resolution(char *line, t_cub *cub);
+
 
 char *delete_leading_spaces(char *line);
 t_bool	is_empty_line(char *line);
@@ -138,5 +161,9 @@ void skip_digits(char **line);
 int check_file_name(char *filename);
 
 int check_formatting_texture(char *line);
+int parse_texture(char *line, t_cub *cub);
+
+int	check_formatting_color(char *line);
+int check_formatting_color_number(char **line);
 
 #endif

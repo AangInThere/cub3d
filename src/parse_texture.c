@@ -1,14 +1,26 @@
 #include "header.h"
 
-static char *identifier_textures[] = {"NO", "SO", "WE", "EA", "S"};
+static char *g_identifier_textures[] = {"NO", "SO", "WE", "EA", "S"};
 
-// int	parse_texture(char *line, t_texture *texture, void *mlx_ptr)
-// {
+int	parse_texture(char *line, t_cub *cub)
+{
+	int	i;
 
-// 	texture->img.img = mlx_xpm_file_to_image(mlx_ptr, "textures/eagle.xpm", &texture->width, &texture->height);
-// 	texture->img.addr = mlx_get_data_addr(texture->img.img, &(texture->img.bits_per_pixel), &(texture->img.line_length),
-// 										 &(texture->img.endian));
-// }
+	i = 0;
+	while (i < 5)
+	{
+		if (ft_strncmp(line, g_identifier_textures[i], ft_strlen(g_identifier_textures[i])) == 0)
+		{
+			line += ft_strlen(g_identifier_textures[i]);
+			skip_spaces(&line);
+			if (!(cub->textures[i].filepath = ft_strdup(line)))
+				return (-1);
+			break;
+		}
+		i++;
+	}
+	return (0);
+}
 
 int	check_formatting_texture(char *line)
 {
@@ -19,10 +31,10 @@ int	check_formatting_texture(char *line)
 	has_a_match = FALSE;
 	while (i < 5)
 	{
-		if (ft_strncmp(line, identifier_textures[i], ft_strlen(identifier_textures[i])) == 0)
+		if (ft_strncmp(line, g_identifier_textures[i], ft_strlen(g_identifier_textures[i])) == 0)
 		{
 			has_a_match = TRUE;
-			line += ft_strlen(identifier_textures[i]);
+			line += ft_strlen(g_identifier_textures[i]);
 			break;
 		}
 		i++;
@@ -32,8 +44,5 @@ int	check_formatting_texture(char *line)
 	skip_spaces(&line);
 	if (*line == '\0')
 		return (-2);
-	while (*line != ' ' && *line)
-		line++;
-	skip_spaces(&line);
-	return (*line == '\0' ? 0 : -3);
+	return (0);
 }

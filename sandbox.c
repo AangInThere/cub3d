@@ -35,25 +35,42 @@ int main()
 	// }
 	// mlx_loop(mlx_ptr);
 
+	// t_color color;
+	// color.hexcode = 0X00FF00;
+	// printf("%hhu, %hhu, %hhu; %u\n", color.rgb.r, color.rgb.g, color.rgb.b, color.hexcode);
+	// color.rgb.b = 200;
+	// printf("%hhu, %hhu, %hhu; %u\n", color.rgb.r, color.rgb.g, color.rgb.b, color.hexcode);
+
 	t_cub	cub;
-	// void *mlx_ptr = mlx_init();
+	cub.mlx_ptr = mlx_init();
 	char *line;
 	int fd = open("test.cub", O_RDONLY);
-	get_next_line(fd, &line);
-	// t_window window;
-	// mlx_get_screen_size(mlx_ptr, &window.width, &window.height);
-	// printf("width: %d, height: %d\n", window.width, window.height);
+	// get_next_line(fd, &line);
+	mlx_get_screen_size(cub.mlx_ptr, &cub.window.width, &cub.window.height);
+	printf("width: %d, height: %d\n", cub.window.width, cub.window.height);
 
 	// line = delete_leading_spaces(line);
 	// printf("check format: %d\n", check_formatting_resolution(line));
 	// if (check_formatting_resolution(line) == 0)
 	// {
-	// 	parse_resolution(line, &window);
-	// 	printf("width: %d, height: %d\n", window.width, window.height);
+	// 	parse_resolution(line, &cub);
+	// 	printf("width: %d, height: %d\n", cub.window.width, cub.window.height);
+	// }
+	// get_next_line(fd, &line);
+	// line = delete_leading_spaces(line);
+	// printf("check format: %d\n", check_formatting_texture(line));
+	// if (check_formatting_texture(line) == 0)
+	// {
+	// 	parse_texture(line, &cub);
+	// 	printf("filepath: %s|\n", cub.textures[S].filepath);
 	// }
 	get_next_line(fd, &line);
 	line = delete_leading_spaces(line);
-	printf("check format: %d\n", check_formatting_texture(line));
-
+	printf("check color format: %d\n", check_formatting_color(line));
+	// if (check_formatting_color(line) == 0)
+	// {
+	// 	parse_texture(line, &cub);
+	// 	printf("filepath: %s|\n", cub.textures[S].filepath);
+	// }
 
 }

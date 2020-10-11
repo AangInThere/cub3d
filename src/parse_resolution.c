@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   parse_resolution.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 16:10:29 by aclose            #+#    #+#             */
-/*   Updated: 2020/10/09 14:06:06 by aclose           ###   ########.fr       */
+/*   Updated: 2020/10/10 15:37:39 by aclose           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
 
-int parse_resolution(char *line, t_window *window)
+int parse_resolution(char *line, t_cub *cub)
 {
+	t_window	*window;
 	int	asked_height;
 	int	asked_width;
 
+	window = &(cub->window);
 	while (!ft_isdigit(*line))
 		line++;
 	asked_width = ft_atoi(line);
