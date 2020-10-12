@@ -109,6 +109,9 @@ typedef	struct s_cub
 	void		*mlx_ptr;
 	t_window	window;
 	t_texture	textures[5];
+	t_color		colors[2];
+	unsigned	already_parsed;
+	unsigned	error_code;
 }				t_cub;
 
 enum e_textures
@@ -118,6 +121,12 @@ enum e_textures
 	WE,
 	EA,
 	S
+};
+
+enum e_colors
+{
+	FLOOR,
+	CEILING
 };
 
 extern t_player	player;
@@ -163,7 +172,11 @@ int check_file_name(char *filename);
 int check_formatting_texture(char *line);
 int parse_texture(char *line, t_cub *cub);
 
+
+int	parse_color(char *line, t_cub *cub);
+int	parse_color_numbers(char *line, t_color *color);
 int	check_formatting_color(char *line);
 int check_formatting_color_number(char **line);
+void skip_until_next_number(char **line);
 
 #endif
