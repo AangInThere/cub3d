@@ -6,7 +6,7 @@
 /*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 16:10:29 by aclose            #+#    #+#             */
-/*   Updated: 2020/10/10 15:37:39 by aclose           ###   ########.fr       */
+/*   Updated: 2020/10/13 01:16:32 by aclose           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int parse_resolution(char *line, t_cub *cub)
 		return (-1);
 	window->width = (asked_width > window->width ? window->width : asked_width);
 	window->height = (asked_height > window->height ? window->height : asked_height);
-	return (1);
+	return (0);
 }
 
 int	check_formatting_resolution(char *line)

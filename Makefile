@@ -7,7 +7,7 @@ CFLAGS=-g -Wall -Wextra -Werror -I $(INC_DIR)
 #CFLAGS= -I$(INC) -O3 -I..
 
 _SRC = cub3d.c player.c helper_render.c ray.c parse_resolution.c parse_utils.c \
-		parse_texture.c parse_color.c
+		parse_texture.c parse_color.c parse_premap.c
 SRC = $(addprefix $(SRC_DIR)/,$(_SRC))
 _HEADER=header.h
 HEADER = $(addprefix $(INC_DIR)/,$(_HEADER))
@@ -23,7 +23,7 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(HEADER)
 	@mkdir -p obj
 	$(CC) $(CFLAGS) -c $< -o $@
 
-_SANDBOX_SRC = parse_resolution.c parse_utils.c parse_texture.c parse_color.c
+_SANDBOX_SRC = parse_premap.c parse_resolution.c parse_utils.c parse_texture.c parse_color.c
 SANDBOX_SRC = $(addprefix $(SRC_DIR)/,$(_SANDBOX_SRC))
 
 sandbox : sandbox.c $(SANDBOX_SRC) test.cub

@@ -42,6 +42,7 @@ int main()
 	// printf("%hhu, %hhu, %hhu; %u\n", color.rgb.r, color.rgb.g, color.rgb.b, color.hexcode);
 
 	t_cub	cub;
+	ft_bzero(&cub, sizeof(cub));
 	cub.mlx_ptr = mlx_init();
 	char *line;
 	int fd = open("test.cub", O_RDONLY);
@@ -64,14 +65,15 @@ int main()
 	// 	parse_texture(line, &cub);
 	// 	printf("filepath: %s|\n", cub.textures[S].filepath);
 	// }
-	get_next_line(fd, &line);
-	line = delete_leading_spaces(line);
-	printf("check color format: %d\n", check_formatting_color(line));
-	if (check_formatting_color(line) == 0)
-	{
-		parse_color(line, &cub);
-		t_color color = cub.colors[CEILING];
-		printf("%hhu, %hhu, %hhu; %u\n", color.rgb.r, color.rgb.g, color.rgb.b, color.hexcode);
-	}
+	// get_next_line(fd, &line);
+	// line = delete_leading_spaces(line);
+	// printf("check color format: %d\n", check_formatting_color(line));
+	// if (check_formatting_color(line) == 0)
+	// {
+	// 	parse_color(line, &cub);
+	// 	t_color color = cub.colors[CEILING];
+	// 	printf("%hhu, %hhu, %hhu; %u\n", color.rgb.r, color.rgb.g, color.rgb.b, color.hexcode);
+	// }
+	parse_premap(fd, &cub);
 
 }

@@ -114,6 +114,14 @@ typedef	struct s_cub
 	unsigned	error_code;
 }				t_cub;
 
+typedef struct s_parser
+{
+	char *identifier;
+	int (*parsing_function)(char *, t_cub *);
+	int (*format_checking_function)(char *);
+	unsigned parsing_code;
+} t_parser;
+
 enum e_textures
 {
 	NO,
@@ -121,6 +129,18 @@ enum e_textures
 	WE,
 	EA,
 	S
+};
+
+enum e_parsing_code
+{
+	NORTH_TEXTURE = 1,
+	SOUTH_TEXTURE = 1 << 2,
+	WEST_TEXTURE = 1 << 3,
+	EAST_TEXTURE = 1 << 4,
+	SPRITE_TEXTURE = 1 << 5,
+	RESOLUTION = 1 << 6,
+	FLOOR_COLOR = 1 << 7,
+	CEILING_COLOR = 1 << 7
 };
 
 enum e_colors
@@ -178,5 +198,8 @@ int	parse_color_numbers(char *line, t_color *color);
 int	check_formatting_color(char *line);
 int check_formatting_color_number(char **line);
 void skip_until_next_number(char **line);
+
+int parse_one_line(char *line, t_cub *cub);
+int parse_premap(int fd, t_cub *cub);
 
 #endif
