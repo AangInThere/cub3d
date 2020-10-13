@@ -29,9 +29,11 @@ int	parse_premap(int fd, t_cub *cub)
 			}
 		}
 		free(line);
+		if (each_element_of_premap_is_parsed(cub->already_parsed))
+			return (0);
 		gnl_ret = get_next_line(fd, &line);
 	}
-	return (0);
+	return (2);
 }
 
 int	parse_one_line(char *line, t_cub *cub)
@@ -60,5 +62,19 @@ int	parse_one_line(char *line, t_cub *cub)
 		return (4);
 	cub->already_parsed |= g_parser[i].parsing_code;
 	printf("Just succesfully parsed: %s\n", g_parser[i].identifier); //TO dELETE;
+	return (0);
+}
+
+int each_element_of_premap_is_parsed(unsigned already_parsed)
+{
+	unsigned	everything_is_parsed;
+	int i;
+
+	everything_is_parsed = 0;
+	i = 0;
+	while (i < 8)
+		everything_is_parsed |= g_parser[i++].parsing_code;
+	if (already_parsed == everything_is_parsed)
+		return (1);
 	return (0);
 }

@@ -104,6 +104,13 @@ typedef struct	s_ray
 	int		is_ray_facing_right;
 }				t_ray;
 
+typedef struct s_map
+{
+	char **rows;
+	int	height;
+	int malloced_height;
+}	t_map;
+
 typedef	struct s_cub
 {
 	void		*mlx_ptr;
@@ -112,6 +119,8 @@ typedef	struct s_cub
 	t_color		colors[2];
 	unsigned	already_parsed;
 	unsigned	error_code;
+	t_player	player;
+	t_map		map;
 }				t_cub;
 
 typedef struct s_parser
@@ -134,12 +143,12 @@ enum e_textures
 enum e_parsing_code
 {
 	NORTH_TEXTURE = 1,
-	SOUTH_TEXTURE = 1 << 2,
-	WEST_TEXTURE = 1 << 3,
-	EAST_TEXTURE = 1 << 4,
-	SPRITE_TEXTURE = 1 << 5,
-	RESOLUTION = 1 << 6,
-	FLOOR_COLOR = 1 << 7,
+	SOUTH_TEXTURE = 1 << 1,
+	WEST_TEXTURE = 1 << 2,
+	EAST_TEXTURE = 1 << 3,
+	SPRITE_TEXTURE = 1 << 4,
+	RESOLUTION = 1 << 5,
+	FLOOR_COLOR = 1 << 6,
 	CEILING_COLOR = 1 << 7
 };
 
@@ -147,6 +156,18 @@ enum e_colors
 {
 	FLOOR,
 	CEILING
+};
+
+enum e_cell
+{
+	SPACE = ' ',
+	EMPTY = '0',
+	WALL = '1',
+	SPRITE = '2',
+	NORTH = 'N',
+	SOUTH = 'S',
+	EAST = 'E',
+	WEST = 'W'
 };
 
 extern t_player	player;
@@ -201,5 +222,10 @@ void skip_until_next_number(char **line);
 
 int parse_one_line(char *line, t_cub *cub);
 int parse_premap(int fd, t_cub *cub);
+int each_element_of_premap_is_parsed(unsigned already_parsed);
+
+int parse_map(int fd, t_cub *cub);
+int get_map_from_file(int fd, t_map *map);
+char **realloc_map(t_map *map);
 
 #endif

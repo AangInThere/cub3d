@@ -74,6 +74,8 @@ int main()
 	// 	t_color color = cub.colors[CEILING];
 	// 	printf("%hhu, %hhu, %hhu; %u\n", color.rgb.r, color.rgb.g, color.rgb.b, color.hexcode);
 	// }
-	parse_premap(fd, &cub);
-
+	printf("return of parse premap: %d\n", parse_premap(fd, &cub));
+	get_map_from_file(fd, &(cub.map));
+	for (int i = 0; i < cub.map.height; i++)
+		printf("%s\n", cub.map.rows[i]);
 }
