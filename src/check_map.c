@@ -86,7 +86,7 @@ t_bool is_inside_map(t_map *map, int x, int y)
 {
 	if (y < 0 || y >= map->height)
 		return (FALSE);
-	if (x < 0 || x >= ft_strlen(map->rows[y]))
+	if (x < 0 || x >= (int)ft_strlen(map->rows[y]))
 		return (FALSE);
 	return (TRUE);
 }

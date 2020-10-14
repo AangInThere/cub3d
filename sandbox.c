@@ -13,7 +13,7 @@ int key_win(int key, void *p)
 	return (0);
 }
 
-int main()
+int main(int argc, char **argv)
 {
 	// int fd = open("fsdaf.txt", O_RDONLY);
 	// if (fd == -1)
@@ -45,11 +45,12 @@ int main()
 	ft_bzero(&cub, sizeof(cub));
 	cub.mlx_ptr = mlx_init();
 	// char *line;
-	int fd = open("test.cub", O_RDONLY);
+	// int fd = open("test.cub", O_RDONLY);
 	// get_next_line(fd, &line);
 	mlx_get_screen_size(cub.mlx_ptr, &cub.window.width, &cub.window.height);
-	printf("width: %d, height: %d\n", cub.window.width, cub.window.height);
-
+	// printf("width: %d, height: %d\n", cub.window.width, cub.window.height);
+	(void)argc;
+	parse(&cub, argv[1]);
 	// line = delete_leading_spaces(line);
 	// printf("check format: %d\n", check_formatting_resolution(line));
 	// if (check_formatting_resolution(line) == 0)
@@ -74,11 +75,11 @@ int main()
 	// 	t_color color = cub.colors[CEILING];
 	// 	printf("%hhu, %hhu, %hhu; %u\n", color.rgb.r, color.rgb.g, color.rgb.b, color.hexcode);
 	// }
-	printf("return of parse premap: %d\n", parse_premap(fd, &cub));
-	get_map_from_file(fd, &(cub.map));
-	printf("malloced: %d, actual: %d\n", cub.map.malloced_height, cub.map.height);
-	check_map(&cub.map);
-	for (int i = 0; i < cub.map.height; i++)
-		printf("%s\n", cub.map.rows[i]);
-	printf("check map: %d\n", check_characters_and_player_in_map(&cub.map));
+	// printf("return of parse premap: %d\n", parse_premap(fd, &cub));
+	// get_map_from_file(fd, &(cub.map));
+	// printf("malloced: %d, actual: %d\n", cub.map.malloced_height, cub.map.height);
+	// check_map(&cub.map);
+	// for (int i = 0; i < cub.map.height; i++)
+	// 	printf("%s\n", cub.map.rows[i]);
+	// printf("check map: %d\n", check_characters_and_player_in_map(&cub.map));
 }

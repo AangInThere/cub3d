@@ -23,7 +23,7 @@ int	parse_premap(int fd, t_cub *cub)
 		{
 			if ((parse_one_line_ret = parse_one_line(line, cub)) != 0)
 			{
-				printf("parse_one_line return value when failed (%s): %d\n", line, parse_one_line_ret);
+				// printf("parse_one_line return value when failed (%s): %d\n", line, parse_one_line_ret);
 				free(line);
 				return (1);
 			}
@@ -61,7 +61,7 @@ int	parse_one_line(char *line, t_cub *cub)
 	if (g_parser[i].parsing_function(line, cub) != 0)
 		return (4);
 	cub->already_parsed |= g_parser[i].parsing_code;
-	printf("Just succesfully parsed: %s\n", g_parser[i].identifier); //TO dELETE;
+	//printf("Just succesfully parsed: %s\n", g_parser[i].identifier); //TO dELETE;
 	return (0);
 }
 

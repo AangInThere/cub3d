@@ -1,11 +1,11 @@
 R 1080 720
-NO ./wolftex/greystone.png
-SO ./wolftex/redbrick.png
-EA ./wolftex/wood.png
+NO ./textures/eagle.xpm
+SO ./textures/eagle.xpm
+EA ./textures/eagle.xpm
 
 
-WE ./wolftex/wood.png
-S ./wolftex/barrel.png
+WE ./textures/eagle.xpm
+S ./textures/eagle.xpm
 C 255,200,160
 
 
@@ -24,5 +24,6 @@ F 122,122,122
 11000001110101011111011110N0111
 11110111 1110101 101111010001
 11111111 1111111 111111111111
+
 
 

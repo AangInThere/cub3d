@@ -218,9 +218,9 @@ int check_file_name(char *filename);
 
 int check_formatting_texture(char *line);
 int parse_texture(char *line, t_cub *cub);
+int load_textures(t_cub *cub);
 
-
-int	parse_color(char *line, t_cub *cub);
+	int parse_color(char *line, t_cub *cub);
 int	parse_color_numbers(char *line, t_color *color);
 int	check_formatting_color(char *line);
 int check_formatting_color_number(char **line);
@@ -238,5 +238,8 @@ int check_map(t_map *map);
 int check_characters_and_player_in_map(t_map *map);
 t_bool	is_an_edge(t_map *map, int x, int y);
 t_bool is_inside_map(t_map *map, int x, int y);
+
+int parse(t_cub *cub, char *filename);
+void	print_error(char *error_msg);
 
 #endif

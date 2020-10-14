@@ -3,7 +3,10 @@
 
 int parse_map(int fd, t_cub *cub)
 {
-	return 0;
+	get_map_from_file(fd, &cub->map);
+	if (check_map(&cub->map) != 0)
+		return (1);
+	return (0);
 }
 
 int get_map_from_file(int fd, t_map *map)
@@ -25,7 +28,7 @@ int get_map_from_file(int fd, t_map *map)
 		map->rows[map->height] = line;
 		map->height++;
 	}
-	return 0;
+	return (0);
 }
 
 char **realloc_map(t_map *map)

@@ -46,3 +46,19 @@ int	check_formatting_texture(char *line)
 		return (-2);
 	return (0);
 }
+
+int	load_textures(t_cub *cub)
+{
+	int	i;
+	t_texture	*current_texture;
+
+	i = 0;
+	while (i < 5)
+	{
+		current_texture = &cub->textures[i];
+		if ((current_texture->img.img = mlx_xpm_file_to_image(cub->mlx_ptr, current_texture->filepath, &current_texture->width, &current_texture->height)) == NULL)
+			return (i + 1);
+		i++;
+	}
+	return (0);
+}
