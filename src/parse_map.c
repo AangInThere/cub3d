@@ -1,5 +1,4 @@
 #include "header.h"
-
 #define INITIAL_HEIGHT 8
 
 int parse_map(int fd, t_cub *cub)

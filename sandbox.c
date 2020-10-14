@@ -44,7 +44,7 @@ int main()
 	t_cub	cub;
 	ft_bzero(&cub, sizeof(cub));
 	cub.mlx_ptr = mlx_init();
-	char *line;
+	// char *line;
 	int fd = open("test.cub", O_RDONLY);
 	// get_next_line(fd, &line);
 	mlx_get_screen_size(cub.mlx_ptr, &cub.window.width, &cub.window.height);
@@ -76,6 +76,9 @@ int main()
 	// }
 	printf("return of parse premap: %d\n", parse_premap(fd, &cub));
 	get_map_from_file(fd, &(cub.map));
+	printf("malloced: %d, actual: %d\n", cub.map.malloced_height, cub.map.height);
+	check_map(&cub.map);
 	for (int i = 0; i < cub.map.height; i++)
 		printf("%s\n", cub.map.rows[i]);
+	printf("check map: %d\n", check_characters_and_player_in_map(&cub.map));
 }

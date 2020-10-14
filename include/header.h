@@ -131,6 +131,12 @@ typedef struct s_parser
 	unsigned parsing_code;
 } t_parser;
 
+typedef struct s_direction
+{
+	int dx;
+	int dy;
+}	t_direction;
+
 enum e_textures
 {
 	NO,
@@ -227,5 +233,10 @@ int each_element_of_premap_is_parsed(unsigned already_parsed);
 int parse_map(int fd, t_cub *cub);
 int get_map_from_file(int fd, t_map *map);
 char **realloc_map(t_map *map);
+
+int check_map(t_map *map);
+int check_characters_and_player_in_map(t_map *map);
+t_bool	is_an_edge(t_map *map, int x, int y);
+t_bool is_inside_map(t_map *map, int x, int y);
 
 #endif
