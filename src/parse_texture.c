@@ -13,8 +13,9 @@ int	parse_texture(char *line, t_cub *cub)
 		{
 			line += ft_strlen(g_identifier_textures[i]);
 			skip_spaces(&line);
-			if (!(cub->textures[i].filepath = ft_strdup(line)))
-				return (-1);
+			if (!(cub->textures[i].filepath = ft_strtrim(line, " ")))
+				return (1);
+			// if there is an error it should free the filepath malloced;
 			break;
 		}
 		i++;
@@ -56,8 +57,13 @@ int	load_textures(t_cub *cub)
 	while (i < 5)
 	{
 		current_texture = &cub->textures[i];
-		if ((current_texture->img.img = mlx_xpm_file_to_image(cub->mlx_ptr, current_texture->filepath, &current_texture->width, &current_texture->height)) == NULL)
+		if ((current_texture->img.img_ptr = mlx_xpm_file_to_image(cub->mlx_ptr, current_texture->filepath, &current_texture->width, &current_texture->height)) == NULL)
 			return (i + 1);
+		//free malloced filepath and destroy already opened images to avoid leaks;
+		current_texture->img.addr = mlx_get_data_addr(current_texture->img.img_ptr
+														, &current_texture->img.bits_per_pixel
+														, &current_texture->img.line_length
+														, &current_texture->img.endian);
 		i++;
 	}
 	return (0);

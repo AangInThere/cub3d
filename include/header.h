@@ -21,7 +21,7 @@
 # define YSPEED XSPEED
 # define PLAYER_SIZE 5
 # define M_PI 3.14159265358979323846
-# define ROTATION_SPEED (4 * (M_PI / 180) / 3.0)
+# define ROTATION_SPEED (4.0 * (M_PI / 180.0) / 3.0)
 # define FOV_ANGLE (M_PI / 3)
 # define WALL_STRIP_WIDTH  1
 # define NUM_RAYS  (WIN_WIDTH / WALL_STRIP_WIDTH)
@@ -61,7 +61,7 @@ typedef struct s_mlx
 
 typedef struct s_image
 {
-	void *img;
+	void *img_ptr;
 	char *addr;
 	int bits_per_pixel;
 	int line_length;
@@ -121,6 +121,10 @@ typedef	struct s_cub
 	unsigned	error_code;
 	t_player	player;
 	t_map		map;
+	t_image		images[2];
+	int			current_image;
+	t_ray		*rays;
+	int			number_of_rays;
 }				t_cub;
 
 typedef struct s_parser
@@ -178,33 +182,33 @@ enum e_cell
 
 extern t_player	player;
 extern int		grid[11][15];
-extern t_ray	rays[NUM_RAYS];
+extern t_ray	ray_array[NUM_RAYS];
 extern t_texture texture;
 
 int put_square_at(t_image *data, int x, int y, int size, int color);
 void my_mlx_pixel_put(t_image *data, int x, int y, int color);
 int put_rectangle_at(t_image *data, int x, int y, int width, int height, int color);
 
-int WallAt(int x, int y);
+int WallAt(int x, int y, t_map map);
 
-int update_player();
-int render_player(t_image *img);
+int update_player(t_cub *cub);
+int render_player(t_image *img, t_cub *cub);
 int reset_player(int keycode, void *param);
 
 void plot_line(t_image *data, int x0, int y0, int x1, int y1);
-void render_grid(t_image *data);
+void render_grid(t_image *data, t_cub *cub);
 
-void update_rays(void);
-void render_rays(t_image *img);
+void update_rays(t_cub *cub);
+void render_rays(t_image *img, t_cub *cub);
 double normalize_angle(double angle);
-void find_horizontal_intersection(t_ray *ray);
-void find_vertical_intersection(t_ray *ray);
+void find_horizontal_intersection(t_ray *ray, t_cub *cub);
+void find_vertical_intersection(t_ray *ray, t_cub *cub);
 double distanceBetween(double x0, double y0, double x1, double y1);
-void select_shortest_wall_hit(t_ray *ray);
-void render3d(t_image *img);
-double normalize_wall_height(double height);
-int find_texture_x(t_ray ray);
-void render_ray(t_image *img, t_ray ray, int ray_x);
+void select_shortest_wall_hit(t_ray *ray, t_cub *cub);
+void render3d(t_image *img, t_cub *cub);
+double normalize_wall_height(double height, t_cub *cub);
+int find_texture_x(t_ray ray, t_cub *cub);
+void render_ray(t_image *img, t_ray ray, int ray_x, t_cub *cub);
 
 int check_formatting_resolution(char *line);
 int parse_resolution(char *line, t_cub *cub);

@@ -20,43 +20,50 @@ void plot_circle(t_image *img, int xm, int ym, int r, unsigned color)
 	} while (x < 0);
 }
 
-int update_player()
+int update_player(t_cub *cub)
 {
 	double newx;
 	double newy;
 	double deltax;
 	double deltay;
-
-	deltax = player.dir_ver * YSPEED * cos(player.rotation_angle) + player.dir_hor * XSPEED * cos(player.rotation_angle + M_PI / 2);
-	deltay = player.dir_ver * YSPEED * sin(player.rotation_angle) + player.dir_hor * XSPEED * sin(player.rotation_angle + M_PI / 2);
-	newx = player.x + deltax;
-	newy = player.y + deltay;
-	if (!(WallAt(newx, newy)))
+	t_player *player = &cub->player;
+	deltax = player->dir_ver * YSPEED * cos(player->rotation_angle) + player->dir_hor * XSPEED * cos(player->rotation_angle + M_PI / 2);
+	deltay = player->dir_ver * YSPEED * sin(player->rotation_angle) + player->dir_hor * XSPEED * sin(player->rotation_angle + M_PI / 2);
+	newx = player->x + deltax;
+	newy = player->y + deltay;
+	if (!(WallAt(newx, newy, cub->map)))
 	{
-		player.x = newx;
-		player.y = newy;
+		player->x = newx;
+		player->y = newy;
 	}
-	player.rotation_angle += player.turn_dir * ROTATION_SPEED;
-	player.rotation_angle = normalize_angle(player.rotation_angle);
-	// printf("rotation_angle: %f\n", player.rotation_angle);
-	// player.dir_hor = 0;
-	// player.dir_ver = 0;
-	// player.turn_dir = 0;
+	player->rotation_angle += player->turn_dir * ROTATION_SPEED;
+	player->rotation_angle = normalize_angle(player->rotation_angle);
+	// printf("rotation_angle: %f\n", player->rotation_angle);
+	// player->dir_hor = 0;
+	// player->dir_ver = 0;
+	// player->turn_dir = 0;
 	return 1;
 }
 
-int render_player(t_image* img)
+int render_player(t_image* img, t_cub *cub)
 {
 	// put_square_at(img, player.x - PLAYER_SIZE / 2, player.y - PLAYER_SIZE / 2, PLAYER_SIZE, 0X00FF0000);
-	plot_circle(img, MINIMAP_SCALE_FACTOR * player.x , MINIMAP_SCALE_FACTOR * player.y, PLAYER_SIZE, 0X00FF0000);
+	plot_circle(img, MINIMAP_SCALE_FACTOR * cub->player.x , MINIMAP_SCALE_FACTOR * cub->player.y, PLAYER_SIZE, 0X00FF0000);
 	return 1;
 }
 
-int WallAt(int x, int y)
+int WallAt(int x, int y, t_map map)
 {
+	// int xInGrid = x / TILE_SIZE;
+	// int yInGrid = y / TILE_SIZE;
+	// if (grid[yInGrid][xInGrid] == 1 || x < 0 || y < 0)
+	// 	return (1);
+	// else
+	// 	return (0);
+
 	int xInGrid = x / TILE_SIZE;
 	int yInGrid = y / TILE_SIZE;
-	if (grid[yInGrid][xInGrid] == 1 || x < 0 || y < 0)
+	if (x < 0 || y < 0 || y >= map.height || x >= (int)ft_strlen(map.rows[yInGrid]) || map.rows[yInGrid][xInGrid] == 1)
 		return (1);
 	else
 		return (0);

@@ -61,13 +61,13 @@ int put_rectangle_at(t_image *data, int x, int y, int width, int height, int col
 	return (1);
 }
 
-void render_grid(t_image *data)
+void render_grid(t_image *data, t_cub *cub)
 {
-	for (int i = 0; i < 11; i++)
+	for (int i = 0; i < cub->map.height; i++)
 	{
-		for (int j = 0; j < 15; j++)
+		for (int j = 0; j < (int)ft_strlen(cub->map.rows[i]); j++)
 		{
-			if (grid[i][j] == 1)
+			if (grid[i][j] == 1 || grid [i][j] == SPACE)
 				put_square_at(data, MINIMAP_SCALE_FACTOR * j * TILE_SIZE, MINIMAP_SCALE_FACTOR * i * TILE_SIZE, MINIMAP_SCALE_FACTOR * TILE_SIZE, 0x0032CD32);
 		}
 	}
