@@ -1,6 +1,6 @@
 #include "header.h"
 
-t_player player = {TILE_SIZE * 2, TILE_SIZE * 2, 0, 0, 0, 0.25 * M_PI};
+// t_player player = {TILE_SIZE * 2, TILE_SIZE * 2, 0, 0, 0, 0.25 * M_PI};
 
 
 void plot_circle(t_image *img, int xm, int ym, int r, unsigned color)
@@ -31,8 +31,12 @@ int update_player(t_cub *cub)
 	deltay = player->dir_ver * YSPEED * sin(player->rotation_angle) + player->dir_hor * XSPEED * sin(player->rotation_angle + M_PI / 2);
 	newx = player->x + deltax;
 	newy = player->y + deltay;
+	// printf("new player.x: %f, new player.y: %f\n", newx, newy);
+	// printf("delta.x: %f, delta.y: %f\n", deltax, deltay);
+
 	if (!(WallAt(newx, newy, cub->map)))
 	{
+		// printf("pos of player changed\n");
 		player->x = newx;
 		player->y = newy;
 	}
@@ -63,7 +67,8 @@ int WallAt(int x, int y, t_map map)
 
 	int xInGrid = x / TILE_SIZE;
 	int yInGrid = y / TILE_SIZE;
-	if (x < 0 || y < 0 || y >= map.height || x >= (int)ft_strlen(map.rows[yInGrid]) || map.rows[yInGrid][xInGrid] == 1)
+	// if (x < 0 || y < 0 || y >= map.height || x >= (int)ft_strlen(map.rows[yInGrid]) || map.rows[yInGrid][xInGrid] == 1)
+	if (x < 0 || y < 0 || map.rows[yInGrid][xInGrid] == WALL)
 		return (1);
 	else
 		return (0);

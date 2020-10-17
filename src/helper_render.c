@@ -67,8 +67,9 @@ void render_grid(t_image *data, t_cub *cub)
 	{
 		for (int j = 0; j < (int)ft_strlen(cub->map.rows[i]); j++)
 		{
-			if (grid[i][j] == 1 || grid [i][j] == SPACE)
+			if (cub->map.rows[i][j] == WALL || cub->map.rows[i][j] == SPACE)
 				put_square_at(data, MINIMAP_SCALE_FACTOR * j * TILE_SIZE, MINIMAP_SCALE_FACTOR * i * TILE_SIZE, MINIMAP_SCALE_FACTOR * TILE_SIZE, 0x0032CD32);
+				// put_square_at(data, MINIMAP_SCALE_FACTOR * j * TILE_SIZE, MINIMAP_SCALE_FACTOR * i * TILE_SIZE, MINIMAP_SCALE_FACTOR * TILE_SIZE, 0x0032CD32);
 		}
 	}
 }

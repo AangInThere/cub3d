@@ -1,27 +1,27 @@
 #include "header.h"
 
-int current_imgnbr;
-t_image img1;
-t_image img2;
-t_texture texture;
-int grid[11][15] = {
-	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1 },
-	{ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1 },
-	{ 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1 },
-	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1 },
-	{ 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1 },
-	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-	{ 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1 },
-	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
-};
+// int current_imgnbr;
+// t_image img1;
+// t_image img2;
+// t_texture texture;
+// int grid[11][15] = {
+// 	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+// 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1 },
+// 	{ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1 },
+// 	{ 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1 },
+// 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1 },
+// 	{ 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1 },
+// 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+// 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+// 	{ 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1 },
+// 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+// 	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
+// };
 
 int key_win(int key, t_cub *cub)
 {
 	(void)cub;
-	// printf("Key in Win1 : %d\n", key);
+	printf("Key in Win1 : %d\n", key);
 	if (key == 0xFF1B)
 		exit(0);
 	else if (key == 119)
@@ -42,7 +42,7 @@ int key_win(int key, t_cub *cub)
 int key_release_win(int key, t_cub *cub)
 {
 	(void)cub;
-	// printf("Key Release in Win1 : %d\n", key);
+	printf("Key Release in Win1 : %d\n", key);
 	if (key == 119)
 		cub->player.dir_ver = 0;
 	else if (key == 115)
@@ -59,17 +59,17 @@ int key_release_win(int key, t_cub *cub)
 
 }
 
-// int clear_img(t_image* img)
-// {
-// 	for (int i = 0; i < WIN_WIDTH; i++)
-// 	{
-// 		for (int j = 0; j < WIN_HEIGHT; j++)
-// 		{
-// 			my_mlx_pixel_put(img, i, j, 0X00000000);
-// 		}
-// 	}
-// 	return 1;
-// }
+int clear_img(t_image* img, t_cub *cub)
+{
+	for (int i = 0; i < cub->window.width; i++)
+	{
+		for (int j = 0; j < cub->window.height; j++)
+		{
+			my_mlx_pixel_put(img, i, j, 0X00000000);
+		}
+	}
+	return 1;
+}
 
 int render_next_frame(t_cub *cub)
 {
@@ -93,11 +93,16 @@ int render_next_frame(t_cub *cub)
 	t_image *img = &cub->images[cub->current_image];
 	cub->current_image = (cub->current_image == 0 ? 1 : 0);
 	update_player(cub);
+	// printf("player.x: %f, player.y: %f\n", cub->player.x, cub->player.y);
+	// printf("dir.x: %d, dir.y: %d\n", cub->player.dir_hor, cub->player.dir_ver);
 	update_rays(cub);
+	clear_img(img, cub);
+
 	render3d(img, cub);
-	// render_player(img, cub);
-	// render_grid(img, cub);
-	// render_rays(img, cub);
+	render_player(img, cub);
+	render_grid(img, cub);
+	render_rays(img, cub);
+
 	mlx_put_image_to_window(cub->mlx_ptr, cub->window.win_ptr, img->img_ptr, 0, 0);
 	return 0;
 }
@@ -136,8 +141,8 @@ int set_player_starting_position(t_player *player, t_map map)
 		{
 			if (ft_strchr(player_string, map.rows[i][j]) != NULL)
 			{
-				player->x = j * TILE_SIZE;
-				player->y = i * TILE_SIZE;
+				player->x = j * TILE_SIZE + TILE_SIZE / 2;
+				player->y = i * TILE_SIZE + TILE_SIZE / 2;
 				break;
 			}
 		}

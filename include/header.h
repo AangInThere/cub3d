@@ -26,6 +26,7 @@
 # define WALL_STRIP_WIDTH  1
 # define NUM_RAYS  (WIN_WIDTH / WALL_STRIP_WIDTH)
 // # define NUM_RAYS  1
+// # define MINIMAP_SCALE_FACTOR 0.2
 # define MINIMAP_SCALE_FACTOR 0.2
 # define TRUE 1
 # define FALSE 0
@@ -109,6 +110,7 @@ typedef struct s_map
 	char **rows;
 	int	height;
 	int malloced_height;
+	int width;
 }	t_map;
 
 typedef	struct s_cub
@@ -125,6 +127,7 @@ typedef	struct s_cub
 	int			current_image;
 	t_ray		*rays;
 	int			number_of_rays;
+	int			tile_size;
 }				t_cub;
 
 typedef struct s_parser
@@ -180,10 +183,10 @@ enum e_cell
 	WEST = 'W'
 };
 
-extern t_player	player;
-extern int		grid[11][15];
-extern t_ray	ray_array[NUM_RAYS];
-extern t_texture texture;
+// extern t_player	player;
+// extern int		grid[11][15];
+// extern t_ray	ray_array[NUM_RAYS];
+// extern t_texture texture;
 
 int put_square_at(t_image *data, int x, int y, int size, int color);
 void my_mlx_pixel_put(t_image *data, int x, int y, int color);

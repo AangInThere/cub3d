@@ -26,6 +26,8 @@ int get_map_from_file(int fd, t_map *map)
 		if (map->height >= map->malloced_height)
 			realloc_map(map);
 		map->rows[map->height] = line;
+		if ((int)ft_strlen(line) > map->width)
+			map->width = ft_strlen(line);
 		map->height++;
 	}
 	return (0);
