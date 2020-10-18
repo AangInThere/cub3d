@@ -175,19 +175,19 @@ void	render3d(t_image *img, t_cub *cub)
 		wallStripHeight = normalize_wall_height(wallStripHeight, cub);
 		render_ray(img, cub->rays[i], i, cub);
 		// wall_bottom = cub->window.height / 2 + wallStripHeight / 2;
-		// if (wallStripHeight < cub->window.height)
-		// {
-		// 	put_rectangle_at(img, i * WALL_STRIP_WIDTH,
-		// 					 0,
-		// 					 WALL_STRIP_WIDTH,
-		// 					 cub->window.height / 2 - wallStripHeight / 2,
-		// 					 0X00add8e6);
-		// 	put_rectangle_at(img, i * WALL_STRIP_WIDTH,
-		// 							cub->window.height / 2 + wallStripHeight / 2,
-		// 							WALL_STRIP_WIDTH,
-		// 							cub->window.height / 2  - wallStripHeight / 2,
-		// 							0X00808080);
-		// }
+		if (wallStripHeight < cub->window.height)
+		{
+			put_rectangle_at(img, i * WALL_STRIP_WIDTH,
+							 0,
+							 WALL_STRIP_WIDTH,
+							 cub->window.height / 2 - wallStripHeight / 2,
+							 cub->colors[CEILING].hexcode);
+			put_rectangle_at(img, i * WALL_STRIP_WIDTH,
+							 cub->window.height / 2 + wallStripHeight / 2,
+							 WALL_STRIP_WIDTH,
+							 cub->window.height / 2 - wallStripHeight / 2,
+							 cub->colors[FLOOR].hexcode);
+		}
 
 		// printf("texture_x: %d, texture_width: %d, ratio: %f", texture_x, texture.width, (double)texture_x / (double)texture.width);
 		// printf("cub->window.height: %d, projection plane: %f, rayDistance: %f, wallHeight: %f\n", cub->window.height, distanceProjectionPlane, correcteddWallDistance, wallStripHeight);

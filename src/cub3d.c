@@ -96,7 +96,7 @@ int render_next_frame(t_cub *cub)
 	// printf("player.x: %f, player.y: %f\n", cub->player.x, cub->player.y);
 	// printf("dir.x: %d, dir.y: %d\n", cub->player.dir_hor, cub->player.dir_ver);
 	update_rays(cub);
-	clear_img(img, cub);
+	// clear_img(img, cub);
 
 	render3d(img, cub);
 	render_player(img, cub);
@@ -148,15 +148,17 @@ int set_up_window_and_images_for_cub(t_cub *cub)
 
 int set_player_starting_position(t_player *player, t_map map, t_cub *cub)
 {
-	char *player_string = "NSWE";
+	static double initial_angle[4] = {M_PI + M_PI / 2 , 0, M_PI / 2, M_PI};
+	char *player_string = "NWSE";
 	for (int i = 0; i < map.height; i++)
 	{
 		for (int j = 0; j < (int)ft_strlen(map.rows[i]); j++)
 		{
 			if (ft_strchr(player_string, map.rows[i][j]) != NULL)
 			{
-				player->x = j * cub->tile_size + cub->tile_size / 2;
-				player->y = i * cub->tile_size + cub->tile_size / 2;
+				player->x = j * cub->tile_size + cub->tile_size / 2.0;
+				player->y = i * cub->tile_size + cub->tile_size / 2.0;
+				player->rotation_angle = initial_angle[(long)(ft_strchr(player_string, map.rows[i][j]) - player_string)];
 				break;
 			}
 		}

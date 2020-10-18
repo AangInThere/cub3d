@@ -40,9 +40,9 @@ typedef union
 	unsigned int hexcode;
 	struct
 	{
-		unsigned char r;
-		unsigned char g;
 		unsigned char b;
+		unsigned char g;
+		unsigned char r;
 	} rgb;
 } t_color;
 
