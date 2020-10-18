@@ -68,7 +68,7 @@ int WallAt(int x, int y, t_map map, t_cub *cub)
 	int xInGrid = x / cub->tile_size;
 	int yInGrid = y / cub->tile_size;
 	// if (x < 0 || y < 0 || y >= map.height || x >= (int)ft_strlen(map.rows[yInGrid]) || map.rows[yInGrid][xInGrid] == 1)
-	if (x < 0 || y < 0 || map.rows[yInGrid][xInGrid] == WALL)
+	if (x < 0 || y < 0 || yInGrid >= map.height || xInGrid > map.width || map.rows[yInGrid][xInGrid] == WALL)
 		return (1);
 	else
 		return (0);

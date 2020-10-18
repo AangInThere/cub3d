@@ -99,8 +99,8 @@ int render_next_frame(t_cub *cub)
 	clear_img(img, cub);
 
 	render3d(img, cub);
-	// render_player(img, cub);
-	// render_grid(img, cub);
+	render_player(img, cub);
+	render_grid(img, cub);
 	// render_rays(img, cub);
 
 	mlx_put_image_to_window(cub->mlx_ptr, cub->window.win_ptr, img->img_ptr, 0, 0);
@@ -141,7 +141,7 @@ int set_up_window_and_images_for_cub(t_cub *cub)
 	cub->rays = malloc(sizeof(t_ray) * (cub->number_of_rays));
 	cub->tile_size = ft_compute_tile_size(cub);
 	cub->tile_width = cub->window.width / cub->map.width;
-	cub->tile_size = cub->window.height / cub->map.height;
+	cub->tile_height = cub->window.height / cub->map.height;
 
 	return 0;
 }
