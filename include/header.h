@@ -128,6 +128,8 @@ typedef	struct s_cub
 	t_ray		*rays;
 	int			number_of_rays;
 	int			tile_size;
+	int			tile_width;
+	int			tile_height;
 }				t_cub;
 
 typedef struct s_parser
@@ -192,7 +194,7 @@ int put_square_at(t_image *data, int x, int y, int size, int color);
 void my_mlx_pixel_put(t_image *data, int x, int y, int color);
 int put_rectangle_at(t_image *data, int x, int y, int width, int height, int color);
 
-int WallAt(int x, int y, t_map map);
+int WallAt(int x, int y, t_map map, t_cub *cub);
 
 int update_player(t_cub *cub);
 int render_player(t_image *img, t_cub *cub);
@@ -240,6 +242,7 @@ int each_element_of_premap_is_parsed(unsigned already_parsed);
 int parse_map(int fd, t_cub *cub);
 int get_map_from_file(int fd, t_map *map);
 char **realloc_map(t_map *map);
+int ft_compute_real_height(t_map *map);
 
 int check_map(t_map *map);
 int check_characters_and_player_in_map(t_map *map);

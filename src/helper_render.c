@@ -63,13 +63,25 @@ int put_rectangle_at(t_image *data, int x, int y, int width, int height, int col
 
 void render_grid(t_image *data, t_cub *cub)
 {
+	int j;
+	int tile_width = cub->window.width / cub->map.width;
+	int tile_height = cub->window.height / cub->map.height;
+
 	for (int i = 0; i < cub->map.height; i++)
 	{
-		for (int j = 0; j < (int)ft_strlen(cub->map.rows[i]); j++)
+		for (j = 0; j < (int)ft_strlen(cub->map.rows[i]); j++)
 		{
 			if (cub->map.rows[i][j] == WALL || cub->map.rows[i][j] == SPACE)
-				put_square_at(data, MINIMAP_SCALE_FACTOR * j * TILE_SIZE, MINIMAP_SCALE_FACTOR * i * TILE_SIZE, MINIMAP_SCALE_FACTOR * TILE_SIZE, 0x0032CD32);
+			{
+				// put_square_at(data, MINIMAP_SCALE_FACTOR * j * cub->tile_size, MINIMAP_SCALE_FACTOR * i * cub->tile_size, MINIMAP_SCALE_FACTOR * cub->tile_size, 0x0032CD32);
 				// put_square_at(data, MINIMAP_SCALE_FACTOR * j * TILE_SIZE, MINIMAP_SCALE_FACTOR * i * TILE_SIZE, MINIMAP_SCALE_FACTOR * TILE_SIZE, 0x0032CD32);
+				put_rectangle_at(data, MINIMAP_SCALE_FACTOR * j * tile_width, MINIMAP_SCALE_FACTOR * i * tile_height, tile_width, tile_height, 0x0032CD32);
+			}
+		}
+		while (j < cub->map.width)
+		{
+			put_rectangle_at(data, MINIMAP_SCALE_FACTOR * j * tile_width, MINIMAP_SCALE_FACTOR * i * tile_height, tile_width, tile_height, 0x0032CD32);
+			j++;
 		}
 	}
 }

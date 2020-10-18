@@ -3,6 +3,7 @@
 
 int parse_map(int fd, t_cub *cub)
 {
+	//add a check to see if there is not an empty line in the middle of the map even when it is closed
 	get_map_from_file(fd, &cub->map);
 	if (check_map(&cub->map) != 0)
 		return (1);
@@ -30,6 +31,7 @@ int get_map_from_file(int fd, t_map *map)
 			map->width = ft_strlen(line);
 		map->height++;
 	}
+	map->height = ft_compute_real_height(map);
 	return (0);
 }
 
@@ -45,4 +47,21 @@ char **realloc_map(t_map *map)
 	free(map->rows);
 	map->rows = new_rows;
 	return (NULL);
+}
+
+int	ft_compute_real_height(t_map *map)
+{
+	int height;
+	int i;
+
+	i = 0;
+	height = 0;
+	while (i < map->height)
+	{
+		if (is_empty_line(map->rows[i]))
+			break;
+		height++;
+		i++;
+	}
+	return (height);
 }

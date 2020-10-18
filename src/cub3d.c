@@ -99,9 +99,9 @@ int render_next_frame(t_cub *cub)
 	clear_img(img, cub);
 
 	render3d(img, cub);
-	render_player(img, cub);
-	render_grid(img, cub);
-	render_rays(img, cub);
+	// render_player(img, cub);
+	// render_grid(img, cub);
+	// render_rays(img, cub);
 
 	mlx_put_image_to_window(cub->mlx_ptr, cub->window.win_ptr, img->img_ptr, 0, 0);
 	return 0;
@@ -112,6 +112,16 @@ int destroy_win(t_cub *cub)
 {
 	(void)cub;
 	exit(0);
+}
+
+int ft_compute_tile_size(t_cub *cub)
+{
+	int according_to_width;
+	int according_to_height;
+
+	according_to_width = cub->window.width / cub->map.width;
+	according_to_height = cub->window.height / cub->map.height;
+	return (according_to_width < according_to_height ? according_to_width : according_to_height);
 }
 
 int set_up_window_and_images_for_cub(t_cub *cub)
@@ -129,10 +139,14 @@ int set_up_window_and_images_for_cub(t_cub *cub)
 	mlx_loop_hook(cub->mlx_ptr, render_next_frame, cub);
 	cub->number_of_rays = cub->window.width / WALL_STRIP_WIDTH;
 	cub->rays = malloc(sizeof(t_ray) * (cub->number_of_rays));
+	cub->tile_size = ft_compute_tile_size(cub);
+	cub->tile_width = cub->window.width / cub->map.width;
+	cub->tile_size = cub->window.height / cub->map.height;
+
 	return 0;
 }
 
-int set_player_starting_position(t_player *player, t_map map)
+int set_player_starting_position(t_player *player, t_map map, t_cub *cub)
 {
 	char *player_string = "NSWE";
 	for (int i = 0; i < map.height; i++)
@@ -141,8 +155,8 @@ int set_player_starting_position(t_player *player, t_map map)
 		{
 			if (ft_strchr(player_string, map.rows[i][j]) != NULL)
 			{
-				player->x = j * TILE_SIZE + TILE_SIZE / 2;
-				player->y = i * TILE_SIZE + TILE_SIZE / 2;
+				player->x = j * cub->tile_size + cub->tile_size / 2;
+				player->y = i * cub->tile_size + cub->tile_size / 2;
 				break;
 			}
 		}
@@ -172,7 +186,7 @@ int main(int argc, char **argv)
 	if (parse(&cub, argv[1]) != 0)
 		exit(0);
 	set_up_window_and_images_for_cub(&cub);
-	set_player_starting_position(&cub.player, cub.map);
+	set_player_starting_position(&cub.player, cub.map, &cub);
 	// mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "Hello world!");
 	// img1.img_ptr = mlx_new_image(mlx.mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	// img1.addr = mlx_get_data_addr(img1.img_ptr, &(img1.bits_per_pixel), &(img1.line_length),

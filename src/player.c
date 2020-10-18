@@ -34,7 +34,7 @@ int update_player(t_cub *cub)
 	// printf("new player.x: %f, new player.y: %f\n", newx, newy);
 	// printf("delta.x: %f, delta.y: %f\n", deltax, deltay);
 
-	if (!(WallAt(newx, newy, cub->map)))
+	if (!(WallAt(newx, newy, cub->map, cub)))
 	{
 		// printf("pos of player changed\n");
 		player->x = newx;
@@ -56,7 +56,7 @@ int render_player(t_image* img, t_cub *cub)
 	return 1;
 }
 
-int WallAt(int x, int y, t_map map)
+int WallAt(int x, int y, t_map map, t_cub *cub)
 {
 	// int xInGrid = x / TILE_SIZE;
 	// int yInGrid = y / TILE_SIZE;
@@ -65,8 +65,8 @@ int WallAt(int x, int y, t_map map)
 	// else
 	// 	return (0);
 
-	int xInGrid = x / TILE_SIZE;
-	int yInGrid = y / TILE_SIZE;
+	int xInGrid = x / cub->tile_size;
+	int yInGrid = y / cub->tile_size;
 	// if (x < 0 || y < 0 || y >= map.height || x >= (int)ft_strlen(map.rows[yInGrid]) || map.rows[yInGrid][xInGrid] == 1)
 	if (x < 0 || y < 0 || map.rows[yInGrid][xInGrid] == WALL)
 		return (1);

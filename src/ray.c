@@ -48,14 +48,14 @@ void find_vertical_intersection(t_ray *ray, t_cub *cub)
 	double y_intercept, x_intercept;
 	double ystep, xstep;
 
-	x_intercept = ((int)((cub->player.x) / TILE_SIZE)) * TILE_SIZE;
-	x_intercept += (ray->is_ray_facing_right ? TILE_SIZE : 0);
+	x_intercept = ((int)((cub->player.x) /  cub->tile_size)) *  cub->tile_size;
+	x_intercept += (ray->is_ray_facing_right ?  cub->tile_size : 0);
 
 	y_intercept = cub->player.y + (x_intercept - cub->player.x) * tan(ray->angle);
 	// printf("x: %d, y: %d\n", x_intercept, y_intercept);
 
-	xstep = (ray->is_ray_facing_right ? TILE_SIZE : -TILE_SIZE);
-	ystep = TILE_SIZE * tan(ray->angle);
+	xstep = (ray->is_ray_facing_right ?  cub->tile_size : - cub->tile_size);
+	ystep =  cub->tile_size * tan(ray->angle);
 	ystep *= (!ray->is_ray_facing_down && ystep > 0 ? -1 : 1);
 	ystep *= (ray->is_ray_facing_down && ystep < 0 ? -1 : 1);
 	// printf("xstep: %f, ystep: %f\n", xstep, ystep);
@@ -65,7 +65,7 @@ void find_vertical_intersection(t_ray *ray, t_cub *cub)
 
 	while (nextVerTouchY >= 0 && nextVerTouchY < cub->window.height && nextVerTouchX >= 0 && nextVerTouchX < cub->window.width)
 	{
-		if (WallAt((nextVerTouchX - (!ray->is_ray_facing_right ? 1 : 0)), nextVerTouchY, cub->map))
+		if (WallAt((nextVerTouchX - (!ray->is_ray_facing_right ? 1 : 0)), nextVerTouchY, cub->map, cub))
 		{
 			ray->ver_wall_hit_x = nextVerTouchX;
 			ray->ver_wall_hit_y = nextVerTouchY;
@@ -85,14 +85,14 @@ void	find_horizontal_intersection(t_ray *ray, t_cub * cub)
 	double y_intercept, x_intercept;
 	double ystep, xstep;
 
-	y_intercept = ((int)(cub->player.y / TILE_SIZE)) * TILE_SIZE;
-	y_intercept += (ray->is_ray_facing_down ? TILE_SIZE : 0);
+	y_intercept = ((int)(cub->player.y /  cub->tile_size)) *  cub->tile_size;
+	y_intercept += (ray->is_ray_facing_down ?  cub->tile_size : 0);
 
 	x_intercept = cub->player.x + (y_intercept - cub->player.y) / tan(ray->angle);
 	// printf("x: %d, y: %d\n", x_intercept, y_intercept);
 
-	ystep = (ray->is_ray_facing_down ? TILE_SIZE : -TILE_SIZE);
-	xstep = TILE_SIZE / tan(ray->angle);
+	ystep = (ray->is_ray_facing_down ?  cub->tile_size : - cub->tile_size);
+	xstep =  cub->tile_size / tan(ray->angle);
 	xstep *= (ray->is_ray_facing_right && xstep < 0 ? -1 : 1);
 	xstep *= (!ray->is_ray_facing_right && xstep > 0 ? -1 : 1);
 
@@ -101,7 +101,7 @@ void	find_horizontal_intersection(t_ray *ray, t_cub * cub)
 
 	while (nextHorTouchY >= 0 && nextHorTouchY < cub->window.height && nextHorTouchX >= 0 && nextHorTouchX < cub->window.width)
 	{
-		if (WallAt(nextHorTouchX, nextHorTouchY - (!ray->is_ray_facing_down ? 1 : 0), cub->map))
+		if (WallAt(nextHorTouchX, nextHorTouchY - (!ray->is_ray_facing_down ? 1 : 0), cub->map, cub))
 		{
 			ray->hor_wall_hit_x = nextHorTouchX;
 			ray->hor_wall_hit_y = nextHorTouchY;
@@ -164,12 +164,12 @@ void	render3d(t_image *img, t_cub *cub)
 	// double correcteddWallDistance;
 
 	(void)img;
-	for (int i = 0; i < NUM_RAYS; i++)
+	for (int i = 0; i < cub->number_of_rays; i++)
 	{
 		ray = cub->rays[i];
 		distanceProjectionPlane = (cub->window.width / 2) / tan(FOV_ANGLE / 2);
 		// correcteddWallDistance = ray.distance * cos(ray.angle - cub->player.rotation_angle);
-		wallStripHeight = (TILE_SIZE / ray.distance) * distanceProjectionPlane;
+		wallStripHeight = ( cub->tile_size / ray.distance) * distanceProjectionPlane;
 		// step_texture = texture.height / wallStripHeight;
 		// text_pos = ((cub->window.height / 2 - normalize_wall_height(wallStripHeight)) - cub->window.height / 2 + wallStripHeight / 2) * step_texture;
 		wallStripHeight = normalize_wall_height(wallStripHeight, cub);
@@ -206,7 +206,7 @@ void render_ray(t_image *img, t_ray ray, int ray_x, t_cub *cub)
 	double text_pos;
 
 	double distanceProjectionPlane = (cub->window.width / 2) / tan(FOV_ANGLE / 2);
-	double wallStripHeight = (TILE_SIZE / ray.distance) * distanceProjectionPlane;
+	double wallStripHeight = ( cub->tile_size / ray.distance) * distanceProjectionPlane;
 	double step_texture = cub->textures[0].height / wallStripHeight;
 	// double text_pos = ((cub->window.height / 2 - normalize_wall_height(wallStripHeight)) - cub->window.height / 2 + wallStripHeight / 2) * step_texture;
 	if (wallStripHeight == normalize_wall_height(wallStripHeight, cub))
@@ -234,9 +234,9 @@ int find_texture_x(t_ray ray, t_cub *cub)
 
 	wall_hit = (ray.is_vertical_hit ? ray.wall_hit_y : ray.wall_hit_x);
 	// printf("Wall_hit: %f\n", wall_hit);
-	while (wall_hit > TILE_SIZE)
-		wall_hit -= TILE_SIZE;
-	texture_x = ((wall_hit / TILE_SIZE) * (double)cub->textures[0].width);
+	while (wall_hit >  cub->tile_size)
+		wall_hit -=  cub->tile_size;
+	texture_x = ((wall_hit /  cub->tile_size) * (double)cub->textures[0].width);
 	// printf("texture_x: %d, wall_hit: %f, ratio: %f\n", texture_x, wall_hit, (double)texture_x / (double)texture.width);
 	return (texture_x);
 }
