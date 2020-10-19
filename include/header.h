@@ -97,6 +97,7 @@ typedef struct	s_ray
 	int		is_vertical_hit;
 	int		is_ray_facing_down;
 	int		is_ray_facing_right;
+	t_texture	*texture;
 }				t_ray;
 
 typedef struct s_map
@@ -216,6 +217,7 @@ int find_texture_x(t_ray ray, t_cub *cub);
 int render_next_frame(t_cub *cub);
 void render3d(t_image *img, t_cub *cub);
 void render_ray(t_image *img, t_ray ray, int ray_x, t_cub *cub);
+t_texture *find_correct_texture(t_ray ray, t_cub *cub);
 
 int check_formatting_resolution(char *line);
 int parse_resolution(char *line, t_cub *cub);

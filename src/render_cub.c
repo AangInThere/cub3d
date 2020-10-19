@@ -88,24 +88,39 @@ void render_ray(t_image *img, t_ray ray, int ray_x, t_cub *cub)
 	int texture_y;
 	double text_pos;
 
+	ray.texture = find_correct_texture(ray, cub);
 	double distanceProjectionPlane = (cub->window.width / 2) / tan(FOV_ANGLE / 2);
 	double wallStripHeight = (cub->tile_size / ray.distance) * distanceProjectionPlane;
-	double step_texture = cub->textures[0].height / wallStripHeight;
+	double step_texture = ray.texture->height / wallStripHeight;
 	// double text_pos = ((cub->window.height / 2 - normalize_wall_height(wallStripHeight)) - cub->window.height / 2 + wallStripHeight / 2) * step_texture;
 	if (wallStripHeight == normalize_wall_height(wallStripHeight, cub))
 		text_pos = 0;
 	else
 	{
 		double ratio_of_texture_to_appear = normalize_wall_height(wallStripHeight, cub) / wallStripHeight;
-		text_pos = ((double)cub->textures[0].height / 2.0) - (ratio_of_texture_to_appear * (double)cub->textures[0].height / 2);
+		text_pos = ((double)ray.texture->height / 2.0) - (ratio_of_texture_to_appear * (double)ray.texture->height / 2);
 	}
 	wallStripHeight = normalize_wall_height(wallStripHeight, cub);
 	int texture_x = find_texture_x(ray, cub);
 	for (int i = 0; i < (int)wallStripHeight; i++)
 	{
 		texture_y = (int)text_pos;
-		color = *(unsigned int *)(cub->textures[0].img.addr + texture_y * cub->textures[0].img.line_length + texture_x * (cub->textures[0].img.bits_per_pixel / 8));
+		color = *(unsigned int *)(ray.texture->img.addr + texture_y * ray.texture->img.line_length + texture_x * (ray.texture->img.bits_per_pixel / 8));
 		my_mlx_pixel_put(img, ray_x * WALL_STRIP_WIDTH, cub->window.height / 2 - wallStripHeight / 2 + i, color);
 		text_pos += step_texture;
 	}
+}
+
+t_texture *find_correct_texture(t_ray ray, t_cub *cub)
+{
+	if (ray.is_ray_facing_right && ray.is_vertical_hit)
+		return (&cub->textures[EA]);
+	else if (!ray.is_ray_facing_right && ray.is_vertical_hit)
+		return (&cub->textures[WE]);
+	else if (ray.is_ray_facing_down && !ray.is_vertical_hit)
+		return (&cub->textures[SO]);
+	else if (!ray.is_ray_facing_down && !ray.is_vertical_hit)
+		return (&cub->textures[NO]);
+	return (NULL);
+
 }

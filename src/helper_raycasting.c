@@ -42,7 +42,7 @@ int find_texture_x(t_ray ray, t_cub *cub)
 	// printf("Wall_hit: %f\n", wall_hit);
 	while (wall_hit >  cub->tile_size)
 		wall_hit -=  cub->tile_size;
-	texture_x = ((wall_hit /  cub->tile_size) * (double)cub->textures[0].width);
+	texture_x = ((wall_hit /  cub->tile_size) * (double)ray.texture->width);
 	// printf("texture_x: %d, wall_hit: %f, ratio: %f\n", texture_x, wall_hit, (double)texture_x / (double)texture.width);
 	return (texture_x);
 }
