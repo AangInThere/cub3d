@@ -1,6 +1,6 @@
 #include "header.h"
 
-void plot_line(t_data *data, int x0, int y0, int x1, int y1)
+void plot_line(t_image *data, int x0, int y0, int x1, int y1)
 {
 	int dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
 	int dy = -abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
@@ -25,7 +25,7 @@ void plot_line(t_data *data, int x0, int y0, int x1, int y1)
 	}
 }
 
-int put_square_at(t_data *data, int x, int y, int size, int color)
+int put_square_at(t_image *data, int x, int y, int size, int color)
 {
 	int a;
 	int b;
@@ -43,7 +43,7 @@ int put_square_at(t_data *data, int x, int y, int size, int color)
 	return (1);
 }
 
-int put_rectangle_at(t_data *data, int x, int y, int width, int height, int color)
+int put_rectangle_at(t_image *data, int x, int y, int width, int height, int color)
 {
 	int a;
 	int b;
@@ -61,19 +61,24 @@ int put_rectangle_at(t_data *data, int x, int y, int width, int height, int colo
 	return (1);
 }
 
-void render_grid(t_data *data)
+void plot_circle(t_image *img, int xm, int ym, int r, unsigned color)
 {
-	for (int i = 0; i < 11; i++)
+	int x = -r, y = 0, err = 2 - 2 * r; /* II. Quadrant */
+	do
 	{
-		for (int j = 0; j < 15; j++)
-		{
-			if (grid[i][j] == 1)
-				put_square_at(data, MINIMAP_SCALE_FACTOR * j * TILE_SIZE, MINIMAP_SCALE_FACTOR * i * TILE_SIZE, MINIMAP_SCALE_FACTOR * TILE_SIZE, 0x0032CD32);
-		}
-	}
+		my_mlx_pixel_put(img, xm - x, ym + y, color); /*   I. Quadrant */
+		my_mlx_pixel_put(img, xm - y, ym - x, color); /*  II. Quadrant */
+		my_mlx_pixel_put(img, xm + x, ym - y, color); /* III. Quadrant */
+		my_mlx_pixel_put(img, xm + y, ym + x, color); /*  IV. Quadrant */
+		r = err;
+		if (r > x)
+			err += ++x * 2 + 1; /* e_xy+e_x > 0 */
+		if (r <= y)
+			err += ++y * 2 + 1; /* e_xy+e_y < 0 */
+	} while (x < 0);
 }
 
-void my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void my_mlx_pixel_put(t_image *data, int x, int y, int color)
 {
 	char *dst;
 
