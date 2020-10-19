@@ -1,10 +1,10 @@
 #ifndef HEADER_H
 # define HEADER_H
-
 # include "mlx.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
+# define __USE_XOPEN
 # include <math.h>
 # include <limits.h>
 # include <fcntl.h>
@@ -20,7 +20,7 @@
 # define XSPEED ((double)TILE_SIZE / 20.0)
 # define YSPEED XSPEED
 # define PLAYER_SIZE 5
-# define M_PI 3.14159265358979323846
+// # define M_PI 3.14159265358979323846
 # define ROTATION_SPEED (4.0 * (M_PI / 180.0) / 3.0)
 # define FOV_ANGLE (M_PI / 3)
 # define WALL_STRIP_WIDTH  1
@@ -53,12 +53,6 @@ typedef struct s_window
 	int		height;
 
 } t_window;
-
-typedef struct s_mlx
-{
-	void	*mlx_ptr;
-	void	*win_ptr;
-} t_mlx;
 
 typedef struct s_image
 {
@@ -193,31 +187,38 @@ enum e_cell
 int put_square_at(t_image *data, int x, int y, int size, int color);
 void my_mlx_pixel_put(t_image *data, int x, int y, int color);
 int put_rectangle_at(t_image *data, int x, int y, int width, int height, int color);
+void plot_line(t_image *data, int x0, int y0, int x1, int y1);
+void plot_circle(t_image *img, int xm, int ym, int r, unsigned color);
 
-int WallAt(int x, int y, t_map map, t_cub *cub);
+int set_up_window_and_images_for_cub(t_cub *cub);
+int set_player_starting_position(t_player *player, t_map map, t_cub *cub);
+int ft_compute_tile_size(t_cub *cub);
 
 int update_player(t_cub *cub);
-int render_player(t_image *img, t_cub *cub);
-int reset_player(int keycode, void *param);
+int WallAt(int x, int y, t_map map, t_cub *cub);
 
-void plot_line(t_image *data, int x0, int y0, int x1, int y1);
 void render_grid(t_image *data, t_cub *cub);
-
-void update_rays(t_cub *cub);
+int render_player(t_image *img, t_cub *cub);
 void render_rays(t_image *img, t_cub *cub);
-double normalize_angle(double angle);
+int clear_img(t_image *img, t_cub *cub);
+
+	void update_rays(t_cub *cub);
 void find_horizontal_intersection(t_ray *ray, t_cub *cub);
 void find_vertical_intersection(t_ray *ray, t_cub *cub);
+
+
+double normalize_angle(double angle);
 double distanceBetween(double x0, double y0, double x1, double y1);
 void select_shortest_wall_hit(t_ray *ray, t_cub *cub);
-void render3d(t_image *img, t_cub *cub);
 double normalize_wall_height(double height, t_cub *cub);
 int find_texture_x(t_ray ray, t_cub *cub);
+
+int render_next_frame(t_cub *cub);
+void render3d(t_image *img, t_cub *cub);
 void render_ray(t_image *img, t_ray ray, int ray_x, t_cub *cub);
 
 int check_formatting_resolution(char *line);
 int parse_resolution(char *line, t_cub *cub);
-
 
 char *delete_leading_spaces(char *line);
 t_bool	is_empty_line(char *line);
@@ -229,7 +230,7 @@ int check_formatting_texture(char *line);
 int parse_texture(char *line, t_cub *cub);
 int load_textures(t_cub *cub);
 
-	int parse_color(char *line, t_cub *cub);
+int parse_color(char *line, t_cub *cub);
 int	parse_color_numbers(char *line, t_color *color);
 int	check_formatting_color(char *line);
 int check_formatting_color_number(char **line);
@@ -251,5 +252,10 @@ t_bool is_inside_map(t_map *map, int x, int y);
 
 int parse(t_cub *cub, char *filename);
 void	print_error(char *error_msg);
+
+int key_win(int key, t_cub *cub);
+int key_release_win(int key, t_cub *cub);
+int destroy_win(t_cub *cub);
+
 
 #endif

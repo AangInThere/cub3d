@@ -61,30 +61,21 @@ int put_rectangle_at(t_image *data, int x, int y, int width, int height, int col
 	return (1);
 }
 
-void render_grid(t_image *data, t_cub *cub)
+void plot_circle(t_image *img, int xm, int ym, int r, unsigned color)
 {
-	int j;
-	// int tile_width = cub->window.width / cub->map.width;
-	// int tile_height = cub->window.height / cub->map.height;
-
-	for (int i = 0; i < cub->map.height; i++)
+	int x = -r, y = 0, err = 2 - 2 * r; /* II. Quadrant */
+	do
 	{
-		for (j = 0; j < (int)ft_strlen(cub->map.rows[i]); j++)
-		{
-			if (cub->map.rows[i][j] == WALL || cub->map.rows[i][j] == SPACE)
-			{
-				put_square_at(data, MINIMAP_SCALE_FACTOR * j * cub->tile_size, MINIMAP_SCALE_FACTOR * i * cub->tile_size, MINIMAP_SCALE_FACTOR * cub->tile_size, 0x0032CD32);
-				// put_square_at(data, MINIMAP_SCALE_FACTOR * j * TILE_SIZE, MINIMAP_SCALE_FACTOR * i * TILE_SIZE, MINIMAP_SCALE_FACTOR * TILE_SIZE, 0x0032CD32);
-				// put_rectangle_at(data, MINIMAP_SCALE_FACTOR * j * cub->tile_size, MINIMAP_SCALE_FACTOR * i * cub->tile_size, cub->tile_size * MINIMAP_SCALE_FACTOR, cub->tile_size * MINIMAP_SCALE_FACTOR, 0x0032CD32);
-			}
-		}
-		while (j < cub->map.width)
-		{
-			put_square_at(data, MINIMAP_SCALE_FACTOR * j * cub->tile_size, MINIMAP_SCALE_FACTOR * i * cub->tile_size, MINIMAP_SCALE_FACTOR * cub->tile_size, 0x0032CD32);
-			// put_rectangle_at(data, MINIMAP_SCALE_FACTOR * j * cub->tile_size, MINIMAP_SCALE_FACTOR * i * cub->tile_size, cub->tile_size* MINIMAP_SCALE_FACTOR, cub->tile_size* MINIMAP_SCALE_FACTOR, 0x0032CD32);
-			j++;
-		}
-	}
+		my_mlx_pixel_put(img, xm - x, ym + y, color); /*   I. Quadrant */
+		my_mlx_pixel_put(img, xm - y, ym - x, color); /*  II. Quadrant */
+		my_mlx_pixel_put(img, xm + x, ym - y, color); /* III. Quadrant */
+		my_mlx_pixel_put(img, xm + y, ym + x, color); /*  IV. Quadrant */
+		r = err;
+		if (r > x)
+			err += ++x * 2 + 1; /* e_xy+e_x > 0 */
+		if (r <= y)
+			err += ++y * 2 + 1; /* e_xy+e_y < 0 */
+	} while (x < 0);
 }
 
 void my_mlx_pixel_put(t_image *data, int x, int y, int color)
