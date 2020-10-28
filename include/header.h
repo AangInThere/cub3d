@@ -115,6 +115,8 @@ typedef struct s_map
 	int	height;
 	int malloced_height;
 	int width;
+	int	sprite_count;
+	t_sprite	*sprites;
 }	t_map;
 
 typedef	struct s_cub
@@ -204,6 +206,8 @@ void plot_circle(t_image *img, int xm, int ym, int r, unsigned color);
 int set_up_window_and_images_for_cub(t_cub *cub);
 int set_player_starting_position(t_player *player, t_map map, t_cub *cub);
 int ft_compute_tile_size(t_cub *cub);
+int setup_sprites(t_cub *cub);
+int	ft_count_sprites(t_map *map);
 
 int update_player(t_cub *cub);
 int WallAt(int x, int y, t_map map, t_cub *cub);
@@ -213,7 +217,7 @@ int render_player(t_image *img, t_cub *cub);
 void render_rays(t_image *img, t_cub *cub);
 int clear_img(t_image *img, t_cub *cub);
 
-	void update_rays(t_cub *cub);
+void update_rays(t_cub *cub);
 void find_horizontal_intersection(t_ray *ray, t_cub *cub);
 void find_vertical_intersection(t_ray *ray, t_cub *cub);
 
@@ -269,7 +273,13 @@ int key_win(int key, t_cub *cub);
 int key_release_win(int key, t_cub *cub);
 int destroy_win(t_cub *cub);
 
-int update_sprite(t_cub *cub);
-int render_sprite(t_image *img, t_cub *cub);
+// int update_sprite(t_cub *cub);
+// int render_sprite(t_image *img, t_cub *cub);
+
+int update_sprite(t_sprite *sprite, t_player player);
+int render_sprite(t_image *img, t_cub *cub, t_sprite *sprite);
+int sort_sprites(t_map *map);
+int update_sprites(t_cub *cub);
+int render_sprites(t_image *img, t_cub *cub);
 
 #endif

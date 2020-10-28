@@ -19,6 +19,7 @@ int check_map(t_map *map)
 	int row_length;
 	int j;
 
+	//check if map is not in 2 parts(with an empty line in the middle of it, consider this an error)
 	if (check_characters_and_player_in_map(map) != 0)
 		return (1);
 	i = -1;

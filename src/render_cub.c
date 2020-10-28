@@ -26,9 +26,9 @@ int render_next_frame(t_cub *cub)
 	// printf("dir.x: %d, dir.y: %d\n", cub->player.dir_hor, cub->player.dir_ver);
 	update_rays(cub);
 	// clear_img(img, cub);
-	update_sprite(cub);
+	update_sprites(cub);
 	render3d(img, cub);
-	render_sprite(img, cub);
+	render_sprites(img, cub);
 	// render_player(img, cub);
 	// render_grid(img, cub);
 	// render_rays(img, cub);

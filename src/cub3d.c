@@ -1,24 +1,5 @@
 #include "header.h"
 
-// int current_imgnbr;
-// t_image img1;
-// t_image img2;
-// t_texture texture;
-// int grid[11][15] = {
-// 	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-// 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1 },
-// 	{ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1 },
-// 	{ 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1 },
-// 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1 },
-// 	{ 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1 },
-// 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-// 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-// 	{ 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1 },
-// 	{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-// 	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
-// };
-
-
 int main(int argc, char **argv)
 {
 	// t_mlx	mlx;
@@ -42,6 +23,7 @@ int main(int argc, char **argv)
 		exit(0);
 	set_up_window_and_images_for_cub(&cub);
 	set_player_starting_position(&cub.player, cub.map, &cub);
+	setup_sprites(&cub);
 	// mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "Hello world!");
 	// img1.img_ptr = mlx_new_image(mlx.mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	// img1.addr = mlx_get_data_addr(img1.img_ptr, &(img1.bits_per_pixel), &(img1.line_length),

@@ -53,3 +53,52 @@ int ft_compute_tile_size(t_cub *cub)
 	according_to_height = cub->window.height / cub->map.height;
 	return (according_to_width < according_to_height ? according_to_width : according_to_height);
 }
+
+int setup_sprites(t_cub *cub)
+{
+	int i;
+	int j;
+	int k;
+
+	cub->map.sprite_count = ft_count_sprites(&cub->map);
+	cub->map.sprites = malloc(sizeof(t_sprite) * cub->map.sprite_count);
+	if (!cub->map.sprites)
+		return (1);
+	i = -1;
+	k = 0;
+	while (++i < cub->map.height)
+	{
+		j = 0;
+		while (j < (int)ft_strlen(cub->map.rows[i]))
+		{
+			if (cub->map.rows[i][j] == SPRITE)
+			{
+				cub->map.sprites[k].x = cub->tile_size * j + cub->tile_size / 2;
+				cub->map.sprites[k++].y = cub->tile_size * i + cub->tile_size / 2;
+			}
+			j++;
+		}
+	}
+	return (0);
+}
+
+int	ft_count_sprites(t_map *map)
+{
+	int i;
+	int row_length;
+	int j;
+
+	i = -1;
+	while (++i < map->height)
+	{
+		j = 0;
+		row_length = ft_strlen(map->rows[i]);
+		while (j < row_length)
+		{
+			if (map->rows[i][j] == SPRITE)
+				map->sprite_count++;
+			j++;
+		}
+	}
+	return (map->sprite_count);
+}
