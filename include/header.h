@@ -30,8 +30,8 @@
 # define MINIMAP_SCALE_FACTOR 0.2
 # define TRUE 1
 # define FALSE 0
-# define MINIMUM_WIDTH 200
-# define MINIMUM_HEIGHT 200
+# define MINIMUM_WIDTH 20
+# define MINIMUM_HEIGHT 20
 
 typedef int t_bool;
 
@@ -100,6 +100,15 @@ typedef struct	s_ray
 	t_texture	*texture;
 }				t_ray;
 
+typedef struct s_sprite
+{
+	double x;
+	double y;
+	double distance_from_player;
+	double angle;
+	t_bool is_visible;
+}	t_sprite;
+
 typedef struct s_map
 {
 	char **rows;
@@ -125,6 +134,7 @@ typedef	struct s_cub
 	int			tile_size;
 	int			tile_width;
 	int			tile_height;
+	t_sprite	sprite;
 }				t_cub;
 
 typedef struct s_parser
@@ -259,5 +269,7 @@ int key_win(int key, t_cub *cub);
 int key_release_win(int key, t_cub *cub);
 int destroy_win(t_cub *cub);
 
+int update_sprite(t_cub *cub);
+int render_sprite(t_image *img, t_cub *cub);
 
 #endif

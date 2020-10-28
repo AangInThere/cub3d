@@ -26,10 +26,11 @@ int render_next_frame(t_cub *cub)
 	// printf("dir.x: %d, dir.y: %d\n", cub->player.dir_hor, cub->player.dir_ver);
 	update_rays(cub);
 	// clear_img(img, cub);
-
+	update_sprite(cub);
 	render3d(img, cub);
-	render_player(img, cub);
-	render_grid(img, cub);
+	render_sprite(img, cub);
+	// render_player(img, cub);
+	// render_grid(img, cub);
 	// render_rays(img, cub);
 
 	mlx_put_image_to_window(cub->mlx_ptr, cub->window.win_ptr, img->img_ptr, 0, 0);

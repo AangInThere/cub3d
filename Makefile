@@ -1,4 +1,4 @@
-NAME = cub3d
+NAME = cub3D
 CC=gcc
 SRC_DIR = src
 OBJ_DIR = obj
@@ -9,7 +9,7 @@ CFLAGS=-g -Wall -Wextra -Werror -I $(INC_DIR)
 _SRC = cub3d.c player.c helper_render.c parse_resolution.c parse_utils.c \
 		parse_texture.c parse_color.c parse_premap.c parse_map.c check_map.c \
 		parse.c hooks.c render_minimap.c raycasting.c helper_raycasting.c \
-		render_cub.c setup.c
+		render_cub.c setup.c sprite.c
 SRC = $(addprefix $(SRC_DIR)/,$(_SRC))
 _HEADER=header.h
 HEADER = $(addprefix $(INC_DIR)/,$(_HEADER))

@@ -33,8 +33,8 @@ int main(int argc, char **argv)
 	{
 		if (check_file_name(argv[1]))
 			printf("Error in filename\n");
-		else
-			printf("Filename is fine\n");
+		// else
+			// printf("Filename is fine\n");
 	}
 	// mlx.mlx_ptr = mlx_init();
 	mlx_get_screen_size(cub.mlx_ptr, &cub.window.width, &cub.window.height);

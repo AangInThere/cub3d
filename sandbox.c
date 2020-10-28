@@ -4,17 +4,19 @@
 #include <string.h>
 #include "header.h"
 
-int key_win(int key, void *p)
-{
-	(void)p;
-	// printf("Key in Win1 : %d\n", key);
-	if (key == 0xFF1B)
-		exit(0);
-	return (0);
-}
+// int key_win(int key, void *p)
+// {
+// 	(void)p;
+// 	// printf("Key in Win1 : %d\n", key);
+// 	if (key == 0xFF1B)
+// 		exit(0);
+// 	return (0);
+// }
 
 int main(int argc, char **argv)
 {
+	(void)argc;
+	(void)argv;
 	// int fd = open("fsdaf.txt", O_RDONLY);
 	// if (fd == -1)
 	// {
@@ -41,16 +43,28 @@ int main(int argc, char **argv)
 	// color.rgb.b = 200;
 	// printf("%hhu, %hhu, %hhu; %u\n", color.rgb.r, color.rgb.g, color.rgb.b, color.hexcode);
 
-	t_cub	cub;
-	ft_bzero(&cub, sizeof(cub));
-	cub.mlx_ptr = mlx_init();
-	// char *line;
-	// int fd = open("test.cub", O_RDONLY);
-	// get_next_line(fd, &line);
-	mlx_get_screen_size(cub.mlx_ptr, &cub.window.width, &cub.window.height);
-	// printf("width: %d, height: %d\n", cub.window.width, cub.window.height);
-	(void)argc;
-	parse(&cub, argv[1]);
+	// t_cub	cub;
+	// ft_bzero(&cub, sizeof(cub));
+	// cub.mlx_ptr = mlx_init();
+	// // char *line;
+	// // int fd = open("test.cub", O_RDONLY);
+	// // get_next_line(fd, &line);
+	// mlx_get_screen_size(cub.mlx_ptr, &cub.window.width, &cub.window.height);
+	// // printf("width: %d, height: %d\n", cub.window.width, cub.window.height);
+	// (void)argc;
+	// parse(&cub, argv[1]);
+
+	static t_texture sprite;
+	sprite.filepath = "textures/eagle.xpm";
+	sprite.img.img_ptr = mlx_xpm_file_to_image(mlx_init(), sprite.filepath, &sprite.width, &sprite.height);
+	sprite.img.addr = mlx_get_data_addr(sprite.img.img_ptr
+														, &sprite.img.bits_per_pixel
+														, &sprite.img.line_length
+														, &sprite.img.endian);
+	int x = 0, y = 3;
+	unsigned color_first_pixel = *(unsigned int *)(sprite.img.addr + (y * sprite.img.line_length + x * (sprite.img.bits_per_pixel / 8)));
+	printf("sprite.width: %d, sprite.height: %d, color_first: %x\n", sprite.width, sprite.height, color_first_pixel);
+
 	// line = delete_leading_spaces(line);
 	// printf("check format: %d\n", check_formatting_resolution(line));
 	// if (check_formatting_resolution(line) == 0)

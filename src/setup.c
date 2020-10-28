@@ -16,9 +16,11 @@ int set_up_window_and_images_for_cub(t_cub *cub)
 	cub->number_of_rays = cub->window.width / WALL_STRIP_WIDTH;
 	cub->rays = malloc(sizeof(t_ray) * (cub->number_of_rays));
 	cub->tile_size = ft_compute_tile_size(cub);
+	// cub->tile_size = 80;
 	cub->tile_width = cub->window.width / cub->map.width;
 	cub->tile_height = cub->window.height / cub->map.height;
-
+	cub->sprite.x = 1.5 * cub->tile_size;
+	cub->sprite.y = 1.5 * cub->tile_size;
 	return 0;
 }
 
