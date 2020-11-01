@@ -19,8 +19,8 @@ int set_up_window_and_images_for_cub(t_cub *cub)
 	// cub->tile_size = 80;
 	cub->tile_width = cub->window.width / cub->map.width;
 	cub->tile_height = cub->window.height / cub->map.height;
-	cub->sprite.x = 1.5 * cub->tile_size;
-	cub->sprite.y = 1.5 * cub->tile_size;
+	// cub->sprite.x = 1.5 * cub->tile_size;
+	// cub->sprite.y = 1.5 * cub->tile_size;
 	return 0;
 }
 

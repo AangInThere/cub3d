@@ -136,7 +136,7 @@ typedef	struct s_cub
 	int			tile_size;
 	int			tile_width;
 	int			tile_height;
-	t_sprite	sprite;
+	// t_sprite	sprite;
 }				t_cub;
 
 typedef struct s_parser
@@ -191,11 +191,6 @@ enum e_cell
 	EAST = 'E',
 	WEST = 'W'
 };
-
-// extern t_player	player;
-// extern int		grid[11][15];
-// extern t_ray	ray_array[NUM_RAYS];
-// extern t_texture texture;
 
 int put_square_at(t_image *data, int x, int y, int size, int color);
 void my_mlx_pixel_put(t_image *data, int x, int y, int color);
@@ -281,5 +276,10 @@ int render_sprite(t_image *img, t_cub *cub, t_sprite *sprite);
 int sort_sprites(t_map *map);
 int update_sprites(t_cub *cub);
 int render_sprites(t_image *img, t_cub *cub);
+
+int save_bmp(t_cub *cub);
+int write_bmp_header(t_cub *cub, int fd, int filesize);
+int write_bmp_pixel(t_cub *cub, int fd, int pad, t_image *image);
+
 
 #endif

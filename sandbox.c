@@ -54,17 +54,18 @@ int main(int argc, char **argv)
 	// (void)argc;
 	// parse(&cub, argv[1]);
 
-	static t_texture sprite;
-	sprite.filepath = "textures/eagle.xpm";
-	sprite.img.img_ptr = mlx_xpm_file_to_image(mlx_init(), sprite.filepath, &sprite.width, &sprite.height);
-	sprite.img.addr = mlx_get_data_addr(sprite.img.img_ptr
-														, &sprite.img.bits_per_pixel
-														, &sprite.img.line_length
-														, &sprite.img.endian);
-	int x = 0, y = 3;
-	unsigned color_first_pixel = *(unsigned int *)(sprite.img.addr + (y * sprite.img.line_length + x * (sprite.img.bits_per_pixel / 8)));
-	printf("sprite.width: %d, sprite.height: %d, color_first: %x\n", sprite.width, sprite.height, color_first_pixel);
-
+	// static t_texture sprite;
+	// sprite.filepath = "textures/eagle.xpm";
+	// sprite.img.img_ptr = mlx_xpm_file_to_image(mlx_init(), sprite.filepath, &sprite.width, &sprite.height);
+	// sprite.img.addr = mlx_get_data_addr(sprite.img.img_ptr
+	// 													, &sprite.img.bits_per_pixel
+	// 													, &sprite.img.line_length
+	// 													, &sprite.img.endian);
+	// int x = 0, y = 3;
+	// unsigned color_first_pixel = *(unsigned int *)(sprite.img.addr + (y * sprite.img.line_length + x * (sprite.img.bits_per_pixel / 8)));
+	// printf("sprite.width: %d, sprite.height: %d, color_first: %x\n", sprite.width, sprite.height, color_first_pixel);
+	int ex = INT_MIN;
+	printf("%hhu %hhu %hhu %hhu\n", *((unsigned char *)&ex), *((unsigned char *)&ex + 1), *((unsigned char *)&ex + 2), *((unsigned char *)&ex + 3));
 	// line = delete_leading_spaces(line);
 	// printf("check format: %d\n", check_formatting_resolution(line));
 	// if (check_formatting_resolution(line) == 0)
