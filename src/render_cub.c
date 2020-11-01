@@ -32,8 +32,8 @@ int render_next_frame(t_cub *cub)
 	// render_player(img, cub);
 	// render_grid(img, cub);
 	// render_rays(img, cub);
-	save_bmp(cub);
-	exit(0);
+	// save_bmp(cub);
+	// exit(0);
 	mlx_put_image_to_window(cub->mlx_ptr, cub->window.win_ptr, img->img_ptr, 0, 0);
 	return 0;
 }

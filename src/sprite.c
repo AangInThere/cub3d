@@ -122,12 +122,13 @@ int render_sprite(t_image *img, t_cub *cub, t_sprite *sprite)
 		{
 			double cy = 0;
 			texx = cx * 64 / width;
-			// int ray_sprite = inx + cx;
+			int ray_sprite = inx + cx;
 			while (cy < height)
 			{
 
 				texy = cy * 64 / height;
-				if (inx + cx < cub->window.width && iny + cy < cub->window.height && inx + cx >= 0 && iny + cy >= 0)
+				if (inx + cx < cub->window.width && iny + cy < cub->window.height && inx + cx >= 0 && iny + cy >= 0
+					&& cub->rays[ray_sprite].distance > sprite->distance_from_player)
 				{
 					unsigned color;
 					color = *(unsigned int *)(texture->img.addr + (int)texy * texture->img.line_length + (int)texx * (texture->img.bits_per_pixel / 8));
