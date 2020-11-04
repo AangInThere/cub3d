@@ -4,3 +4,4 @@ obj
 cub3d
 sandbox
 cub3D
+valgrind-out.txt

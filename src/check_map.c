@@ -18,10 +18,11 @@ int check_map(t_map *map)
 	int	i;
 	int row_length;
 	int j;
+	t_error error_code;
 
 	//check if map is not in 2 parts(with an empty line in the middle of it, consider this an error)
-	if (check_characters_and_player_in_map(map) != 0)
-		return (1);
+	if ((error_code = check_characters_and_player_in_map(map)) != 0)
+		return (error_code);
 	i = -1;
 	while (++i < map->height)
 	{
@@ -30,7 +31,7 @@ int check_map(t_map *map)
 		while (j < row_length)
 		{
 			if (is_an_edge(map, j, i) && map->rows[i][j] != WALL)
-				return (2);
+				return (MAP_IS_NOT_CLOSED);
 			j++;
 		}
 	}
@@ -53,17 +54,17 @@ int	check_characters_and_player_in_map(t_map *map)
 		while (j < row_length)
 		{
 			if (ft_strchr(MAP_STRING, map->rows[i][j]) == NULL)
-				return (1);
+				return (UNKNOWN_CHAR_IN_MAP);
 			if (ft_strchr(PLAYER_STRING, map->rows[i][j]))
 			{
 				if (found_player_position)
-					return (2);
+					return (TWO_PLAYERS_IN_MAP);
 				found_player_position = TRUE;
 			}
 			j++;
 		}
 	}
-	return (found_player_position == TRUE ? 0 : 3);
+	return (found_player_position == TRUE ? 0 : PLAYER_NOT_FOUND_IN_MAP);
 }
 
 t_bool	is_an_edge(t_map *map, int x, int y)

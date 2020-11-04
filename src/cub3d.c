@@ -1,26 +1,20 @@
 #include "header.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	// t_mlx	mlx;
 	t_cub	cub;
 
-	(void)argc;
-	(void)argv;
-
-	ft_bzero(&cub, sizeof(cub));
-	cub.mlx_ptr = mlx_init();
-	if (argc == 2)
+	if (argc < 2 || argc > 3 || check_file_name(argv[1]) != 0 || (argc == 3 && ft_strcmp(argv[2], "--save") != 0))
 	{
-		if (check_file_name(argv[1]))
-			printf("Error in filename\n");
-		// else
-			// printf("Filename is fine\n");
+		ft_putstr("Usage: ./cub3D *.cub [--save]\n");
+		exit(EXIT_FAILURE);
 	}
-	// mlx.mlx_ptr = mlx_init();
+	ft_bzero(&cub, sizeof(cub));
+	if ((cub.mlx_ptr = mlx_init()) == NULL)
+		exit(EXIT_FAILURE);
 	mlx_get_screen_size(cub.mlx_ptr, &cub.window.width, &cub.window.height);
 	if (parse(&cub, argv[1]) != 0)
-		exit(0);
+		print_error_and_clean_exit(NULL, &cub);
 	set_up_window_and_images_for_cub(&cub);
 	set_player_starting_position(&cub.player, cub.map, &cub);
 	setup_sprites(&cub);

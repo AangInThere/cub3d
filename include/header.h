@@ -122,6 +122,7 @@ typedef struct s_map
 typedef	struct s_cub
 {
 	void		*mlx_ptr;
+	int			fd_config_file;
 	t_window	window;
 	t_texture	textures[5];
 	t_color		colors[2];
@@ -191,6 +192,25 @@ enum e_cell
 	EAST = 'E',
 	WEST = 'W'
 };
+
+typedef enum e_error
+{
+	UNKNOWN_IDENTIFIER = 1,
+	SAME_IDENTIFIER_TWICE,
+	MALLOC_ERROR,
+	SMALLER_THAN_MINIMUM_RESOLUTION,
+	COLOR_PARSING,
+	MISSING_ELEMENTS,
+	CONFIG_FILE_READING,
+	FORMATTING_TEXTURE,
+	FORMATTING_RESOLUTION,
+	FORMATTING_COLOR,
+	UNKNOWN_CHAR_IN_MAP,
+	TWO_PLAYERS_IN_MAP,
+	PLAYER_NOT_FOUND_IN_MAP,
+	MAP_IS_NOT_CLOSED,
+	LOADING_TEXTURES
+}	t_error;
 
 int put_square_at(t_image *data, int x, int y, int size, int color);
 void my_mlx_pixel_put(t_image *data, int x, int y, int color);
@@ -262,7 +282,12 @@ t_bool	is_an_edge(t_map *map, int x, int y);
 t_bool is_inside_map(t_map *map, int x, int y);
 
 int parse(t_cub *cub, char *filename);
+
+
 void	print_error(char *error_msg);
+int	free_and_destroy(t_cub *cub);
+int	print_error_and_clean_exit(char *error_msg, t_cub *cub);
+int	free_and_destroy_textures(t_cub *cub);
 
 int key_win(int key, t_cub *cub);
 int key_release_win(int key, t_cub *cub);

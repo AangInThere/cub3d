@@ -17,18 +17,25 @@ int main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
+
 	// int fd = open("fsdaf.txt", O_RDONLY);
 	// if (fd == -1)
 	// {
 	// 	printf("af %s\n", strerror(errno));
 	// 	perror("open");
 	// }
-	// void *mlx_ptr = mlx_init();
-	// int screen_width;
-	// int screen_height;
-	// mlx_get_screen_size(mlx_ptr, &screen_width, &screen_height);
-	// printf("width: %d, height: %d\n", screen_width, screen_height);
-	// void *win_ptr = mlx_new_window(mlx_ptr, screen_width, screen_height, "test get screen size");
+	void *mlx_ptr = mlx_init();
+	int screen_width;
+	int screen_height;
+	mlx_get_screen_size(mlx_ptr, &screen_width, &screen_height);
+	printf("width: %d, height: %d\n", screen_width, screen_height);
+	void *win_ptr = mlx_new_window(mlx_ptr, screen_width, screen_height, "test get screen size");
+	// (void)win_ptr;
+	mlx_destroy_window(mlx_ptr, win_ptr);
+	// system("leaks sandbox");
+	int *array = malloc(4);
+	array[0] = 12342;
+	exit(EXIT_SUCCESS);
 	// mlx_key_hook(win_ptr, key_win, NULL);
 	// for (int i = screen_height - 70; i < screen_height; i++)
 	// {
@@ -64,8 +71,8 @@ int main(int argc, char **argv)
 	// int x = 0, y = 3;
 	// unsigned color_first_pixel = *(unsigned int *)(sprite.img.addr + (y * sprite.img.line_length + x * (sprite.img.bits_per_pixel / 8)));
 	// printf("sprite.width: %d, sprite.height: %d, color_first: %x\n", sprite.width, sprite.height, color_first_pixel);
-	int ex = INT_MIN;
-	printf("%hhu %hhu %hhu %hhu\n", *((unsigned char *)&ex), *((unsigned char *)&ex + 1), *((unsigned char *)&ex + 2), *((unsigned char *)&ex + 3));
+	// int ex = INT_MIN;
+	// printf("%hhu %hhu %hhu %hhu\n", *((unsigned char *)&ex), *((unsigned char *)&ex + 1), *((unsigned char *)&ex + 2), *((unsigned char *)&ex + 3));
 	// line = delete_leading_spaces(line);
 	// printf("check format: %d\n", check_formatting_resolution(line));
 	// if (check_formatting_resolution(line) == 0)

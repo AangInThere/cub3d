@@ -33,7 +33,9 @@ int	parse_premap(int fd, t_cub *cub)
 			return (0);
 		gnl_ret = get_next_line(fd, &line);
 	}
-	return (2);
+	if (gnl_ret < 0)
+			return (cub->error_code = CONFIG_FILE_READING);
+	return (cub->error_code = MISSING_ELEMENTS);
 }
 
 int	parse_one_line(char *line, t_cub *cub)
@@ -53,11 +55,11 @@ int	parse_one_line(char *line, t_cub *cub)
 		}
 	}
 	if (!has_a_match)
-		return (1);
+		return (cub->error_code = UNKNOWN_IDENTIFIER);
 	if (g_parser[i].format_checking_function(line) != 0)
-		return (2);
+		return (cub->error_code = g_parser[i].format_checking_function(line));
 	if (cub->already_parsed & g_parser[i].parsing_code)
-		return (3); //already parsed;
+		return (cub->error_code = SAME_IDENTIFIER_TWICE);
 	if (g_parser[i].parsing_function(line, cub) != 0)
 		return (4);
 	cub->already_parsed |= g_parser[i].parsing_code;

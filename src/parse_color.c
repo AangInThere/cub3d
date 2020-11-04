@@ -14,7 +14,7 @@ int	parse_color(char *line, t_cub *cub)
 			line += ft_strlen(g_identifier_colors[i]);
 			skip_spaces(&line);
 			if (parse_color_numbers(line, &(cub->colors[i])))
-				return (-1);
+				return (cub->error_code = COLOR_PARSING);
 			break;
 		}
 		i++;
@@ -54,19 +54,19 @@ int	check_formatting_color(char *line)
 		if (ft_strncmp(line, g_identifier_colors[i], ft_strlen(g_identifier_colors[i])) == 0)
 			has_a_match = TRUE;
 	if (!has_a_match || *++line != ' ')
-		return (-1);
+		return (FORMATTING_COLOR);
 	if (check_formatting_color_number(&line) != 0)
-		return (-2);
+		return (FORMATTING_COLOR);
 	if (*line++ != ',')
-		return (-3);
+		return (FORMATTING_COLOR);
 	if (check_formatting_color_number(&line) != 0)
-		return (-4);
+		return (FORMATTING_COLOR);
 	if (*line++ != ',')
-		return (-5);
+		return (FORMATTING_COLOR);
 	if (check_formatting_color_number(&line) != 0)
-		return (-6);
+		return (FORMATTING_COLOR);
 	if (*line != '\0')
-		return (-7);
+		return (FORMATTING_COLOR);
 	return (0);
 }
 

@@ -4,8 +4,9 @@
 int parse_map(int fd, t_cub *cub)
 {
 	//add a check to see if there is not an empty line in the middle of the map even when it is closed
-	get_map_from_file(fd, &cub->map);
-	if (check_map(&cub->map) != 0)
+	if (get_map_from_file(fd, &cub->map) != 0)
+		return (cub->error_code = CONFIG_FILE_READING);
+	if ((cub->error_code = check_map(&cub->map)) != 0)
 		return (1);
 	return (0);
 }
@@ -19,6 +20,8 @@ int get_map_from_file(int fd, t_map *map)
 	while (gnl_ret > 0)
 	{
 		gnl_ret = get_next_line(fd, &line);
+		if (gnl_ret < 0)
+			return (CONFIG_FILE_READING);
 		if (map->height == 0 &&  is_empty_line(line))
 		{
 			free(line);
@@ -41,7 +44,7 @@ char **realloc_map(t_map *map)
 	int new_size;
 
 	new_size = (map->malloced_height == 0 ? INITIAL_HEIGHT : map->malloced_height * 2);
-	new_rows = malloc(sizeof(char *) * new_size);
+	new_rows = ft_calloc(new_size,  sizeof(char *));
 	ft_memcpy(new_rows, map->rows, map->malloced_height * sizeof(char *));
 	map->malloced_height = new_size;
 	free(map->rows);

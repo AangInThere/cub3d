@@ -5,7 +5,10 @@ int key_win(int key, t_cub *cub)
 	(void)cub;
 	// printf("Key in Win1 : %d\n", key);
 	if (key == 0xFF1B)
-		exit(0);
+	{
+		free_and_destroy(cub);
+		exit(EXIT_SUCCESS);
+	}
 	else if (key == 119)
 		cub->player.dir_ver = 1;
 	else if (key == 115)
