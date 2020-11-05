@@ -50,6 +50,8 @@ int	free_and_destroy(t_cub *cub)
 		mlx_destroy_image(cub->mlx_ptr, cub->images[1].img_ptr);
 	}
 	free_and_destroy_textures(cub);
+	if (cub->mlx_ptr)
+		mlx_destroy_display(cub->mlx_ptr);
 	return (0);
 }
 

@@ -65,29 +65,6 @@ int update_sprite(t_sprite *sprite, t_player player)
 	return (0);
 }
 
-// int update_sprite(t_cub *cub)
-// {
-// 	double difference_in_angle;
-// 	double sprite_angle_with_player;
-
-// 	double dx = cub->sprite.x - cub->player.x;
-// 	double dy = cub->sprite.y - cub->player.y;
-// 	cub->sprite.distance_from_player = distanceBetween(cub->sprite.x, cub->sprite.y, cub->player.x, cub->player.y);
-// 	sprite_angle_with_player = atan2(dy, dx);
-// 	difference_in_angle = sprite_angle_with_player - cub->player.rotation_angle;
-// 	if (difference_in_angle < -1 * M_PI)
-// 		difference_in_angle += 2 * M_PI;
-// 	else if (difference_in_angle > M_PI)
-// 		difference_in_angle -= 2 * M_PI;
-// 	cub->sprite.angle = difference_in_angle;
-// 	difference_in_angle = (difference_in_angle > 0 ? difference_in_angle : -1 * difference_in_angle);
-// 	if (difference_in_angle < FOV_ANGLE / 2)
-// 		cub->sprite.is_visible = TRUE;
-// 	else
-// 		cub->sprite.is_visible = FALSE;
-// 	// printf("is_sprite visible: %s, filepath: %s\n", (cub->sprite.is_visible ? "YES" : "NO"), cub->textures[4].filepath);
-// 	return (0);
-// }
 
 int render_sprites(t_image *img, t_cub *cub)
 {
@@ -132,8 +109,7 @@ int render_sprite(t_image *img, t_cub *cub, t_sprite *sprite)
 				{
 					unsigned color;
 					color = *(unsigned int *)(texture->img.addr + (int)texy * texture->img.line_length + (int)texx * (texture->img.bits_per_pixel / 8));
-					(void)color;
-					if (color)
+					if (color << 8)
 						my_mlx_pixel_put(img, inx + cx, iny + cy, color);
 					// my_mlx_pixel_put(img, inx + cx, iny + cy, 0XFFFFFF);
 				}
@@ -184,5 +160,29 @@ int render_sprite(t_image *img, t_cub *cub, t_sprite *sprite)
 // 			cx++;
 // 		}
 // 	}
+// 	return (0);
+// }
+
+// int update_sprite(t_cub *cub)
+// {
+// 	double difference_in_angle;
+// 	double sprite_angle_with_player;
+
+// 	double dx = cub->sprite.x - cub->player.x;
+// 	double dy = cub->sprite.y - cub->player.y;
+// 	cub->sprite.distance_from_player = distanceBetween(cub->sprite.x, cub->sprite.y, cub->player.x, cub->player.y);
+// 	sprite_angle_with_player = atan2(dy, dx);
+// 	difference_in_angle = sprite_angle_with_player - cub->player.rotation_angle;
+// 	if (difference_in_angle < -1 * M_PI)
+// 		difference_in_angle += 2 * M_PI;
+// 	else if (difference_in_angle > M_PI)
+// 		difference_in_angle -= 2 * M_PI;
+// 	cub->sprite.angle = difference_in_angle;
+// 	difference_in_angle = (difference_in_angle > 0 ? difference_in_angle : -1 * difference_in_angle);
+// 	if (difference_in_angle < FOV_ANGLE / 2)
+// 		cub->sprite.is_visible = TRUE;
+// 	else
+// 		cub->sprite.is_visible = FALSE;
+// 	// printf("is_sprite visible: %s, filepath: %s\n", (cub->sprite.is_visible ? "YES" : "NO"), cub->textures[4].filepath);
 // 	return (0);
 // }

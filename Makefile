@@ -3,6 +3,7 @@ CC=gcc
 SRC_DIR = src
 OBJ_DIR = obj
 INC_DIR = include
+#CFLAGS=-ggdb3 -fsanitize=address -Wall -Wextra -Werror -I $(INC_DIR)
 CFLAGS=-ggdb3 -Wall -Wextra -Werror -I $(INC_DIR)
 #CFLAGS= -I$(INC) -O3 -I..
 
