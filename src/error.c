@@ -15,6 +15,7 @@ static char *g_error_msg[] = {
 	[TWO_PLAYERS_IN_MAP] = "Two players found in the map",
 	[PLAYER_NOT_FOUND_IN_MAP] = "Player not found in the map",
 	[MAP_IS_NOT_CLOSED] = "The map is not closed by walls",
+	[EMPTY_LINE_IN_THE_MIDDLE] = "There is an empty line in the middle of the map content",
 	[LOADING_TEXTURES] = "Could not load textures"
 };
 
@@ -30,8 +31,6 @@ int	free_and_destroy(t_cub *cub)
 
 	if (cub->fd_config_file > 0)
 		close(cub->fd_config_file);
-	if (cub->window.win_ptr)
-		mlx_destroy_window(cub->mlx_ptr, cub->window.win_ptr);
 	i = -1;
 	if (cub->map.rows)
 	{
@@ -50,8 +49,10 @@ int	free_and_destroy(t_cub *cub)
 		mlx_destroy_image(cub->mlx_ptr, cub->images[1].img_ptr);
 	}
 	free_and_destroy_textures(cub);
-	if (cub->mlx_ptr)
-		mlx_destroy_display(cub->mlx_ptr);
+	if (cub->window.win_ptr)
+		mlx_destroy_window(cub->mlx_ptr, cub->window.win_ptr);
+	// if (cub->mlx_ptr)
+	// 	mlx_destroy_display(cub->mlx_ptr);
 	return (0);
 }
 

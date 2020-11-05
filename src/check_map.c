@@ -35,6 +35,21 @@ int check_map(t_map *map)
 			j++;
 		}
 	}
+	if ((error_code = check_if_map_is_not_in_2_parts(map)) != 0)
+		return (error_code);
+	return (0);
+}
+
+int	check_if_map_is_not_in_2_parts(t_map *map)
+{
+	int	i;
+
+	i = -1;
+	while (++i < map->height)
+	{
+		if (is_empty_line(map->rows[i]))
+				return (EMPTY_LINE_IN_THE_MIDDLE);
+	}
 	return (0);
 }
 

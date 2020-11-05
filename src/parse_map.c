@@ -3,7 +3,6 @@
 
 int parse_map(int fd, t_cub *cub)
 {
-	//add a check to see if there is not an empty line in the middle of the map even when it is closed
 	if (get_map_from_file(fd, &cub->map) != 0)
 		return (cub->error_code = CONFIG_FILE_READING);
 	if ((cub->error_code = check_map(&cub->map)) != 0)
@@ -34,7 +33,8 @@ int get_map_from_file(int fd, t_map *map)
 			map->width = ft_strlen(line);
 		map->height++;
 	}
-	map->height = ft_compute_real_height(map);
+	remove_empty_lines_at_the_end(map);
+	// map->height = ft_compute_real_height(map);
 	return (0);
 }
 
@@ -52,19 +52,38 @@ char **realloc_map(t_map *map)
 	return (NULL);
 }
 
-int	ft_compute_real_height(t_map *map)
-{
-	int height;
-	int i;
+// int	ft_compute_real_height(t_map *map)
+// {
+// 	int height;
+// 	int i;
 
-	i = 0;
-	height = 0;
-	while (i < map->height)
+// 	i = 0;
+// 	height = 0;
+// 	while (i < map->height)
+// 	{
+// 		if (is_empty_line(map->rows[i]))
+// 			break;
+// 		height++;
+// 		i++;
+// 	}
+// 	return (height);
+// }
+
+int remove_empty_lines_at_the_end(t_map *map)
+{
+	int	i;
+
+	i = map->height - 1;
+	while (i >= 0)
 	{
 		if (is_empty_line(map->rows[i]))
+		{
+			free(map->rows[i]);
+			map->height--;
+		}
+		else
 			break;
-		height++;
-		i++;
+		i--;
 	}
-	return (height);
+	return (0);
 }

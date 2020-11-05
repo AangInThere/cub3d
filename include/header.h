@@ -209,7 +209,8 @@ typedef enum e_error
 	TWO_PLAYERS_IN_MAP,
 	PLAYER_NOT_FOUND_IN_MAP,
 	MAP_IS_NOT_CLOSED,
-	LOADING_TEXTURES
+	LOADING_TEXTURES,
+	EMPTY_LINE_IN_THE_MIDDLE
 }	t_error;
 
 int put_square_at(t_image *data, int x, int y, int size, int color);
@@ -274,12 +275,14 @@ int each_element_of_premap_is_parsed(unsigned already_parsed);
 int parse_map(int fd, t_cub *cub);
 int get_map_from_file(int fd, t_map *map);
 char **realloc_map(t_map *map);
-int ft_compute_real_height(t_map *map);
+// int ft_compute_real_height(t_map *map);
+int remove_empty_lines_at_the_end(t_map *map);
 
 int check_map(t_map *map);
 int check_characters_and_player_in_map(t_map *map);
 t_bool	is_an_edge(t_map *map, int x, int y);
 t_bool is_inside_map(t_map *map, int x, int y);
+int	check_if_map_is_not_in_2_parts(t_map *map);
 
 int parse(t_cub *cub, char *filename);
 
