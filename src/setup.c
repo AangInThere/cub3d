@@ -1,33 +1,55 @@
 #include "header.h"
 
-int set_up_window_and_images_for_cub(t_cub *cub)
+int setup_cub3d(t_cub *cub)
 {
-	cub->window.win_ptr = mlx_new_window(cub->mlx_ptr, cub->window.width, cub->window.height, "Cub3D");
-	cub->images[0].img_ptr = mlx_new_image(cub->mlx_ptr, cub->window.width, cub->window.height);
-	cub->images[1].img_ptr = mlx_new_image(cub->mlx_ptr, cub->window.width, cub->window.height);
-	cub->images[0].addr = mlx_get_data_addr(cub->images[0].img_ptr, &(cub->images[0].bits_per_pixel), &(cub->images[0].line_length),
-											&(cub->images[0].endian));
-	cub->images[1].addr = mlx_get_data_addr(cub->images[1].img_ptr, &(cub->images[1].bits_per_pixel), &(cub->images[1].line_length),
-											&(cub->images[1].endian));
-	mlx_hook(cub->window.win_ptr, 2, 1L << 0, key_win, cub);
-	mlx_hook(cub->window.win_ptr, 3, 1L << 1, key_release_win, cub);
-	mlx_hook(cub->window.win_ptr, 17, 1L << 17, destroy_win, cub);
-	mlx_loop_hook(cub->mlx_ptr, render_next_frame, cub);
-	cub->number_of_rays = cub->window.width / WALL_STRIP_WIDTH;
-	cub->rays = malloc(sizeof(t_ray) * (cub->number_of_rays));
+
+	if (setup_window_and_images(cub) != 0)
+		return (cub->error_code);
 	cub->tile_size = ft_compute_tile_size(cub);
 	// cub->tile_size = TILE_SIZE;
 	cub->tile_width = cub->window.width / cub->map.width;
 	cub->tile_height = cub->window.height / cub->map.height;
-	// cub->sprite.x = 1.5 * cub->tile_size;
-	// cub->sprite.y = 1.5 * cub->tile_size;
-	return 0;
+	setup_hooks(cub);
+	set_player_starting_position(&cub->player, cub->map, cub);
+	cub->number_of_rays = cub->window.width / WALL_STRIP_WIDTH;
+	if ((cub->rays = malloc(sizeof(t_ray) * (cub->number_of_rays))) == NULL)
+		return (cub->error_code = MALLOC_ERROR);
+	if (setup_sprites(cub) != 0)
+		return (cub->error_code);
+	return (0);
+}
+
+int setup_window_and_images(t_cub *cub)
+{
+	if ((cub->window.win_ptr = mlx_new_window(cub->mlx_ptr, cub->window.width, cub->window.height, "Cub3D")) == NULL)
+		return (cub->error_code = MINILIBX_ERROR);
+	if ((cub->images[0].img_ptr = mlx_new_image(cub->mlx_ptr, cub->window.width, cub->window.height)) == NULL)
+		return (cub->error_code = MINILIBX_ERROR);
+	if ((cub->images[1].img_ptr = mlx_new_image(cub->mlx_ptr, cub->window.width, cub->window.height)) == NULL)
+		return (cub->error_code = MINILIBX_ERROR);
+	if ((cub->images[0].addr = mlx_get_data_addr(cub->images[0].img_ptr, &(cub->images[0].bits_per_pixel), &(cub->images[0].line_length),
+												 &(cub->images[0].endian))) == NULL)
+		return (cub->error_code = MINILIBX_ERROR);
+	if ((cub->images[1].addr = mlx_get_data_addr(cub->images[1].img_ptr, &(cub->images[1].bits_per_pixel), &(cub->images[1].line_length),
+												 &(cub->images[1].endian))) == NULL)
+		return (cub->error_code = MINILIBX_ERROR);
+	return (0);
+}
+
+int	setup_hooks(t_cub *cub)
+{
+	mlx_hook(cub->window.win_ptr, 2, 1L << 0, key_win, cub);
+	mlx_hook(cub->window.win_ptr, 3, 1L << 1, key_release_win, cub);
+	mlx_hook(cub->window.win_ptr, 17, 1L << 17, destroy_win, cub);
+	mlx_loop_hook(cub->mlx_ptr, render_next_frame, cub);
+	return (0);
 }
 
 int set_player_starting_position(t_player *player, t_map map, t_cub *cub)
 {
 	static double initial_angle[4] = {M_PI + M_PI / 2, 0, M_PI / 2, M_PI};
-	char *player_string = "NWSE";
+	static char *player_string = "NWSE";
+
 	for (int i = 0; i < map.height; i++)
 	{
 		for (int j = 0; j < (int)ft_strlen(map.rows[i]); j++)
@@ -61,9 +83,8 @@ int setup_sprites(t_cub *cub)
 	int k;
 
 	cub->map.sprite_count = ft_count_sprites(&cub->map);
-	cub->map.sprites = malloc(sizeof(t_sprite) * cub->map.sprite_count);
-	if (!cub->map.sprites)
-		return (1);
+	if ((cub->map.sprites = malloc(sizeof(t_sprite) * cub->map.sprite_count)) == NULL)
+		return (cub->error_code = MALLOC_ERROR);
 	i = -1;
 	k = 0;
 	while (++i < cub->map.height)

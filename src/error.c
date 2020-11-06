@@ -16,7 +16,8 @@ static char *g_error_msg[] = {
 	[PLAYER_NOT_FOUND_IN_MAP] = "Player not found in the map",
 	[MAP_IS_NOT_CLOSED] = "The map is not closed by walls",
 	[EMPTY_LINE_IN_THE_MIDDLE] = "There is an empty line in the middle of the map content",
-	[LOADING_TEXTURES] = "Could not load textures"
+	[LOADING_TEXTURES] = "Could not load textures",
+	[MINILIBX_ERROR] = "Minilibx encountered an error"
 };
 
 void print_error(char *error_msg)

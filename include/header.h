@@ -210,7 +210,8 @@ typedef enum e_error
 	PLAYER_NOT_FOUND_IN_MAP,
 	MAP_IS_NOT_CLOSED,
 	LOADING_TEXTURES,
-	EMPTY_LINE_IN_THE_MIDDLE
+	EMPTY_LINE_IN_THE_MIDDLE,
+	MINILIBX_ERROR
 }	t_error;
 
 int put_square_at(t_image *data, int x, int y, int size, int color);
@@ -219,7 +220,9 @@ int put_rectangle_at(t_image *data, int x, int y, int width, int height, int col
 void plot_line(t_image *data, int x0, int y0, int x1, int y1);
 void plot_circle(t_image *img, int xm, int ym, int r, unsigned color);
 
-int set_up_window_and_images_for_cub(t_cub *cub);
+int setup_cub3d(t_cub *cub);
+int setup_window_and_images(t_cub *cub);
+int setup_hooks(t_cub *cub);
 int set_player_starting_position(t_player *player, t_map map, t_cub *cub);
 int ft_compute_tile_size(t_cub *cub);
 int setup_sprites(t_cub *cub);
