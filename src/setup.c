@@ -3,7 +3,7 @@
 int setup_cub3d(t_cub *cub)
 {
 
-	if (setup_window_and_images(cub) != 0)
+	if (setup_window_and_image(cub) != 0)
 		return (cub->error_code);
 	cub->tile_size = ft_compute_tile_size(cub);
 	// cub->tile_size = TILE_SIZE;
@@ -19,20 +19,26 @@ int setup_cub3d(t_cub *cub)
 	return (0);
 }
 
-int setup_window_and_images(t_cub *cub)
+int setup_window_and_image(t_cub *cub)
 {
 	if ((cub->window.win_ptr = mlx_new_window(cub->mlx_ptr, cub->window.width, cub->window.height, "Cub3D")) == NULL)
 		return (cub->error_code = MINILIBX_ERROR);
-	if ((cub->images[0].img_ptr = mlx_new_image(cub->mlx_ptr, cub->window.width, cub->window.height)) == NULL)
+	if ((cub->image.img_ptr = mlx_new_image(cub->mlx_ptr, cub->window.width, cub->window.height)) == NULL)
 		return (cub->error_code = MINILIBX_ERROR);
-	if ((cub->images[1].img_ptr = mlx_new_image(cub->mlx_ptr, cub->window.width, cub->window.height)) == NULL)
+	if ((cub->image.addr = mlx_get_data_addr(cub->image.img_ptr, &(cub->image.bits_per_pixel), &(cub->image.line_length),
+												 &(cub->image.endian))) == NULL)
 		return (cub->error_code = MINILIBX_ERROR);
-	if ((cub->images[0].addr = mlx_get_data_addr(cub->images[0].img_ptr, &(cub->images[0].bits_per_pixel), &(cub->images[0].line_length),
-												 &(cub->images[0].endian))) == NULL)
-		return (cub->error_code = MINILIBX_ERROR);
-	if ((cub->images[1].addr = mlx_get_data_addr(cub->images[1].img_ptr, &(cub->images[1].bits_per_pixel), &(cub->images[1].line_length),
-												 &(cub->images[1].endian))) == NULL)
-		return (cub->error_code = MINILIBX_ERROR);
+
+	// if ((cub->images[0].img_ptr = mlx_new_image(cub->mlx_ptr, cub->window.width, cub->window.height)) == NULL)
+	// 	return (cub->error_code = MINILIBX_ERROR);
+	// if ((cub->images[1].img_ptr = mlx_new_image(cub->mlx_ptr, cub->window.width, cub->window.height)) == NULL)
+	// 	return (cub->error_code = MINILIBX_ERROR);
+	// if ((cub->images[0].addr = mlx_get_data_addr(cub->images[0].img_ptr, &(cub->images[0].bits_per_pixel), &(cub->images[0].line_length),
+	// 											 &(cub->images[0].endian))) == NULL)
+	// 	return (cub->error_code = MINILIBX_ERROR);
+	// if ((cub->images[1].addr = mlx_get_data_addr(cub->images[1].img_ptr, &(cub->images[1].bits_per_pixel), &(cub->images[1].line_length),
+	// 											 &(cub->images[1].endian))) == NULL)
+	// 	return (cub->error_code = MINILIBX_ERROR);
 	return (0);
 }
 

@@ -130,14 +130,13 @@ typedef	struct s_cub
 	unsigned	error_code;
 	t_player	player;
 	t_map		map;
-	t_image		images[2];
+	t_image		image;
 	int			current_image;
 	t_ray		*rays;
 	int			number_of_rays;
 	int			tile_size;
 	int			tile_width;
 	int			tile_height;
-	// t_sprite	sprite;
 }				t_cub;
 
 typedef struct s_parser
@@ -221,7 +220,7 @@ void plot_line(t_image *data, int x0, int y0, int x1, int y1);
 void plot_circle(t_image *img, int xm, int ym, int r, unsigned color);
 
 int setup_cub3d(t_cub *cub);
-int setup_window_and_images(t_cub *cub);
+int setup_window_and_image(t_cub *cub);
 int setup_hooks(t_cub *cub);
 int set_player_starting_position(t_player *player, t_map map, t_cub *cub);
 int ft_compute_tile_size(t_cub *cub);

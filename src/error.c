@@ -43,11 +43,10 @@ int	free_and_destroy(t_cub *cub)
 		free(cub->rays);
 	if (cub->map.sprites)
 		free(cub->map.sprites);
-	if (cub->images[0].img_ptr)
+	if (cub->image.img_ptr)
 	{
 		//maybe I will switch to only one image after so be careful about these lines
-		mlx_destroy_image(cub->mlx_ptr, cub->images[0].img_ptr);
-		mlx_destroy_image(cub->mlx_ptr, cub->images[1].img_ptr);
+		mlx_destroy_image(cub->mlx_ptr, cub->image.img_ptr);
 	}
 	free_and_destroy_textures(cub);
 	if (cub->window.win_ptr)

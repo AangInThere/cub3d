@@ -2,25 +2,9 @@
 
 int render_next_frame(t_cub *cub)
 {
-	// t_image img = (current_imgnbr == 0 ? img1 : img2);
-	// current_imgnbr = (current_imgnbr == 0 ? 1 : 0);
-	// // clear_img(&img);
-	// update_player();
-	// update_rays();
-	// // plot_line(&img
-	// // 			, player.x
-	// // 			, player.y
-	// // 			, player.x + cos(player.rotation_angle) * 20
-	// // 			, player.y + sin(player.rotation_angle) * 20);
-	// render3d(&img);
-	// render_player(&img);
-	// render_grid(&img);
-	// render_rays(&img);
-	// mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, img.img_ptr, 0, 0);
-	// // mlx_put_image_to_window(mlx, mlx_win, texture.img.img, 0, 0);
-	// return (1);
-	t_image *img = &cub->images[cub->current_image];
-	cub->current_image = (cub->current_image == 0 ? 1 : 0);
+	t_image *img = &cub->image;
+	// cub->current_image = (cub->current_image == 0 ? 1 : 0);
+	cub->current_image = 0;
 	update_player(cub);
 	// printf("player.x: %f, player.y: %f\n", cub->player.x, cub->player.y);
 	// printf("dir.x: %d, dir.y: %d\n", cub->player.dir_hor, cub->player.dir_ver);

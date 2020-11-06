@@ -9,7 +9,7 @@ int save_bmp(t_cub *cub)
 	pad = (4 - (cub->window.width * 3) % 4) % 4;
 	filesize = 54 + 3 * (cub->window.width + pad) * cub->window.height;
 	write_bmp_header(cub, fd, filesize);
-	write_bmp_pixel(cub, fd, pad, &cub->images[0]);
+	write_bmp_pixel(cub, fd, pad, &cub->image);
 	close(fd);
 	return (0);
 }
