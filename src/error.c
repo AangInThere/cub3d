@@ -35,7 +35,7 @@ int	free_and_destroy(t_cub *cub)
 	i = -1;
 	if (cub->map.rows)
 	{
-		while (++i < cub->map.malloced_height)
+		while (++i < cub->map.height)
 			free(cub->map.rows[i]);
 		free(cub->map.rows);
 	}

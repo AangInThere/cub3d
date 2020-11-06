@@ -1,8 +1,5 @@
 #include "header.h"
 
-// t_player player = {TILE_SIZE * 2, TILE_SIZE * 2, 0, 0, 0, 0.25 * M_PI};
-
-
 int update_player(t_cub *cub)
 {
 	double newx;
@@ -44,7 +41,8 @@ int WallAt(int x, int y, t_map map, t_cub *cub)
 	int xInGrid = x / cub->tile_size;
 	int yInGrid = y / cub->tile_size;
 	// if (x < 0 || y < 0 || y >= map.height || x >= (int)ft_strlen(map.rows[yInGrid]) || map.rows[yInGrid][xInGrid] == 1)
-	if (x < 0 || y < 0 || yInGrid >= map.height || xInGrid > map.width || map.rows[yInGrid][xInGrid] == WALL)
+	// remove ft_strlen add something in map because otherwise it is going to be too slow
+	if (x < 0 || y < 0 || yInGrid >= map.height || xInGrid >= (int)ft_strlen(map.rows[yInGrid]) || map.rows[yInGrid][xInGrid] == WALL)
 		return (1);
 	else
 		return (0);
