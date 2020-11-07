@@ -46,7 +46,7 @@ void find_vertical_intersection(t_ray *ray, t_cub *cub)
 
 	while (nextVerTouchY >= 0 && nextVerTouchY < cub->window.height && nextVerTouchX >= 0 && nextVerTouchX < cub->window.width)
 	{
-		if (WallAt((nextVerTouchX - (!ray->is_ray_facing_right ? 1 : 0)), nextVerTouchY, cub->map, cub))
+		if (is_wall_at((nextVerTouchX - (!ray->is_ray_facing_right ? 1 : 0)), nextVerTouchY, cub->map, cub))
 		{
 			ray->ver_wall_hit_x = nextVerTouchX;
 			ray->ver_wall_hit_y = nextVerTouchY;
@@ -81,7 +81,7 @@ void find_horizontal_intersection(t_ray *ray, t_cub *cub)
 
 	while (nextHorTouchY >= 0 && nextHorTouchY < cub->window.height && nextHorTouchX >= 0 && nextHorTouchX < cub->window.width)
 	{
-		if (WallAt(nextHorTouchX, nextHorTouchY - (!ray->is_ray_facing_down ? 1 : 0), cub->map, cub))
+		if (is_wall_at(nextHorTouchX, nextHorTouchY - (!ray->is_ray_facing_down ? 1 : 0), cub->map, cub))
 		{
 			ray->hor_wall_hit_x = nextHorTouchX;
 			ray->hor_wall_hit_y = nextHorTouchY;

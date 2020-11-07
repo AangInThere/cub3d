@@ -2,8 +2,6 @@
 
 int parse(t_cub *cub, char *filename)
 {
-
-	//check filename and argv arguments before
 	mlx_get_screen_size(cub->mlx_ptr, &cub->window.width, &cub->window.height);
 	if ((cub->fd_config_file = open(filename, O_RDONLY)) == -1)
 		print_error_and_clean_exit("Could not open config file", cub);

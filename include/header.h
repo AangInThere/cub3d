@@ -229,7 +229,8 @@ int setup_sprites(t_cub *cub);
 int	ft_count_sprites(t_map *map);
 
 int update_player(t_cub *cub);
-int WallAt(int x, int y, t_map map, t_cub *cub);
+int is_wall_at(int x, int y, t_map map, t_cub *cub);
+int	is_sprite_at(int x, int y, t_map map, t_cub *cub);
 
 void render_grid(t_image *data, t_cub *cub);
 int render_player(t_image *img, t_cub *cub);
