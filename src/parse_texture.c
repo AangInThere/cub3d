@@ -60,10 +60,11 @@ int	load_textures(t_cub *cub)
 		if ((current_texture->img.img_ptr = mlx_xpm_file_to_image(cub->mlx_ptr, current_texture->filepath, &current_texture->width, &current_texture->height)) == NULL)
 			return (cub->error_code = LOADING_TEXTURES);
 		//free malloced filepath and destroy already opened images to avoid leaks;
-		current_texture->img.addr = mlx_get_data_addr(current_texture->img.img_ptr
+		if ((current_texture->img.addr = mlx_get_data_addr(current_texture->img.img_ptr
 														, &current_texture->img.bits_per_pixel
 														, &current_texture->img.line_length
-														, &current_texture->img.endian);
+														, &current_texture->img.endian)) == NULL)
+			return (cub->error_code = MINILIBX_ERROR);
 		i++;
 	}
 	return (0);

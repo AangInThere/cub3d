@@ -35,6 +35,27 @@
 
 typedef int t_bool;
 
+typedef enum e_error
+{
+	UNKNOWN_IDENTIFIER = 1,
+	SAME_IDENTIFIER_TWICE,
+	MALLOC_ERROR,
+	SMALLER_THAN_MINIMUM_RESOLUTION,
+	COLOR_PARSING,
+	MISSING_ELEMENTS,
+	CONFIG_FILE_READING,
+	FORMATTING_TEXTURE,
+	FORMATTING_RESOLUTION,
+	FORMATTING_COLOR,
+	UNKNOWN_CHAR_IN_MAP,
+	TWO_PLAYERS_IN_MAP,
+	PLAYER_NOT_FOUND_IN_MAP,
+	MAP_IS_NOT_CLOSED,
+	LOADING_TEXTURES,
+	EMPTY_LINE_IN_THE_MIDDLE,
+	MINILIBX_ERROR
+} t_error;
+
 typedef union
 {
 	unsigned int hexcode;
@@ -71,6 +92,15 @@ typedef struct s_texture
 	t_image	img;
 } t_texture;
 
+typedef struct	s_intersection_finder
+{
+	double	x_intercept;
+	double	y_intercept;
+	double	x_step;
+	double	y_step;
+	double	next_touch_x;
+	double	next_touch_y;
+}				t_intersection_finder;
 
 typedef struct s_player
 {
@@ -109,17 +139,17 @@ typedef struct s_sprite
 	t_bool is_visible;
 }	t_sprite;
 
-typedef struct s_map
+typedef struct	s_map
 {
-	char **rows;
-	int	height;
-	int malloced_height;
-	int width;
-	int	sprite_count;
+	char		**rows;
+	int			height;
+	int			malloced_height;
+	int			width;
+	int			sprite_count;
 	t_sprite	*sprites;
-}	t_map;
+}				t_map;
 
-typedef	struct s_cub
+typedef	struct 	s_cub
 {
 	void		*mlx_ptr;
 	int			fd_config_file;
@@ -127,11 +157,10 @@ typedef	struct s_cub
 	t_texture	textures[5];
 	t_color		colors[2];
 	unsigned	already_parsed;
-	unsigned	error_code;
+	t_error		error_code;
 	t_player	player;
 	t_map		map;
 	t_image		image;
-	int			current_image;
 	t_ray		*rays;
 	int			number_of_rays;
 	int			tile_size;
@@ -193,27 +222,6 @@ enum e_cell
 	WEST = 'W'
 };
 
-typedef enum e_error
-{
-	UNKNOWN_IDENTIFIER = 1,
-	SAME_IDENTIFIER_TWICE,
-	MALLOC_ERROR,
-	SMALLER_THAN_MINIMUM_RESOLUTION,
-	COLOR_PARSING,
-	MISSING_ELEMENTS,
-	CONFIG_FILE_READING,
-	FORMATTING_TEXTURE,
-	FORMATTING_RESOLUTION,
-	FORMATTING_COLOR,
-	UNKNOWN_CHAR_IN_MAP,
-	TWO_PLAYERS_IN_MAP,
-	PLAYER_NOT_FOUND_IN_MAP,
-	MAP_IS_NOT_CLOSED,
-	LOADING_TEXTURES,
-	EMPTY_LINE_IN_THE_MIDDLE,
-	MINILIBX_ERROR
-}	t_error;
-
 int put_square_at(t_image *data, int x, int y, int size, int color);
 void my_mlx_pixel_put(t_image *data, int x, int y, int color);
 int put_rectangle_at(t_image *data, int x, int y, int width, int height, int color);
@@ -240,7 +248,8 @@ int clear_img(t_image *img, t_cub *cub);
 void update_rays(t_cub *cub);
 void find_horizontal_intersection(t_ray *ray, t_cub *cub);
 void find_vertical_intersection(t_ray *ray, t_cub *cub);
-
+void	vert_intersec_setup(t_ray *ray, t_cub *cub, t_intersection_finder *s);
+void hor_intersec_setup(t_ray *ray, t_cub *cub, t_intersection_finder *s);
 
 double normalize_angle(double angle);
 double distanceBetween(double x0, double y0, double x1, double y1);

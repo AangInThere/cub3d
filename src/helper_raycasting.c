@@ -1,7 +1,5 @@
 #include "header.h"
 
-// t_ray ray_array[NUM_RAYS];
-
 void	select_shortest_wall_hit(t_ray *ray, t_cub *cub)
 {
 	double hor_distance = (ray->found_hor_wall_hit ?
@@ -30,7 +28,7 @@ double distanceBetween(double x0, double y0, double x1, double y1)
 	double distance;
 
 	distance = sqrt(pow(x0 - x1, 2) + pow(y0 - y1, 2));
-	return distance;
+	return (distance);
 }
 
 int find_texture_x(t_ray ray, t_cub *cub)

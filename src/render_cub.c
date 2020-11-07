@@ -3,11 +3,7 @@
 int render_next_frame(t_cub *cub)
 {
 	t_image *img = &cub->image;
-	// cub->current_image = (cub->current_image == 0 ? 1 : 0);
-	cub->current_image = 0;
 	update_player(cub);
-	// printf("player.x: %f, player.y: %f\n", cub->player.x, cub->player.y);
-	// printf("dir.x: %d, dir.y: %d\n", cub->player.dir_hor, cub->player.dir_ver);
 	update_rays(cub);
 	// clear_img(img, cub);
 	update_sprites(cub);
@@ -16,8 +12,6 @@ int render_next_frame(t_cub *cub)
 	// render_player(img, cub);
 	// render_grid(img, cub);
 	// render_rays(img, cub);
-	// save_bmp(cub);
-	// exit(0);
 	if (cub->should_save_first_frame)
 		save_bmp_and_exit(cub);
 	mlx_put_image_to_window(cub->mlx_ptr, cub->window.win_ptr, img->img_ptr, 0, 0);
