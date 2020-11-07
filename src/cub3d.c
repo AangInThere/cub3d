@@ -10,6 +10,8 @@ int	main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 	ft_bzero(&cub, sizeof(cub));
+	if (argc == 3)
+		cub.should_save_first_frame = TRUE;
 	if ((cub.mlx_ptr = mlx_init()) == NULL)
 		exit(EXIT_FAILURE);
 	if (parse(&cub, argv[1]) != 0)

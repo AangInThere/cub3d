@@ -1,17 +1,24 @@
 #include "header.h"
+#define WRITE_ERROR 1
 
-int save_bmp(t_cub *cub)
+int save_bmp_and_exit(t_cub *cub)
 {
-	int fd = open("screenshot.bmp", O_WRONLY | O_TRUNC | O_CREAT | O_APPEND);
+	int fd;
 	int filesize;
 	int pad;
 
+	if ((fd = open("screenshot.bmp", O_WRONLY | O_TRUNC | O_CREAT | O_APPEND, 0664)) < 0)
+		print_error_and_clean_exit("Could not open or create screenshot.bmp", cub);
 	pad = (4 - (cub->window.width * 3) % 4) % 4;
 	filesize = 54 + 3 * (cub->window.width + pad) * cub->window.height;
-	write_bmp_header(cub, fd, filesize);
-	write_bmp_pixel(cub, fd, pad, &cub->image);
+	if (write_bmp_header(cub, fd, filesize) == WRITE_ERROR || write_bmp_pixel(cub, fd, pad, &cub->image) == WRITE_ERROR)
+	{
+		close(fd);
+		print_error_and_clean_exit("Could not write to screenchot.bmp", cub);
+	}
 	close(fd);
-	return (0);
+	free_and_destroy(cub);
+	exit(EXIT_SUCCESS);
 }
 
 int write_bmp_header(t_cub *cub, int fd, int filesize)
@@ -28,7 +35,8 @@ int write_bmp_header(t_cub *cub, int fd, int filesize)
 	ft_memcpy(bmp_header + 22, &cub->window.height, 4);
 	bmp_header[26] = 1;
 	bmp_header[28] = 24;
-	write(fd, bmp_header, 54);
+	if (write(fd, bmp_header, 54) < 54)
+		return (WRITE_ERROR);
 	return (0);
 }
 
@@ -45,10 +53,12 @@ int write_bmp_pixel(t_cub *cub, int fd, int pad, t_image *image)
 		while (j < cub->window.width)
 		{
 			color = *(unsigned int *)(image->addr + i * image->line_length + j * (image->bits_per_pixel / 8));
-			write(fd, &color, 3);
+			if (write(fd, &color, 3) < 3)
+				return (WRITE_ERROR);
 			j++;
 		}
-		write(fd, "\0\0\0", pad);
+		if (write(fd, "\0\0\0", pad) < 0)
+			return (WRITE_ERROR);
 	}
 	return (0);
 }

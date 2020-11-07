@@ -137,6 +137,7 @@ typedef	struct s_cub
 	int			tile_size;
 	int			tile_width;
 	int			tile_height;
+	t_bool		should_save_first_frame;
 }				t_cub;
 
 typedef struct s_parser
@@ -307,7 +308,7 @@ int sort_sprites(t_map *map);
 int update_sprites(t_cub *cub);
 int render_sprites(t_image *img, t_cub *cub);
 
-int save_bmp(t_cub *cub);
+int save_bmp_and_exit(t_cub *cub);
 int write_bmp_header(t_cub *cub, int fd, int filesize);
 int write_bmp_pixel(t_cub *cub, int fd, int pad, t_image *image);
 

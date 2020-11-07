@@ -18,6 +18,8 @@ int render_next_frame(t_cub *cub)
 	// render_rays(img, cub);
 	// save_bmp(cub);
 	// exit(0);
+	if (cub->should_save_first_frame)
+		save_bmp_and_exit(cub);
 	mlx_put_image_to_window(cub->mlx_ptr, cub->window.win_ptr, img->img_ptr, 0, 0);
 	return 0;
 }
