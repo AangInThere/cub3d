@@ -43,18 +43,18 @@ int put_square_at(t_image *data, int x, int y, int size, int color)
 	return (1);
 }
 
-int put_rectangle_at(t_image *data, int x, int y, int width, int height, int color)
+int put_rectangle(t_image *data, t_rectangle rectangle)
 {
 	int a;
 	int b;
 
 	b = 0;
-	while (b < height)
+	while (b < rectangle.height)
 	{
 		a = 0;
-		while (a < width)
+		while (a < rectangle.width)
 		{
-			my_mlx_pixel_put(data, x + a++, y + b, color);
+			my_mlx_pixel_put(data, rectangle.x + a++, rectangle.y + b, rectangle.color);
 		}
 		b++;
 	}

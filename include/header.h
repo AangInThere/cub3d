@@ -13,20 +13,13 @@
 # include "../libft/libft.h"
 
 # define TILE_SIZE 80
-# define MAP_NUM_ROWS 11
-# define MAP_NUM_COLS 15
-# define	WIN_WIDTH	(MAP_NUM_COLS * TILE_SIZE)
-# define	WIN_HEIGHT (MAP_NUM_ROWS * TILE_SIZE)
 # define XSPEED ((double)TILE_SIZE / 20.0)
 # define YSPEED XSPEED
 # define PLAYER_SIZE 5
 // # define M_PI 3.14159265358979323846
-# define ROTATION_SPEED (4.0 * (M_PI / 180.0) / 3.0)
+# define ROTATION_SPEED (6.0 * (M_PI / 180.0) / 3.0)
 # define FOV_ANGLE (M_PI / 3)
 # define WALL_STRIP_WIDTH  1
-# define NUM_RAYS  (WIN_WIDTH / WALL_STRIP_WIDTH)
-// # define NUM_RAYS  1
-// # define MINIMAP_SCALE_FACTOR 0.2
 # define MINIMAP_SCALE_FACTOR 0.2
 # define TRUE 1
 # define FALSE 0
@@ -92,6 +85,15 @@ typedef struct s_texture
 	t_image	img;
 } t_texture;
 
+typedef struct s_texture_renderer
+{
+	unsigned	color;
+	double		texture_y;
+	double		texture_x;
+	double		step_texture;
+	double		ratio_of_texture_to_appear;
+}	t_texture_renderer;
+
 typedef struct	s_intersection_finder
 {
 	double	x_intercept;
@@ -110,6 +112,7 @@ typedef struct s_player
 	int dir_ver;
 	int turn_dir;
 	double rotation_angle;
+	double	speed;
 }				t_player;
 
 typedef struct	s_ray
@@ -127,8 +130,19 @@ typedef struct	s_ray
 	int		is_vertical_hit;
 	int		is_ray_facing_down;
 	int		is_ray_facing_right;
+	double	wall_strip_height;
+	double	normalized_wall_strip_height;
 	t_texture	*texture;
 }				t_ray;
+
+typedef	struct t_rectangle
+{
+	int	x;
+	int	y;
+	int	width;
+	int	height;
+	unsigned	color;
+}	t_rectangle;
 
 typedef struct s_sprite
 {
@@ -163,6 +177,7 @@ typedef	struct 	s_cub
 	t_image		image;
 	t_ray		*rays;
 	int			number_of_rays;
+	double		distance_projection_plane;
 	int			tile_size;
 	int			tile_width;
 	int			tile_height;
@@ -224,7 +239,7 @@ enum e_cell
 
 int put_square_at(t_image *data, int x, int y, int size, int color);
 void my_mlx_pixel_put(t_image *data, int x, int y, int color);
-int put_rectangle_at(t_image *data, int x, int y, int width, int height, int color);
+int put_rectangle(t_image *data, t_rectangle rectangle);
 void plot_line(t_image *data, int x0, int y0, int x1, int y1);
 void plot_circle(t_image *img, int xm, int ym, int r, unsigned color);
 
@@ -255,12 +270,13 @@ double normalize_angle(double angle);
 double distanceBetween(double x0, double y0, double x1, double y1);
 void select_shortest_wall_hit(t_ray *ray, t_cub *cub);
 double normalize_wall_height(double height, t_cub *cub);
-int find_texture_x(t_ray ray, t_cub *cub);
+double find_texture_x(t_ray ray, t_cub *cub);
 
 int render_next_frame(t_cub *cub);
-void render3d(t_image *img, t_cub *cub);
-void render_ray(t_image *img, t_ray ray, int ray_x, t_cub *cub);
+void render_walls_floor_and_ceiling(t_image *img, t_cub *cub);
+void render_wall_strip(t_image *img, t_ray ray, int ray_x, t_cub *cub);
 t_texture *find_correct_texture(t_ray ray, t_cub *cub);
+void		render_floor_and_ceiling(t_image *img, t_cub *cub, int ray_x);
 
 int check_formatting_resolution(char *line);
 int parse_resolution(char *line, t_cub *cub);

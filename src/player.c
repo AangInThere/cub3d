@@ -7,10 +7,10 @@ int update_player(t_cub *cub)
 	double	deltax;
 	double	deltay;
 
-	deltax = cub->player.dir_ver * YSPEED * cos(cub->player.rotation_angle)
-			+ cub->player.dir_hor * XSPEED * cos(cub->player.rotation_angle + M_PI / 2);
-	deltay = cub->player.dir_ver * YSPEED * sin(cub->player.rotation_angle)
-			+ cub->player.dir_hor * XSPEED * sin(cub->player.rotation_angle + M_PI / 2);
+	deltax = cub->player.dir_ver * cub->player.speed * cos(cub->player.rotation_angle)
+			+ cub->player.dir_hor * cub->player.speed * cos(cub->player.rotation_angle + M_PI / 2);
+	deltay = cub->player.dir_ver * cub->player.speed * sin(cub->player.rotation_angle)
+			+ cub->player.dir_hor * cub->player.speed * sin(cub->player.rotation_angle + M_PI / 2);
 	newx = cub->player.x + deltax;
 	newy = cub->player.y + deltay;
 
