@@ -151,6 +151,13 @@ typedef struct s_sprite
 	double distance_from_player;
 	double angle;
 	t_bool is_visible;
+	double dx;
+	double dy;
+	double	height;
+	double	width;
+	double	texture_x;
+	double	texture_y;
+
 }	t_sprite;
 
 typedef struct	s_map
@@ -328,7 +335,7 @@ int destroy_win(t_cub *cub);
 // int update_sprite(t_cub *cub);
 // int render_sprite(t_image *img, t_cub *cub);
 
-int update_sprite(t_sprite *sprite, t_player player);
+void update_sprite(t_sprite *sprite, t_player player, t_cub *cub);
 int render_sprite(t_image *img, t_cub *cub, t_sprite *sprite);
 int sort_sprites(t_map *map);
 int update_sprites(t_cub *cub);

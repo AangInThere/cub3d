@@ -7,14 +7,18 @@ int update_player(t_cub *cub)
 	double	deltax;
 	double	deltay;
 
-	deltax = cub->player.dir_ver * cub->player.speed * cos(cub->player.rotation_angle)
-			+ cub->player.dir_hor * cub->player.speed * cos(cub->player.rotation_angle + M_PI / 2);
-	deltay = cub->player.dir_ver * cub->player.speed * sin(cub->player.rotation_angle)
-			+ cub->player.dir_hor * cub->player.speed * sin(cub->player.rotation_angle + M_PI / 2);
+	deltax = cub->player.dir_ver * cub->player.speed
+				* cos(cub->player.rotation_angle)
+			+ cub->player.dir_hor * cub->player.speed
+				* cos(cub->player.rotation_angle + M_PI / 2);
+	deltay = cub->player.dir_ver * cub->player.speed
+				* sin(cub->player.rotation_angle)
+			+ cub->player.dir_hor * cub->player.speed
+				* sin(cub->player.rotation_angle + M_PI / 2);
 	newx = cub->player.x + deltax;
 	newy = cub->player.y + deltay;
-
-	if (!(is_wall_at(newx, newy, cub->map, cub)) && !is_sprite_at(newx, newy, cub->map, cub))
+	if (!(is_wall_at(newx, newy, cub->map, cub))
+			&& !is_sprite_at(newx, newy, cub->map, cub))
 	{
 		cub->player.x = newx;
 		cub->player.y = newy;
@@ -32,7 +36,9 @@ int is_wall_at(int x, int y, t_map map, t_cub *cub)
 	x_in_grid = x / cub->tile_size;
 	y_in_grid = y / cub->tile_size;
 	// remove ft_strlen add something in map because otherwise it is going to be too slow
-	if (x < 0 || y < 0 || y_in_grid >= map.height || x_in_grid >= (int)ft_strlen(map.rows[y_in_grid]) || map.rows[y_in_grid][x_in_grid] == WALL)
+	if (x < 0 || y < 0 || y_in_grid >= map.height
+			|| x_in_grid >= (int)ft_strlen(map.rows[y_in_grid])
+			|| map.rows[y_in_grid][x_in_grid] == WALL)
 		return (1);
 	else
 		return (0);
