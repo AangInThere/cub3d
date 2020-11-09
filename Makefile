@@ -4,12 +4,12 @@ SRC_DIR = src
 OBJ_DIR = obj
 INC_DIR = include
 CFLAGS=-ggdb3 -fsanitize=address -Wall -Wextra -Werror -I $(INC_DIR)
-#CFLAGS=-ggdb3 -Wall -Wextra -Werror -I $(INC_DIR)
+# CFLAGS=-ggdb3 -Wall -Wextra -Werror -I $(INC_DIR)
 #CFLAGS= -I$(INC) -O3 -I..
 
-_SRC = cub3d.c player.c helper_render.c parse_resolution.c parse_utils.c \
-		parse_texture.c parse_color.c parse_premap.c parse_map.c check_map.c \
-		parse.c hooks.c render_minimap.c raycasting.c helper_raycasting.c \
+_SRC = cub3d.c player.c helper_render.c parse/parse_resolution.c parse/parse_utils.c \
+		parse/parse_texture.c parse/parse_color.c parse/parse_premap.c parse/parse_map.c parse/check_map.c \
+		parse/parse.c hooks.c render_minimap.c raycasting.c helper_raycasting.c \
 		render_next_frame.c setup.c sprite.c save_bmp.c error.c
 SRC = $(addprefix $(SRC_DIR)/,$(_SRC))
 _HEADER=header.h
@@ -23,7 +23,7 @@ $(NAME) : $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -L. -lmlx -lXext -lX11 -lm -lbsd -Llibft -lft -o $(NAME)
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(HEADER)
-	@mkdir -p obj
+	@mkdir -p obj/parse
 	$(CC) $(CFLAGS) -c $< -o $@
 
 _SANDBOX_SRC = parse.c check_map.c parse_map.c parse_premap.c parse_resolution.c parse_utils.c parse_texture.c parse_color.c
