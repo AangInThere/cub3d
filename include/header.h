@@ -21,6 +21,7 @@
 # define FOV_ANGLE (M_PI / 3)
 # define WALL_STRIP_WIDTH  1
 # define MINIMAP_SCALE_FACTOR 0.2
+// # define MINIMAP_SCALE_FACTOR 1
 # define TRUE 1
 # define FALSE 0
 # define MINIMUM_WIDTH 20
@@ -245,7 +246,7 @@ enum e_cell
 	WEST = 'W'
 };
 
-int put_square_at(t_image *data, int x, int y, int size, int color);
+int put_square(t_image *data, int x, int y, int size, int color);
 void my_mlx_pixel_put(t_image *data, int x, int y, int color);
 int put_rectangle(t_image *data, t_rectangle rectangle);
 void plot_line(t_image *data, int x0, int y0, int x1, int y1);
@@ -263,10 +264,9 @@ int update_player(t_cub *cub);
 int is_wall_at(int x, int y, t_map map, t_cub *cub);
 int	is_sprite_at(int x, int y, t_map map, t_cub *cub);
 
-void render_grid(t_image *data, t_cub *cub);
-int render_player(t_image *img, t_cub *cub);
+void render_minimap(t_image *data, t_cub *cub);
+void render_player_on_minimap(t_image *img, t_cub *cub, int square_size);
 void render_rays(t_image *img, t_cub *cub);
-int clear_img(t_image *img, t_cub *cub);
 
 void update_rays(t_cub *cub);
 void find_horizontal_intersection(t_ray *ray, t_cub *cub);

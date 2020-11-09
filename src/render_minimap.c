@@ -1,66 +1,78 @@
 #include "header.h"
 
-void render_grid(t_image *data, t_cub *cub)
+void render_minimap(t_image *data, t_cub *cub)
 {
 	int j;
-	// int tile_width = cub->window.width / cub->map.width;
-	// int tile_height = cub->window.height / cub->map.height;
+	int square_size;
 
+	square_size = cub->window.width / cub->map.width;
+	if (square_size > cub->window.height / cub->map.height)
+		square_size = cub->window.height / cub->map.height;
+	square_size = (square_size * MINIMAP_SCALE_FACTOR);
 	for (int i = 0; i < cub->map.height; i++)
 	{
 		for (j = 0; j < (int)ft_strlen(cub->map.rows[i]); j++)
 		{
-			if (cub->map.rows[i][j] == WALL || cub->map.rows[i][j] == SPACE)
-			{
-				put_square_at(data, MINIMAP_SCALE_FACTOR * j * cub->tile_size, MINIMAP_SCALE_FACTOR * i * cub->tile_size, MINIMAP_SCALE_FACTOR * cub->tile_size, 0x0032CD32);
-				// put_square_at(data, MINIMAP_SCALE_FACTOR * j * TILE_SIZE, MINIMAP_SCALE_FACTOR * i * TILE_SIZE, MINIMAP_SCALE_FACTOR * TILE_SIZE, 0x0032CD32);
-				// put_rectangle_at(data, MINIMAP_SCALE_FACTOR * j * cub->tile_size, MINIMAP_SCALE_FACTOR * i * cub->tile_size, cub->tile_size * MINIMAP_SCALE_FACTOR, cub->tile_size * MINIMAP_SCALE_FACTOR, 0x0032CD32);
-			}
+			if (cub->map.rows[i][j] == WALL)
+				put_square(data, j * square_size, i * square_size, square_size, 0x0032CD32);
 		}
-		while (j < cub->map.width)
+	}
+	render_player_on_minimap(data, cub, square_size);
+}
+
+void	render_player_on_minimap(t_image *img, t_cub *cub, int square_size)
+{
+	double	x;
+	double	y;
+	double	dx;
+	double	dy;
+
+	x = square_size * (cub->player.x / cub->tile_size);
+	y = square_size * (cub->player.y / cub->tile_size);
+	dx = cos(cub->player.rotation_angle) * square_size;
+	dy = sin(cub->player.rotation_angle) * square_size;
+	plot_circle(img, x, y, square_size / 2, 0X00FF0000);
+	plot_line(img, x, y, x + dx, y + dy);
+}
+
+void plot_line(t_image *data, int x0, int y0, int x1, int y1)
+{
+	int dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
+	int dy = -abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
+	int err = dx + dy, e2; /* error value e_xy */
+
+	for (;;)
+	{ /* loop */
+		my_mlx_pixel_put(data, x0, y0, 0X00FFFFFF);
+		if (x0 == x1 && y0 == y1)
+			break;
+		e2 = 2 * err;
+		if (e2 >= dy)
 		{
-			put_square_at(data, MINIMAP_SCALE_FACTOR * j * cub->tile_size, MINIMAP_SCALE_FACTOR * i * cub->tile_size, MINIMAP_SCALE_FACTOR * cub->tile_size, 0x0032CD32);
-			// put_rectangle_at(data, MINIMAP_SCALE_FACTOR * j * cub->tile_size, MINIMAP_SCALE_FACTOR * i * cub->tile_size, cub->tile_size* MINIMAP_SCALE_FACTOR, cub->tile_size* MINIMAP_SCALE_FACTOR, 0x0032CD32);
-			j++;
-		}
-	}
-}
-
-int render_player(t_image *img, t_cub *cub)
-{
-	// put_square_at(img, player.x - PLAYER_SIZE / 2, player.y - PLAYER_SIZE / 2, PLAYER_SIZE, 0X00FF0000);
-	plot_circle(img, MINIMAP_SCALE_FACTOR * cub->player.x, MINIMAP_SCALE_FACTOR * cub->player.y, PLAYER_SIZE, 0X00FF0000);
-	return 1;
-}
-
-void render_rays(t_image *img, t_cub *cub)
-{
-	for (int i = 0; i < cub->number_of_rays; i++)
-	{
-		plot_line(img,
-				  MINIMAP_SCALE_FACTOR * cub->player.x,
-				  MINIMAP_SCALE_FACTOR * cub->player.y,
-				  MINIMAP_SCALE_FACTOR * cub->rays[i].wall_hit_x,
-				  MINIMAP_SCALE_FACTOR * cub->rays[i].wall_hit_y);
-	}
-	// for (int i = 0; i < NUM_RAYS; i++)
-	// {
-	// 	plot_line(img,
-	// 				cub->player.x,
-	// 				cub->player.y,
-	// 				cub->player.x + cos(ray_array[i].angle) * 20,
-	// 				cub->player.y + sin(ray_array[i].angle) * 20);
-	// }
-}
-
-int clear_img(t_image *img, t_cub *cub)
-{
-	for (int i = 0; i < cub->window.width; i++)
-	{
-		for (int j = 0; j < cub->window.height; j++)
+			err += dy;
+			x0 += sx;
+		} /* e_xy+e_x > 0 */
+		if (e2 <= dx)
 		{
-			my_mlx_pixel_put(img, i, j, 0X00000000);
-		}
+			err += dx;
+			y0 += sy;
+		} /* e_xy+e_y < 0 */
 	}
-	return 1;
+}
+
+void plot_circle(t_image *img, int xm, int ym, int r, unsigned color)
+{
+	int x = -r, y = 0, err = 2 - 2 * r; /* II. Quadrant */
+	do
+	{
+		my_mlx_pixel_put(img, xm - x, ym + y, color); /*   I. Quadrant */
+		my_mlx_pixel_put(img, xm - y, ym - x, color); /*  II. Quadrant */
+		my_mlx_pixel_put(img, xm + x, ym - y, color); /* III. Quadrant */
+		my_mlx_pixel_put(img, xm + y, ym + x, color); /*  IV. Quadrant */
+		r = err;
+		if (r > x)
+			err += ++x * 2 + 1; /* e_xy+e_x > 0 */
+		if (r <= y)
+			err += ++y * 2 + 1; /* e_xy+e_y < 0 */
+	} while (x < 0);
 }

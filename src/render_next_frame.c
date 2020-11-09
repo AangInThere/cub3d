@@ -9,6 +9,7 @@ int			render_next_frame(t_cub *cub)
 	update_sprites(cub);
 	render_walls_floor_and_ceiling(img, cub);
 	render_sprites(img, cub);
+	render_minimap(img, cub);
 	// render_player(img, cub);
 	// render_grid(img, cub);
 	// render_rays(img, cub);
