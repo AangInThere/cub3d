@@ -1,26 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/09 01:48:13 by aclose            #+#    #+#             */
+/*   Updated: 2020/11/09 01:54:20 by aclose           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "header.h"
 #define MAP_STRING "012 NSWE"
 #define PLAYER_STRING "NSWE"
 
-static t_direction directions[] = {
+static t_direction g_directions[] = {
 	{ 1, -1},
-	{ 1,  0},
-	{ 1,  1},
+	{ 1, 0},
+	{ 1, 1},
 	{ 0, -1},
-	{ 0,  1},
+	{ 0, 1},
 	{-1, -1},
-	{-1,  0},
-	{-1,  1}
+	{-1, 0},
+	{-1, 1}
 };
 
-int check_map(t_map *map)
+int		check_map(t_map *map)
 {
-	int	i;
-	int row_length;
-	int j;
-	t_error error_code;
+	int		i;
+	int		row_length;
+	int		j;
+	t_error	error_code;
 
-	//check if map is not in 2 parts(with an empty line in the middle of it, consider this an error)
 	if ((error_code = check_characters_and_player_in_map(map)) != 0)
 		return (error_code);
 	i = -1;
@@ -40,7 +51,7 @@ int check_map(t_map *map)
 	return (0);
 }
 
-int	check_if_map_is_not_in_2_parts(t_map *map)
+int		check_if_map_is_not_in_2_parts(t_map *map)
 {
 	int	i;
 
@@ -48,12 +59,12 @@ int	check_if_map_is_not_in_2_parts(t_map *map)
 	while (++i < map->height)
 	{
 		if (is_empty_line(map->rows[i]))
-				return (EMPTY_LINE_IN_THE_MIDDLE);
+			return (EMPTY_LINE_IN_THE_MIDDLE);
 	}
 	return (0);
 }
 
-int	check_characters_and_player_in_map(t_map *map)
+int		check_characters_and_player_in_map(t_map *map)
 {
 	int	i;
 	int	row_length;
@@ -91,15 +102,17 @@ t_bool	is_an_edge(t_map *map, int x, int y)
 	i = 0;
 	while (i < 8)
 	{
-		if (!is_inside_map(map, x + directions[i].dx, y + directions[i].dy) ||
-			map->rows[y + directions[i].dy][x + directions[i].dx] == SPACE)
+		if (!is_inside_map(map, x + g_directions[i].dx
+							, y + g_directions[i].dy)
+			|| map->rows[y + g_directions[i].dy][x + g_directions[i].dx]
+							== SPACE)
 			return (TRUE);
 		i++;
 	}
 	return (FALSE);
 }
 
-t_bool is_inside_map(t_map *map, int x, int y)
+t_bool	is_inside_map(t_map *map, int x, int y)
 {
 	if (y < 0 || y >= map->height)
 		return (FALSE);
