@@ -148,16 +148,17 @@ typedef struct s_sprite
 {
 	double x;
 	double y;
-	double distance_from_player;
+	double distance;
 	double angle;
 	t_bool is_visible;
 	double dx;
 	double dy;
 	double	height;
 	double	width;
-	double	texture_x;
-	double	texture_y;
-
+	double	tex_x;
+	double	tex_y;
+	double	initial_x;
+	double	initial_y;
 }	t_sprite;
 
 typedef struct	s_map
@@ -336,10 +337,11 @@ int destroy_win(t_cub *cub);
 // int render_sprite(t_image *img, t_cub *cub);
 
 void update_sprite(t_sprite *sprite, t_player player, t_cub *cub);
-int render_sprite(t_image *img, t_cub *cub, t_sprite *sprite);
+void render_sprite(t_image *img, t_cub *cub, t_sprite *sprite);
 int sort_sprites(t_map *map);
 int update_sprites(t_cub *cub);
 int render_sprites(t_image *img, t_cub *cub);
+unsigned	get_color_from_texture(t_texture *texture, t_sprite *sprite, double current_y, double current_x);
 
 int save_bmp_and_exit(t_cub *cub);
 int write_bmp_header(t_cub *cub, int fd, int filesize);
