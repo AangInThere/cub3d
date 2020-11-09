@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/09 16:54:18 by aclose            #+#    #+#             */
+/*   Updated: 2020/11/09 16:54:19 by aclose           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "header.h"
 
 t_bool	is_empty_line(char *line)
@@ -13,8 +25,8 @@ t_bool	is_empty_line(char *line)
 
 char	*delete_leading_spaces(char *line)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*result;
 
 	i = 0;
@@ -35,19 +47,19 @@ char	*delete_leading_spaces(char *line)
 	return (result);
 }
 
-void skip_spaces(char **line)
+void	skip_spaces(char **line)
 {
 	while (**line == ' ')
 		((*line)++);
 }
 
-void skip_digits(char **line)
+void	skip_digits(char **line)
 {
 	while (ft_isdigit(**line))
 		((*line)++);
 }
 
-int	check_file_name(char *filename)
+int		check_file_name(char *filename)
 {
 	int	len;
 
@@ -56,5 +68,3 @@ int	check_file_name(char *filename)
 		return (1);
 	return (0);
 }
-
-

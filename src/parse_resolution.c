@@ -6,18 +6,17 @@
 /*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 16:10:29 by aclose            #+#    #+#             */
-/*   Updated: 2020/11/03 16:02:19 by aclose           ###   ########.fr       */
+/*   Updated: 2020/11/09 16:50:16 by aclose           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-
-int parse_resolution(char *line, t_cub *cub)
+int	parse_resolution(char *line, t_cub *cub)
 {
 	t_window	*window;
-	int	asked_height;
-	int	asked_width;
+	int			asked_height;
+	int			asked_width;
 
 	window = &(cub->window);
 	while (!ft_isdigit(*line))
@@ -29,7 +28,8 @@ int parse_resolution(char *line, t_cub *cub)
 	if (asked_width < MINIMUM_WIDTH || asked_height < MINIMUM_HEIGHT)
 		return (cub->error_code = SMALLER_THAN_MINIMUM_RESOLUTION);
 	window->width = (asked_width > window->width ? window->width : asked_width);
-	window->height = (asked_height > window->height ? window->height : asked_height);
+	window->height = (asked_height > window->height ? window->height
+														: asked_height);
 	return (0);
 }
 

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/09 16:55:34 by aclose            #+#    #+#             */
+/*   Updated: 2020/11/09 16:55:35 by aclose           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "header.h"
 
-int update_player(t_cub *cub)
+int	update_player(t_cub *cub)
 {
 	double	newx;
 	double	newy;
@@ -28,7 +40,7 @@ int update_player(t_cub *cub)
 	return (0);
 }
 
-int is_wall_at(int x, int y, t_map map, t_cub *cub)
+int	is_wall_at(int x, int y, t_map map, t_cub *cub)
 {
 	int	x_in_grid;
 	int	y_in_grid;
@@ -52,7 +64,9 @@ int	is_sprite_at(int x, int y, t_map map, t_cub *cub)
 	x_in_grid = x / cub->tile_size;
 	y_in_grid = y / cub->tile_size;
 	// remove ft_strlen add something in map because otherwise it is going to be too slow
-	if (x < 0 || y < 0 || y_in_grid >= map.height || x_in_grid >= (int)ft_strlen(map.rows[y_in_grid]) || map.rows[y_in_grid][x_in_grid] == SPRITE)
+	if (x < 0 || y < 0 || y_in_grid >= map.height
+			|| x_in_grid >= (int)ft_strlen(map.rows[y_in_grid])
+			|| map.rows[y_in_grid][x_in_grid] == SPRITE)
 		return (1);
 	else
 		return (0);

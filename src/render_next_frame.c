@@ -1,21 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_next_frame.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/09 16:56:42 by aclose            #+#    #+#             */
+/*   Updated: 2020/11/09 16:56:43 by aclose           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "header.h"
 
 int			render_next_frame(t_cub *cub)
 {
-	t_image *img = &cub->image;
+	t_image	*img;
+
+	img = &cub->image;
 	update_player(cub);
 	update_rays(cub);
-	// clear_img(img, cub);
 	update_sprites(cub);
 	render_walls_floor_and_ceiling(img, cub);
 	render_sprites(img, cub);
 	render_minimap(img, cub);
-	// render_player(img, cub);
-	// render_grid(img, cub);
-	// render_rays(img, cub);
 	if (cub->should_save_first_frame)
 		save_bmp_and_exit(cub);
-	mlx_put_image_to_window(cub->mlx_ptr, cub->window.win_ptr, img->img_ptr, 0, 0);
+	mlx_put_image_to_window(cub->mlx_ptr, cub->window.win_ptr
+							, img->img_ptr, 0, 0);
 	return (0);
 }
 

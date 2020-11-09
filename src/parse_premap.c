@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_premap.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/09 16:48:19 by aclose            #+#    #+#             */
+/*   Updated: 2020/11/09 16:48:20 by aclose           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "header.h"
 
 static t_parser g_parser[] = {
@@ -12,7 +24,7 @@ static t_parser g_parser[] = {
 
 int	parse_premap(int fd, t_cub *cub)
 {
-	char *line;
+	char	*line;
 	int		gnl_ret;
 	int		parse_one_line_ret;
 
@@ -23,7 +35,6 @@ int	parse_premap(int fd, t_cub *cub)
 		{
 			if ((parse_one_line_ret = parse_one_line(line, cub)) != 0)
 			{
-				// printf("parse_one_line return value when failed (%s): %d\n", line, parse_one_line_ret);
 				free(line);
 				return (1);
 			}
@@ -34,24 +45,25 @@ int	parse_premap(int fd, t_cub *cub)
 		gnl_ret = get_next_line(fd, &line);
 	}
 	if (gnl_ret < 0)
-			return (cub->error_code = CONFIG_FILE_READING);
+		return (cub->error_code = CONFIG_FILE_READING);
 	return (cub->error_code = MISSING_ELEMENTS);
 }
 
 int	parse_one_line(char *line, t_cub *cub)
 {
-	int	i;
-	t_bool has_a_match;
+	int		i;
+	t_bool	has_a_match;
 
 	has_a_match = FALSE;
 	i = -1;
 	skip_spaces(&line);
 	while (++i < 8)
 	{
-		if (ft_strncmp(line, g_parser[i].identifier, ft_strlen(g_parser[i].identifier)) == 0)
+		if (ft_strncmp(line, g_parser[i].identifier
+				, ft_strlen(g_parser[i].identifier)) == 0)
 		{
 			has_a_match = TRUE;
-			break;
+			break ;
 		}
 	}
 	if (!has_a_match)
@@ -63,14 +75,13 @@ int	parse_one_line(char *line, t_cub *cub)
 	if (g_parser[i].parsing_function(line, cub) != 0)
 		return (4);
 	cub->already_parsed |= g_parser[i].parsing_code;
-	//printf("Just succesfully parsed: %s\n", g_parser[i].identifier); //TO dELETE;
 	return (0);
 }
 
-int each_element_of_premap_is_parsed(unsigned already_parsed)
+int	each_element_of_premap_is_parsed(unsigned already_parsed)
 {
 	unsigned	everything_is_parsed;
-	int i;
+	int			i;
 
 	everything_is_parsed = 0;
 	i = 0;

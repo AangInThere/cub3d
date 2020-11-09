@@ -1,24 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   helper_render.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/09 16:39:44 by aclose            #+#    #+#             */
+/*   Updated: 2020/11/09 16:39:45 by aclose           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "header.h"
 
-int put_square(t_image *data, int x, int y, int size, int color)
-{
-	int a;
-	int b;
-
-	b = 0;
-	while (b < size)
-	{
-		a = 0;
-		while (a < size)
-		{
-			my_mlx_pixel_put(data, x + a++, y + b, color);
-		}
-		b++;
-	}
-	return (1);
-}
-
-int put_rectangle(t_image *data, t_rectangle rectangle)
+int		put_rectangle(t_image *data, t_rectangle rectangle)
 {
 	int a;
 	int b;
@@ -29,15 +23,15 @@ int put_rectangle(t_image *data, t_rectangle rectangle)
 		a = 0;
 		while (a < rectangle.width)
 		{
-			my_mlx_pixel_put(data, rectangle.x + a++, rectangle.y + b, rectangle.color);
+			my_mlx_pixel_put(data, rectangle.x + a++
+							, rectangle.y + b, rectangle.color);
 		}
 		b++;
 	}
 	return (1);
 }
 
-
-void my_mlx_pixel_put(t_image *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_image *data, int x, int y, int color)
 {
 	char *dst;
 

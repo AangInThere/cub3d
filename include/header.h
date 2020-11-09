@@ -275,7 +275,7 @@ void	vert_intersec_setup(t_ray *ray, t_cub *cub, t_intersection_finder *s);
 void hor_intersec_setup(t_ray *ray, t_cub *cub, t_intersection_finder *s);
 
 double normalize_angle(double angle);
-double distanceBetween(double x0, double y0, double x1, double y1);
+double distance_between(double x0, double y0, double x1, double y1);
 void select_shortest_wall_hit(t_ray *ray, t_cub *cub);
 double normalize_wall_height(double height, t_cub *cub);
 double find_texture_x(t_ray ray, t_cub *cub);

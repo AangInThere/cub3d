@@ -35,6 +35,24 @@ void	render_player_on_minimap(t_image *img, t_cub *cub, int square_size)
 	plot_line(img, x, y, x + dx, y + dy);
 }
 
+int put_square(t_image *data, int x, int y, int size, int color)
+{
+	int a;
+	int b;
+
+	b = 0;
+	while (b < size)
+	{
+		a = 0;
+		while (a < size)
+		{
+			my_mlx_pixel_put(data, x + a++, y + b, color);
+		}
+		b++;
+	}
+	return (1);
+}
+
 void plot_line(t_image *data, int x0, int y0, int x1, int y1)
 {
 	int dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;

@@ -46,7 +46,7 @@ void	update_sprite(t_sprite *sprite, t_player player, t_cub *cub)
 
 	sprite->dx = sprite->x - player.x;
 	sprite->dy = sprite->y - player.y;
-	sprite->distance = distanceBetween(sprite->x, sprite->y
+	sprite->distance = distance_between(sprite->x, sprite->y
 													, player.x, player.y);
 	sprite->angle = atan2(sprite->dy, sprite->dx);
 	difference_in_angle = sprite->angle - player.rotation_angle;

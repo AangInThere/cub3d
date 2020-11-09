@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hooks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/09 16:40:51 by aclose            #+#    #+#             */
+/*   Updated: 2020/11/09 16:40:52 by aclose           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "header.h"
 
 #define KEY_W 119
@@ -8,7 +20,7 @@
 #define LEFT_ARROW 65361
 #define KEY_ESC 65307
 
-int key_win(int key, t_cub *cub)
+int	key_win(int key, t_cub *cub)
 {
 	if (key == KEY_ESC)
 	{
@@ -30,7 +42,7 @@ int key_win(int key, t_cub *cub)
 	return (0);
 }
 
-int key_release_win(int key, t_cub *cub)
+int	key_release_win(int key, t_cub *cub)
 {
 	if (key == KEY_W)
 		cub->player.dir_ver = 0;
@@ -47,7 +59,7 @@ int key_release_win(int key, t_cub *cub)
 	return (0);
 }
 
-int destroy_win(t_cub *cub)
+int	destroy_win(t_cub *cub)
 {
 	free_and_destroy(cub);
 	exit(EXIT_SUCCESS);
