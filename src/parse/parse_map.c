@@ -6,7 +6,7 @@
 /*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 17:02:48 by aclose            #+#    #+#             */
-/*   Updated: 2020/11/09 17:02:49 by aclose           ###   ########.fr       */
+/*   Updated: 2020/11/10 00:46:21 by aclose           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,23 @@ int		parse_map(int fd, t_cub *cub)
 		return (cub->error_code = CONFIG_FILE_READING);
 	if ((cub->error_code = check_map(&cub->map)) != 0)
 		return (1);
+	if (populate_row_lengths(&cub->map) != 0)
+		return (cub->error_code = MALLOC_ERROR);
+	return (0);
+}
+
+int		populate_row_lengths(t_map *map)
+{
+	int	i;
+
+	if ((map->row_lengths = malloc(sizeof(int) * map->height)) == NULL)
+		return (MALLOC_ERROR);
+	i = 0;
+	while (i < map->height)
+	{
+		map->row_lengths[i] = ft_strlen(map->rows[i]);
+		i++;
+	}
 	return (0);
 }
 

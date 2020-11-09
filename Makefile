@@ -10,7 +10,7 @@ CFLAGS=-ggdb3 -fsanitize=address -Wall -Wextra -Werror -I $(INC_DIR)
 _SRC = cub3d.c player.c helper_render.c parse/parse_resolution.c parse/parse_utils.c \
 		parse/parse_texture.c parse/parse_color.c parse/parse_premap.c parse/parse_map.c parse/check_map.c \
 		parse/parse.c hooks.c render_minimap.c raycasting.c helper_raycasting.c \
-		render_next_frame.c setup.c sprite.c save_bmp.c error.c
+		render_next_frame.c setup.c sprite.c save_bmp.c error.c setup_helper.c
 SRC = $(addprefix $(SRC_DIR)/,$(_SRC))
 _HEADER=header.h
 HEADER = $(addprefix $(INC_DIR)/,$(_HEADER))
@@ -37,6 +37,8 @@ info:
 
 clean:
 	rm -f $(OBJ)
+	@rmdir obj/parse
+	@rmdir obj
 
 fclean: clean
 	rm -f $(NAME)

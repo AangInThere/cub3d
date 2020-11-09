@@ -52,14 +52,14 @@ typedef enum e_error
 
 typedef union
 {
-	unsigned int hexcode;
+	unsigned	hexcode;
 	struct
 	{
 		unsigned char b;
 		unsigned char g;
 		unsigned char r;
-	} rgb;
-} t_color;
+	} 			rgb;
+}	t_color;
 
 typedef struct s_window
 {
@@ -71,11 +71,11 @@ typedef struct s_window
 
 typedef struct s_image
 {
-	void *img_ptr;
-	char *addr;
-	int bits_per_pixel;
-	int line_length;
-	int endian;
+	void	*img_ptr;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
 } t_image;
 
 typedef struct s_texture
@@ -109,10 +109,10 @@ typedef struct s_player
 {
 	double	x;
 	double	y;
-	int dir_hor;
-	int dir_ver;
-	int turn_dir;
-	double rotation_angle;
+	int		dir_hor;
+	int		dir_ver;
+	int		turn_dir;
+	double	rotation_angle;
 	double	speed;
 }				t_player;
 
@@ -138,22 +138,22 @@ typedef struct	s_ray
 
 typedef	struct t_rectangle
 {
-	int	x;
-	int	y;
-	int	width;
-	int	height;
+	int			x;
+	int			y;
+	int			width;
+	int			height;
 	unsigned	color;
 }	t_rectangle;
 
 typedef struct s_sprite
 {
-	double x;
-	double y;
-	double distance;
-	double angle;
-	t_bool is_visible;
-	double dx;
-	double dy;
+	double	x;
+	double	y;
+	double	distance;
+	double	angle;
+	t_bool	is_visible;
+	double	dx;
+	double	dy;
 	double	height;
 	double	width;
 	double	tex_x;
@@ -165,6 +165,7 @@ typedef struct s_sprite
 typedef struct	s_map
 {
 	char		**rows;
+	int			*row_lengths;
 	int			height;
 	int			malloced_height;
 	int			width;
@@ -188,8 +189,6 @@ typedef	struct 	s_cub
 	int			number_of_rays;
 	double		distance_projection_plane;
 	int			tile_size;
-	int			tile_width;
-	int			tile_height;
 	t_bool		should_save_first_frame;
 }				t_cub;
 
@@ -246,11 +245,8 @@ enum e_cell
 	WEST = 'W'
 };
 
-int put_square(t_image *data, int x, int y, int size, int color);
 void my_mlx_pixel_put(t_image *data, int x, int y, int color);
 int put_rectangle(t_image *data, t_rectangle rectangle);
-void plot_line(t_image *data, int x0, int y0, int x1, int y1);
-void plot_circle(t_image *img, int xm, int ym, int r, unsigned color);
 
 int setup_cub3d(t_cub *cub);
 int setup_window_and_image(t_cub *cub);
@@ -266,7 +262,8 @@ int	is_sprite_at(int x, int y, t_map map, t_cub *cub);
 
 void render_minimap(t_image *data, t_cub *cub);
 void render_player_on_minimap(t_image *img, t_cub *cub, int square_size);
-void render_rays(t_image *img, t_cub *cub);
+int put_square(t_image *data, int x, int y, int size);
+void plot_circle(t_image *img, int xm, int ym, int r);
 
 void update_rays(t_cub *cub);
 void find_horizontal_intersection(t_ray *ray, t_cub *cub);
@@ -312,8 +309,8 @@ int each_element_of_premap_is_parsed(unsigned already_parsed);
 int parse_map(int fd, t_cub *cub);
 int get_map_from_file(int fd, t_map *map);
 char **realloc_map(t_map *map);
-// int ft_compute_real_height(t_map *map);
 int remove_empty_lines_at_the_end(t_map *map);
+int		populate_row_lengths(t_map *map);
 
 int check_map(t_map *map);
 int check_characters_and_player_in_map(t_map *map);

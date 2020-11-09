@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sprite.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/09 22:45:06 by aclose            #+#    #+#             */
+/*   Updated: 2020/11/09 22:45:24 by aclose           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "header.h"
 
-int	sort_sprites(t_map *map)
+int		sort_sprites(t_map *map)
 {
 	int			i;
 	t_bool		a_permutation_occured;
@@ -26,7 +38,7 @@ int	sort_sprites(t_map *map)
 	return (0);
 }
 
-int	update_sprites(t_cub *cub)
+int		update_sprites(t_cub *cub)
 {
 	int	i;
 
@@ -69,7 +81,7 @@ void	update_sprite(t_sprite *sprite, t_player player, t_cub *cub)
 	}
 }
 
-int	render_sprites(t_image *img, t_cub *cub)
+int		render_sprites(t_image *img, t_cub *cub)
 {
 	int	i;
 
@@ -109,19 +121,4 @@ void	render_sprite(t_image *img, t_cub *cub, t_sprite *sprite)
 		}
 		cur_x++;
 	}
-}
-
-unsigned	get_color_from_texture(t_texture *texture, t_sprite *sprite
-									, double current_x, double current_y)
-{
-	unsigned	color;
-
-	sprite->tex_x = (current_x - sprite->initial_x)
-						* texture->width / sprite->width;
-	sprite->tex_y = (current_y - sprite->initial_y)
-						* texture->height / sprite->height;
-	color = *(unsigned *)(texture->img.addr
-				+ (int)sprite->tex_y * texture->img.line_length
-				+ (int)sprite->tex_x * (texture->img.bits_per_pixel / 8));
-	return (color);
 }

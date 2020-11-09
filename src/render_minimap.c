@@ -1,20 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_minimap.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/09 22:43:30 by aclose            #+#    #+#             */
+/*   Updated: 2020/11/10 00:50:20 by aclose           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "header.h"
 
-void render_minimap(t_image *data, t_cub *cub)
+#define PLAYER_COLOR 0XFF0000
+#define MINIMAP_COLOR 0x0032CD32
+
+void	render_minimap(t_image *data, t_cub *cub)
 {
-	int j;
-	int square_size;
+	int	j;
+	int	square_size;
+	int	i;
 
 	square_size = cub->window.width / cub->map.width;
 	if (square_size > cub->window.height / cub->map.height)
 		square_size = cub->window.height / cub->map.height;
 	square_size = (square_size * MINIMAP_SCALE_FACTOR);
-	for (int i = 0; i < cub->map.height; i++)
+	i = -1;
+	while (++i < cub->map.height)
 	{
-		for (j = 0; j < (int)ft_strlen(cub->map.rows[i]); j++)
+		j = -1;
+		while (++j < cub->map.row_lengths[i])
 		{
 			if (cub->map.rows[i][j] == WALL)
-				put_square(data, j * square_size, i * square_size, square_size, 0x0032CD32);
+				put_square(data, j * square_size, i * square_size
+							, square_size);
 		}
 	}
 	render_player_on_minimap(data, cub, square_size);
@@ -24,18 +43,13 @@ void	render_player_on_minimap(t_image *img, t_cub *cub, int square_size)
 {
 	double	x;
 	double	y;
-	double	dx;
-	double	dy;
 
 	x = square_size * (cub->player.x / cub->tile_size);
 	y = square_size * (cub->player.y / cub->tile_size);
-	dx = cos(cub->player.rotation_angle) * square_size;
-	dy = sin(cub->player.rotation_angle) * square_size;
-	plot_circle(img, x, y, square_size / 2, 0X00FF0000);
-	plot_line(img, x, y, x + dx, y + dy);
+	plot_circle(img, x, y, square_size / 2);
 }
 
-int put_square(t_image *data, int x, int y, int size, int color)
+int		put_square(t_image *data, int x, int y, int size)
 {
 	int a;
 	int b;
@@ -46,51 +60,32 @@ int put_square(t_image *data, int x, int y, int size, int color)
 		a = 0;
 		while (a < size)
 		{
-			my_mlx_pixel_put(data, x + a++, y + b, color);
+			my_mlx_pixel_put(data, x + a++, y + b, MINIMAP_COLOR);
 		}
 		b++;
 	}
 	return (1);
 }
 
-void plot_line(t_image *data, int x0, int y0, int x1, int y1)
+void	plot_circle(t_image *img, int xm, int ym, int r)
 {
-	int dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
-	int dy = -abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
-	int err = dx + dy, e2; /* error value e_xy */
+	int	x;
+	int y;
+	int	err;
 
-	for (;;)
-	{ /* loop */
-		my_mlx_pixel_put(data, x0, y0, 0X00FFFFFF);
-		if (x0 == x1 && y0 == y1)
-			break;
-		e2 = 2 * err;
-		if (e2 >= dy)
-		{
-			err += dy;
-			x0 += sx;
-		} /* e_xy+e_x > 0 */
-		if (e2 <= dx)
-		{
-			err += dx;
-			y0 += sy;
-		} /* e_xy+e_y < 0 */
-	}
-}
-
-void plot_circle(t_image *img, int xm, int ym, int r, unsigned color)
-{
-	int x = -r, y = 0, err = 2 - 2 * r; /* II. Quadrant */
-	do
+	x = -r;
+	y = 0;
+	err = 2 - 2 * r;
+	while (err == 2 - 2 * r || x < 0)
 	{
-		my_mlx_pixel_put(img, xm - x, ym + y, color); /*   I. Quadrant */
-		my_mlx_pixel_put(img, xm - y, ym - x, color); /*  II. Quadrant */
-		my_mlx_pixel_put(img, xm + x, ym - y, color); /* III. Quadrant */
-		my_mlx_pixel_put(img, xm + y, ym + x, color); /*  IV. Quadrant */
+		my_mlx_pixel_put(img, xm - x, ym + y, PLAYER_COLOR);
+		my_mlx_pixel_put(img, xm - y, ym - x, PLAYER_COLOR);
+		my_mlx_pixel_put(img, xm + x, ym - y, PLAYER_COLOR);
+		my_mlx_pixel_put(img, xm + y, ym + x, PLAYER_COLOR);
 		r = err;
 		if (r > x)
-			err += ++x * 2 + 1; /* e_xy+e_x > 0 */
+			err += ++x * 2 + 1;
 		if (r <= y)
-			err += ++y * 2 + 1; /* e_xy+e_y < 0 */
-	} while (x < 0);
+			err += ++y * 2 + 1;
+	}
 }

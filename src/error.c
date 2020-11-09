@@ -6,7 +6,7 @@
 /*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 01:59:33 by aclose            #+#    #+#             */
-/*   Updated: 2020/11/09 19:31:31 by aclose           ###   ########.fr       */
+/*   Updated: 2020/11/10 00:47:57 by aclose           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int		free_and_destroy(t_cub *cub)
 			free(cub->map.rows[i]);
 		free(cub->map.rows);
 	}
+	if (cub->map.row_lengths)
+		free(cub->map.row_lengths);
 	if (cub->rays)
 		free(cub->rays);
 	if (cub->map.sprites)

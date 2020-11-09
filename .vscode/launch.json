@@ -14,7 +14,7 @@
 			"environment": [],
 			"externalConsole": false,
 			"MIMode": "gdb",
-			"args": ["test2.cub"],
+			"args": ["test.cub"],
 			"setupCommands": [
 				{
 					"description": "Enable pretty-printing for gdb",
