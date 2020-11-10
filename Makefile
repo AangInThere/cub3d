@@ -3,8 +3,8 @@ CC=gcc
 SRC_DIR = src
 OBJ_DIR = obj
 INC_DIR = include
-CFLAGS=-ggdb3 -fsanitize=address -Wall -Wextra -Werror -I $(INC_DIR) -I minilibx-linux
-# CFLAGS=-ggdb3 -Wall -Wextra -Werror -I $(INC_DIR) -I minilibx-linux
+# CFLAGS=-ggdb3 -fsanitize=address -Wall -Wextra -Werror -I $(INC_DIR) -I minilibx-linux
+CFLAGS=-ggdb3 -Wall -Wextra -Werror -I $(INC_DIR) -I minilibx-linux
 # CFLAGS=-O3 -Wall -Wextra -Werror -I $(INC_DIR) -I minilibx-linux
 
 _SRC = cub3d.c player.c helper_render.c parse/parse_resolution.c parse/parse_utils.c \
@@ -20,8 +20,8 @@ OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	@make -C ./libft
-	@make -C ./minilibx-linux
+	make -s -C ./libft
+	make -s -C ./minilibx-linux
 	$(CC) $(CFLAGS) $(OBJ) -Lminilibx-linux -lmlx -lXext -lX11 -lm -lbsd -Llibft -lft -o $(NAME)
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(HEADER)
@@ -29,14 +29,14 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@make -C ./libft clean
-	@make -C ./minilibx-linux clean
+	make -s -C ./libft clean
+	make -s -C ./minilibx-linux clean
 	rm -f $(OBJ)
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@make -C ./libft fclean
-	@make -C ./minilibx-linux fclean
+	make -s -C ./libft fclean
+	make -s -C ./minilibx-linux fclean
 	rm -f $(NAME)
 
 re: fclean all

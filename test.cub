@@ -1,12 +1,12 @@
 
-R 800 800
+R 1200 800
 NO ./textures/colorstone.xpm
 SO ./textures/eagle.xpm
 EA ./textures/greystone.xpm
 
 
 WE ./textures/redbrick.xpm
-S ./textures/cheese.xpm
+S ./textures/barrel.xpm
 C 135,206,255
 
 
