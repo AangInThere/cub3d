@@ -6,7 +6,7 @@
 /*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 01:59:33 by aclose            #+#    #+#             */
-/*   Updated: 2020/11/10 00:47:57 by aclose           ###   ########.fr       */
+/*   Updated: 2020/11/10 15:00:22 by aclose           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ int		free_and_destroy(t_cub *cub)
 	free_and_destroy_textures(cub);
 	if (cub->window.win_ptr)
 		mlx_destroy_window(cub->mlx_ptr, cub->window.win_ptr);
-	// if (cub->mlx_ptr)
-	// 	mlx_destroy_display(cub->mlx_ptr);
 	return (0);
 }
 

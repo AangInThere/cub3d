@@ -6,7 +6,7 @@ EA ./textures/greystone.xpm
 
 
 WE ./textures/redbrick.xpm
-S ./textures/barrel.xpm
+S ./textures/cheese.xpm
 C 135,206,255
 
 
