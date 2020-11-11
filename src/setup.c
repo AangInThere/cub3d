@@ -6,7 +6,7 @@
 /*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 23:00:38 by aclose            #+#    #+#             */
-/*   Updated: 2020/11/10 00:51:20 by aclose           ###   ########.fr       */
+/*   Updated: 2020/11/11 13:28:12 by aclose           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	setup_window_and_image(t_cub *cub)
 
 int	set_player_starting_position(t_player *player, t_map map, t_cub *cub)
 {
-	static double	initial_angle[4] = {M_PI + M_PI / 2, 0, M_PI / 2, M_PI};
+	static double initial_angle[4] = {M_PI + M_PI / 2, M_PI, M_PI / 2, 0};
 	static char		*player_string = "NWSE";
 	int				i;
 	int				j;
