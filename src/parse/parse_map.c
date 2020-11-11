@@ -6,7 +6,7 @@
 /*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 17:02:48 by aclose            #+#    #+#             */
-/*   Updated: 2020/11/10 00:46:21 by aclose           ###   ########.fr       */
+/*   Updated: 2020/11/11 12:40:40 by aclose           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int		get_map_from_file(int fd, t_map *map)
 			continue;
 		}
 		if (map->height >= map->malloced_height)
-			realloc_map(map);
+			if (realloc_map(map) == NULL)
+				return (MALLOC_ERROR);
 		map->rows[map->height] = line;
 		if ((int)ft_strlen(line) > map->width)
 			map->width = ft_strlen(line);
@@ -74,12 +75,13 @@ char	**realloc_map(t_map *map)
 
 	new_size = (map->malloced_height == 0 ? INITIAL_HEIGHT
 											: map->malloced_height * 2);
-	new_rows = ft_calloc(new_size, sizeof(char *));
+	if ((new_rows = ft_calloc(new_size, sizeof(char *))) == NULL)
+		return (NULL);
 	ft_memcpy(new_rows, map->rows, map->malloced_height * sizeof(char *));
 	map->malloced_height = new_size;
 	free(map->rows);
 	map->rows = new_rows;
-	return (NULL);
+	return (map->rows);
 }
 
 int		remove_empty_lines_at_the_end(t_map *map)

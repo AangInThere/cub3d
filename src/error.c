@@ -6,7 +6,7 @@
 /*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 01:59:33 by aclose            #+#    #+#             */
-/*   Updated: 2020/11/11 00:04:27 by aclose           ###   ########.fr       */
+/*   Updated: 2020/11/11 12:16:44 by aclose           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,11 @@ int		free_and_destroy(t_cub *cub)
 	free(cub->map.row_lengths);
 	free(cub->rays);
 	free(cub->map.sprites);
-	mlx_destroy_image(cub->mlx_ptr, cub->image.img_ptr);
+	if (cub->mlx_ptr && cub->image.img_ptr)
+		mlx_destroy_image(cub->mlx_ptr, cub->image.img_ptr);
 	free_and_destroy_textures(cub);
-	mlx_destroy_window(cub->mlx_ptr, cub->window.win_ptr);
+	if (cub->mlx_ptr && cub->window.win_ptr)
+		mlx_destroy_window(cub->mlx_ptr, cub->window.win_ptr);
 	return (0);
 }
 
@@ -69,7 +71,8 @@ int		free_and_destroy_textures(t_cub *cub)
 	while (++i < 5)
 	{
 		free(cub->textures[i].filepath);
-		mlx_destroy_image(cub->mlx_ptr, cub->textures[i].img.img_ptr);
+		if (cub->mlx_ptr && cub->textures[i].img.img_ptr)
+			mlx_destroy_image(cub->mlx_ptr, cub->textures[i].img.img_ptr);
 	}
 	return (0);
 }

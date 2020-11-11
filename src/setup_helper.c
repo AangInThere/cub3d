@@ -6,7 +6,7 @@
 /*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 00:28:47 by aclose            #+#    #+#             */
-/*   Updated: 2020/11/10 00:30:21 by aclose           ###   ########.fr       */
+/*   Updated: 2020/11/11 13:16:39 by aclose           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_compute_tile_size(t_cub *cub)
 
 	according_to_width = cub->window.width / cub->map.width;
 	according_to_height = cub->window.height / cub->map.height;
+	if (according_to_width == 0 || according_to_height == 0)
+		return (1);
 	return (according_to_width < according_to_height ? according_to_width
 													: according_to_height);
 }

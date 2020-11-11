@@ -6,7 +6,7 @@
 /*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 01:55:27 by aclose            #+#    #+#             */
-/*   Updated: 2020/11/09 01:55:28 by aclose           ###   ########.fr       */
+/*   Updated: 2020/11/11 12:24:30 by aclose           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	if (argc < 2 || argc > 3 || check_file_name(argv[1]) != 0
 			|| (argc == 3 && ft_strcmp(argv[2], "--save") != 0))
 	{
-		ft_putstr_fd("Error/nUsage: ./cub3D *.cub [--save]\n", STDERR_FILENO);
+		ft_putstr_fd("Error\nUsage: ./cub3D *.cub [--save]\n", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
 	ft_bzero(&cub, sizeof(cub));
