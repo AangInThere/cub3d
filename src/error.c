@@ -6,7 +6,7 @@
 /*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 01:59:33 by aclose            #+#    #+#             */
-/*   Updated: 2020/11/10 15:00:22 by aclose           ###   ########.fr       */
+/*   Updated: 2020/11/11 00:04:27 by aclose           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,15 @@ int		free_and_destroy(t_cub *cub)
 	if (cub->fd_config_file > 0)
 		close(cub->fd_config_file);
 	i = -1;
-	if (cub->map.rows)
-	{
-		while (++i < cub->map.height)
-			free(cub->map.rows[i]);
-		free(cub->map.rows);
-	}
-	if (cub->map.row_lengths)
-		free(cub->map.row_lengths);
-	if (cub->rays)
-		free(cub->rays);
-	if (cub->map.sprites)
-		free(cub->map.sprites);
-	if (cub->image.img_ptr)
-		mlx_destroy_image(cub->mlx_ptr, cub->image.img_ptr);
+	while (++i < cub->map.height)
+		free(cub->map.rows[i]);
+	free(cub->map.rows);
+	free(cub->map.row_lengths);
+	free(cub->rays);
+	free(cub->map.sprites);
+	mlx_destroy_image(cub->mlx_ptr, cub->image.img_ptr);
 	free_and_destroy_textures(cub);
-	if (cub->window.win_ptr)
-		mlx_destroy_window(cub->mlx_ptr, cub->window.win_ptr);
+	mlx_destroy_window(cub->mlx_ptr, cub->window.win_ptr);
 	return (0);
 }
 
@@ -76,10 +68,8 @@ int		free_and_destroy_textures(t_cub *cub)
 	i = -1;
 	while (++i < 5)
 	{
-		if (cub->textures[i].filepath)
-			free(cub->textures[i].filepath);
-		if (cub->textures[i].img.img_ptr)
-			mlx_destroy_image(cub->mlx_ptr, cub->textures[i].img.img_ptr);
+		free(cub->textures[i].filepath);
+		mlx_destroy_image(cub->mlx_ptr, cub->textures[i].img.img_ptr);
 	}
 	return (0);
 }

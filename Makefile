@@ -42,4 +42,4 @@ fclean: clean
 re: fclean all
 
 norminette:
-	~/.norminette/norminette.rb $(SRC) $(HEADER)
+	~/.norminette/norminette.rb $(SRC) $(INC_DIR)

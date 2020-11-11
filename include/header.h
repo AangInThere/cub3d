@@ -6,7 +6,7 @@
 /*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 01:11:18 by aclose            #+#    #+#             */
-/*   Updated: 2020/11/10 01:16:59 by aclose           ###   ########.fr       */
+/*   Updated: 2020/11/11 02:12:03 by aclose           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@
 # include "../libft/libft.h"
 # include "struct.h"
 # define PLAYER_SIZE 5
-# define ROTATION_SPEED (6.0 * (M_PI / 180.0) / 3.0)
-# define FOV_ANGLE (M_PI / 3)
+# define PI_90 0.03490658503
+# define ROTATION_SPEED PI_90
+# define PI_3 1.0471975512
+# define FOV_ANGLE PI_3
 # define WALL_STRIP_WIDTH  1
 # define MINIMAP_SCALE_FACTOR 0.2
 # define TRUE 1
