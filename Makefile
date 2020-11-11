@@ -3,8 +3,8 @@ CC=gcc
 SRC_DIR = src
 OBJ_DIR = obj
 INC_DIR = include
-# CFLAGS=-ggdb3 -fsanitize=address -Wall -Wextra -Werror -I $(INC_DIR) -I minilibx-linux
 CFLAGS=-ggdb3 -Wall -Wextra -Werror -I $(INC_DIR) -I minilibx-linux
+# CFLAGS=-ggdb3 -fsanitize=address -Wall -Wextra -Werror -I $(INC_DIR) -I minilibx-linux
 # CFLAGS=-O3 -Wall -Wextra -Werror -I $(INC_DIR) -I minilibx-linux
 
 _SRC = cub3d.c player.c helper_render.c parse/parse_resolution.c parse/parse_utils.c \
@@ -40,6 +40,8 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+bonus: all
 
 norminette:
 	~/.norminette/norminette.rb $(SRC) $(INC_DIR)

@@ -6,7 +6,7 @@
 /*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 16:11:36 by aclose            #+#    #+#             */
-/*   Updated: 2020/11/07 16:12:26 by aclose           ###   ########.fr       */
+/*   Updated: 2020/11/11 13:49:59 by aclose           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ void	find_vertical_intersection(t_ray *ray, t_cub *cub)
 	t_intersection_finder s;
 
 	vert_intersec_setup(ray, cub, &s);
-	while (s.next_touch_y >= 0 && s.next_touch_y < cub->window.height
-			&& s.next_touch_x >= 0 && s.next_touch_x < cub->window.width)
+	while (s.next_touch_y >= 0
+			&& s.next_touch_y <= cub->map.height * cub->tile_size
+			&& s.next_touch_x >= 0
+			&& s.next_touch_x <= cub->map.width * cub->tile_size)
 	{
 		if (is_wall_at((s.next_touch_x - (!ray->is_ray_facing_right ? 1 : 0))
 						, s.next_touch_y, cub->map, cub))
@@ -81,8 +83,10 @@ void	find_horizontal_intersection(t_ray *ray, t_cub *cub)
 	t_intersection_finder	s;
 
 	hor_intersec_setup(ray, cub, &s);
-	while (s.next_touch_y >= 0 && s.next_touch_y < cub->window.height
-			&& s.next_touch_x >= 0 && s.next_touch_x < cub->window.width)
+	while (s.next_touch_y >= 0
+			&& s.next_touch_y <= cub->map.height * cub->tile_size
+			&& s.next_touch_x >= 0
+			&& s.next_touch_x <= cub->map.width * cub->tile_size)
 	{
 		if (is_wall_at(s.next_touch_x
 				, s.next_touch_y - (!ray->is_ray_facing_down ? 1 : 0)

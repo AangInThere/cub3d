@@ -6,7 +6,7 @@
 /*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 01:11:18 by aclose            #+#    #+#             */
-/*   Updated: 2020/11/11 02:12:03 by aclose           ###   ########.fr       */
+/*   Updated: 2020/11/11 13:58:01 by aclose           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <string.h>
 # include "../libft/libft.h"
 # include "struct.h"
+# define TILE_SIZE 80
 # define PLAYER_SIZE 5
 # define PI_90 0.03490658503
 # define ROTATION_SPEED PI_90
@@ -46,7 +47,6 @@ int			setup_window_and_image(t_cub *cub);
 int			setup_hooks(t_cub *cub);
 int			set_player_starting_position(t_player *player
 				, t_map map, t_cub *cub);
-int			ft_compute_tile_size(t_cub *cub);
 int			setup_sprites(t_cub *cub);
 int			ft_count_sprites(t_map *map);
 

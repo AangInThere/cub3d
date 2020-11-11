@@ -6,7 +6,7 @@
 /*   By: aclose <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 23:00:38 by aclose            #+#    #+#             */
-/*   Updated: 2020/11/11 13:28:12 by aclose           ###   ########.fr       */
+/*   Updated: 2020/11/11 13:49:17 by aclose           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	setup_cub3d(t_cub *cub)
 {
 	if (setup_window_and_image(cub) != 0)
 		return (cub->error_code);
-	cub->tile_size = ft_compute_tile_size(cub);
+	cub->tile_size = TILE_SIZE;
 	cub->player.speed = cub->tile_size / 8.0;
 	cub->distance_projection_plane = (cub->window.width / 2)
 											/ tan(FOV_ANGLE / 2);
@@ -47,7 +47,7 @@ int	setup_window_and_image(t_cub *cub)
 
 int	set_player_starting_position(t_player *player, t_map map, t_cub *cub)
 {
-	static double initial_angle[4] = {M_PI + M_PI / 2, M_PI, M_PI / 2, 0};
+	static double	initial_angle[4] = {M_PI + M_PI / 2, M_PI, M_PI / 2, 0};
 	static char		*player_string = "NWSE";
 	int				i;
 	int				j;
